@@ -8,35 +8,30 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HafezWPFUI.Properties
-{
-
-
+namespace HafezWPFUI.Properties {
+    
+    
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.4.0.0")]
-    public sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase
-    {
-
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.10.0.0")]
+    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
+        
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
-
-        public static Settings Default
-        {
-            get
-            {
+        
+        public static Settings Default {
+            get {
                 return defaultInstance;
             }
         }
-
+        
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("15")]
         public int SlideShowTime
         {
-            get
-            {
-                return ((int) (this["SlideShowTime"]));
+            get {
+                return ((int)(this["SlideShowTime"]));
             }
-            set => this["SlideShowTime"] = value;
+            set => throw new System.NotImplementedException();
         }
 
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
@@ -44,11 +39,10 @@ namespace HafezWPFUI.Properties
         [global::System.Configuration.DefaultSettingValueAttribute("15")]
         public int LogoShowTime
         {
-            get
-            {
-                return ((int) (this["LogoShowTime"]));
+            get {
+                return ((int)(this["LogoShowTime"]));
             }
-            set => this["LogoShowTime"] = value;
+            set => throw new System.NotImplementedException();
         }
     }
 }

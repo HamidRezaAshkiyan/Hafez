@@ -3,28 +3,89 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <LangVersion>latest</LangVersion>
+    <StartupObject>HafezWPFUI.App</StartupObject>
+    <ApplicationIcon>Hafez.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="AForge" Version="2.2.5" />
-    <PackageReference Include="AForge.Video" Version="2.2.5" />
-    <PackageReference Include="AForge.Video.DirectShow" Version="2.2.5" />
-    <PackageReference Include="AutoMapper" Version="10.1.1" />
-    <PackageReference Include="Caliburn.Micro" Version="4.0.173" />
-    <PackageReference Include="Caliburn.Micro.Core" Version="4.0.173" />
-    <PackageReference Include="Dapper" Version="2.0.90" />
-    <PackageReference Include="FluentValidation" Version="10.3.0" />
-    <PackageReference Include="MahApps.Metro" Version="2.4.7" />
-    <PackageReference Include="MaterialDesignColors" Version="2.0.1" />
-    <PackageReference Include="MaterialDesignThemes" Version="4.1.0" />
-    <PackageReference Include="MaterialMessageBox" Version="4.0.2" />
-    <PackageReference Include="Microsoft.AppCenter" Version="4.3.0" />
-    <PackageReference Include="Microsoft.AppCenter.Analytics" Version="4.3.0" />
-    <PackageReference Include="Microsoft.AppCenter.Crashes" Version="4.3.0" />
-    <PackageReference Include="Serilog" Version="2.10.0" />
-    <PackageReference Include="Serilog.Sinks.Debug" Version="2.0.0" />
-    <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+    <Compile Remove="App_Start\**" />
+    <EmbeddedResource Remove="App_Start\**" />
+    <None Remove="App_Start\**" />
+    <Page Remove="App_Start\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Gallery\Album\Sample\Hafez.png" />
+    <None Remove="Gallery\CompanyLogo\Hafez.png" />
+    <None Remove="Gallery\Logo\Sample\Hafez.png" />
+    <None Remove="Resources\Fonts\Vazir.ttf" />
+    <None Remove="Resources\Fonts\VazirFD.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Gallery\Album\Sample\Hafez.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Gallery\CompanyLogo\Hafez.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Gallery\Logo\Sample\Hafez.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Fonts\Vazir.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Fonts\VazirFD.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="AForge" version="2.2.5" />
+    <PackageReference Include="AForge.Video" version="2.2.5" />
+    <PackageReference Include="AForge.Video.DirectShow" version="2.2.5" />
+    <PackageReference Include="AutoMapper" version="10.1.1" />
+    <PackageReference Include="Caliburn.Micro" version="4.0.173" />
+    <PackageReference Include="Caliburn.Micro.Core" version="4.0.173" />
+    <PackageReference Include="ControlzEx" version="5.0.1" />
+    <PackageReference Include="Dapper" version="2.0.90" />
+    <PackageReference Include="FluentValidation" version="10.3.0" />
+    <PackageReference Include="MahApps.Metro" version="2.4.7" />
+    <PackageReference Include="MaterialDesignColors" version="2.0.1" />
+    <PackageReference Include="MaterialDesignThemes" version="4.1.0" />
+    <PackageReference Include="MaterialMessageBox" version="4.0.2" />
+    <PackageReference Include="Microsoft.AppCenter" version="4.3.0" />
+    <PackageReference Include="Microsoft.AppCenter.Analytics" version="4.3.0" />
+    <PackageReference Include="Microsoft.AppCenter.Crashes" version="4.3.0" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" version="1.1.31" />
+    <PackageReference Include="Newtonsoft.Json" version="13.0.1" />
+    <PackageReference Include="Serilog" version="2.10.0" />
+    <PackageReference Include="Serilog.Sinks.Debug" version="2.0.0" />
+    <PackageReference Include="Serilog.Sinks.File" version="5.0.0" />
+    <PackageReference Include="SQLitePCLRaw.bundle_green" version="2.0.4" />
+    <PackageReference Include="SQLitePCLRaw.core" version="2.0.4" />
+    <PackageReference Include="SQLitePCLRaw.lib.e_sqlite3" version="2.0.4" />
+    <PackageReference Include="SQLitePCLRaw.provider.dynamic_cdecl" version="2.0.4" />
+    <PackageReference Include="System.Buffers" version="4.5.1" />
+    <PackageReference Include="System.ComponentModel.Annotations" version="5.0.0" />
+    <PackageReference Include="System.Diagnostics.Debug" version="4.3.0" />
+    <PackageReference Include="System.Memory" version="4.5.4" />
+    <PackageReference Include="System.Numerics.Vectors" version="4.5.0" />
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" version="5.0.0" />
+    <PackageReference Include="System.Runtime.Serialization.Primitives" version="4.3.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HafezLibrary\HafezLibrary.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
 </Project>

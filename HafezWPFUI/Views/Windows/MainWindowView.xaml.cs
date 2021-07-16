@@ -10,8 +10,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Forms;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
@@ -99,7 +99,7 @@ namespace HafezWPFUI.Views.Windows
                 if ( UserConfig.QuranPageNumber <= LastQuranPageNumber )
                 {
                     var pageNumber = Quran.Where(x => x.PageNumber == UserConfig.QuranPageNumber)
-                                                .OrderBy(x => x.SuraID).First();
+                        .OrderBy(x => x.SuraID).First();
 
                     ComboBoxQuranSure.SelectedIndex = pageNumber.SuraID - 1;
                 }
@@ -186,7 +186,6 @@ namespace HafezWPFUI.Views.Windows
 
                     await Task.Run(ControlHandlers.PhysicalKeyValidation);
                 }
-
             }
             catch ( Exception exception )
             {
@@ -440,7 +439,9 @@ namespace HafezWPFUI.Views.Windows
 
                 //Update DB
                 UserConfigModel.Update(new Dictionary<string, string>
-                    {{"QuranPageNumber", quranPageNumber.ToString()}});
+                {
+                    {"QuranPageNumber", quranPageNumber.ToString()}
+                });
 
                 //Update GlobalConfig
                 UserConfig.QuranPageNumber = quranPageNumber;
@@ -836,11 +837,7 @@ namespace HafezWPFUI.Views.Windows
                 //    Id = i + 1,
                 //    FileName = fileNames[i]
                 //};
-                var folderName = new
-                {
-                    Id = i + 1,
-                    FileName = fileNames[i]
-                };
+                var folderName = new {Id = i + 1, FileName = fileNames[i]};
 
                 ComboBoxImage.Items.Add(folderName);
             }
@@ -865,11 +862,7 @@ namespace HafezWPFUI.Views.Windows
             ComboBoxLogo.Items.Clear();
             for ( var i = 0; i < fileNames.Count; i++ )
             {
-                var folderName = new
-                {
-                    Id = i + 1,
-                    FileName = fileNames[i]
-                };
+                var folderName = new {Id = i + 1, FileName = fileNames[i]};
 
                 ComboBoxLogo.Items.Add(folderName);
             }
@@ -1609,7 +1602,6 @@ namespace HafezWPFUI.Views.Windows
             {
                 LogInformation(exception);
             }
-
         }
     }
 }

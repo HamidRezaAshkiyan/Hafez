@@ -75,7 +75,10 @@ namespace HafezLibrary.DataAccess.Connector
 
         public static string GetConnectionString(string name = "DebugDB")
         {
-            return ConfigurationManager.ConnectionStrings[name].ConnectionString;
+            return
+                @"Data Source=(LocalDB)\MSSQLLocalDB;Initial Catalog=C:\USERS\MRSMILE\SOURCE\REPOS\HAFEZ\HAFEZWPFUI\BIN\DEBUG\DATA\DB.MDF;Integrated Security=True";
+                // @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename='|DataDirectory|\Data\DB.mdf';Integrated Security=True;Connect Timeout=30";
+            //return ConfigurationManager.ConnectionStrings[name].ConnectionString;
         }
     }
 }
