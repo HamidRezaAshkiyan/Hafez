@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 
@@ -75,9 +76,13 @@ namespace HafezLibrary.DataAccess.Connector
 
         public static string GetConnectionString(string name = "DebugDB")
         {
-            return
-                @"Data Source=(LocalDB)\MSSQLLocalDB;Initial Catalog=C:\USERS\MRSMILE\SOURCE\REPOS\HAFEZ\HAFEZWPFUI\BIN\DEBUG\DATA\DB.MDF;Integrated Security=True";
-                // @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename='|DataDirectory|\Data\DB.mdf';Integrated Security=True;Connect Timeout=30";
+            var path = Directory.GetCurrentDirectory();
+            var output = @$"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename='{path}\Data\DB.mdf';Integrated Security=True;";
+            
+            return output;
+
+            // TODO move connection string to appsetting.json and do it with |DataDirectory|
+            // @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename='|DataDirectory|\Data\DB.mdf';Integrated Security=True;Connect Timeout=30";
             //return ConfigurationManager.ConnectionStrings[name].ConnectionString;
         }
     }
