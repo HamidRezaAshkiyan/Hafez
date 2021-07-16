@@ -1,16 +1,18 @@
 Now
-[x] add microsoft app analysis
-[] upgrade to .net 5
-[x] remove extra stuff (look at DB)
-[x] add donation section
-[] Flutter app
-[x] use vazir font
-[x] change logo
 [] user setting in json
 [] change DB data
+[] upgrade to .net 5
+[] Flutter app
+[x] add microsoft app analysis
+[x] remove extra stuff (look at DB)
+[x] add donation section
+[x] use vazir font
+[x] change logo
+[x] upgrade to .net core 3.1
 
 
 Future
+[] sqllite?
 [] add twitter integration
 [] change app color?
 [] add test?
