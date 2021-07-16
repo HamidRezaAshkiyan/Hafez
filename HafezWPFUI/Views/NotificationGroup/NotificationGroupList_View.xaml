@@ -1,0 +1,127 @@
+﻿<UserControl
+    x:Class="HafezWPFUI.Views.NotificationGroup.NotificationGroupList_View"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:handlers="clr-namespace:HafezWPFUI.Helper.Handlers"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="600"
+    d:DesignWidth="800"
+    FlowDirection="RightToLeft"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ContextMenu
+                x:Key="RightClickMenu"
+                FontFamily="{StaticResource BaseFontFamily}"
+                Foreground="White">
+                <MenuItem Click="MenuItemNewNotificationGroup_OnClick" Header="ثبت گروه" />
+                <MenuItem Click="MenuItemEditNewNotificationGroup_OnClick" Header="ویرایش گروه" />
+                <MenuItem Click="MenuItemShowNotification_OnClick" Header="نمایش اعلانات" />
+                <Separator />
+                <MenuItem Click="MenuItemImportGroupNotifications_OnClick" Header="وارد کردن به گروه" />
+                <MenuItem Click="MenuItemExportGroupNotifications_OnClick" Header="خروجی گرفتن از گروه" />
+                <Separator />
+                <MenuItem Click="MenuItemShowGroupNotifications_OnClick" Header="پخش گروه" />
+                <Separator />
+                <MenuItem Click="MenuItemShowGroupSortedNotifications_OnClick" Header="پخش گروه با الویت" />
+                <MenuItem Click="MenuItemRemoveSortIds_OnClick" Header="پاک کردن اولویت ها" />
+            </ContextMenu>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <GroupBox materialDesign:ShadowAssist.ShadowDepth="Depth3" BorderThickness="0">
+            <GroupBox.Header>
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    FontWeight="Bold"
+                    Foreground="White">
+                    لیست گروه اعلانات
+                </TextBlock>
+            </GroupBox.Header>
+            <ScrollViewer CanContentScroll="True" VerticalScrollBarVisibility="Auto">
+                <ListView
+                    Name="NotificationGroupListView"
+                    handlers:SortHelper.AutoSort="True"
+                    IsSynchronizedWithCurrentItem="True"
+                    ItemsSource="{Binding}"
+                    MouseRightButtonUp="CreateRightClickMenu">
+                    <ListView.View>
+                        <GridView x:Name="NotificationsList">
+                            <GridViewColumn Header="پخش">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button
+                                            Uid="{Binding Id}"
+                                            Margin="0 -5"
+                                            Padding="0"
+                                            Click="MenuItemShowGroupSortedNotifications_OnClick"
+                                            Style="{StaticResource MaterialDesignFlatButton}"
+                                            ToolTip="پخش گروه با اولویت">
+                                            <Button.Content>
+                                                <materialDesign:PackIcon
+                                                    Width="30"
+                                                    Height="30"
+                                                    Kind="Play" />
+                                            </Button.Content>
+                                        </Button>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="حذف">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button
+                                            Uid="{Binding Id}"
+                                            Margin="0 -5"
+                                            Padding="0"
+                                            Click="ButtonRemoveNotificationGroup_OnClick"
+                                            Style="{StaticResource MaterialDesignFlatButton}"
+                                            ToolTip="حذف">
+                                            <materialDesign:PackIcon
+                                                Width="30"
+                                                Height="25"
+                                                Kind="Close" />
+                                        </Button>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn
+                                Width="auto"
+                                handlers:SortHelper.PropertyName="Id"
+                                DisplayMemberBinding="{Binding Id}"
+                                Header="کد" />
+                            <GridViewColumn
+                                Width="auto"
+                                handlers:SortHelper.PropertyName="Name"
+                                DisplayMemberBinding="{Binding Name}"
+                                Header="نام گروه" />
+
+                            <!--<GridViewColumn Header="پخش گروه">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Click="MenuItemSelect_OnClick"
+                                            Style="{StaticResource MaterialDesignFlatButton}">
+                                            <Button.Content>
+                                                <materialDesign:PackIcon
+                                                    Width="30"
+                                                    Height="30"
+                                                    Kind="Play" />
+                                            </Button.Content>
+                                        </Button>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>-->
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </ScrollViewer>
+        </GroupBox>
+    </Grid>
+</UserControl>

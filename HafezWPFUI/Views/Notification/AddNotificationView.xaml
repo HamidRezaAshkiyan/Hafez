@@ -1,0 +1,209 @@
+﻿<UserControl
+    x:Class="HafezWPFUI.Views.Notification.AddNotificationView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    d:DesignHeight="600"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+
+    <md:DialogHost>
+        <md:DialogHost.DialogContent>
+            <StackPanel Width="150">
+                <TextBlock FontFamily="{DynamicResource BaseFontFamily}">
+                    نام گروه را وارد کنید
+                </TextBlock>
+                <TextBox
+                    x:Name="TxtGroupName"
+                    Margin="0 8 0 0"
+                    HorizontalAlignment="Stretch"
+                    FontFamily="{DynamicResource BaseFontFamily}" />
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                    <Button
+                        Margin="0 8 8 0"
+                        Click="ButtonSubmitGroupName_OnClick"
+                        Command="md:DialogHost.CloseDialogCommand"
+                        FontFamily="{DynamicResource BaseFontFamily}"
+                        IsDefault="True"
+                        Style="{StaticResource MaterialDesignFlatButton}">
+                        <Button.CommandParameter>
+                            <system:Boolean xmlns:system="clr-namespace:System;assembly=mscorlib">
+                                True
+                            </system:Boolean>
+                        </Button.CommandParameter>
+                        تایید
+                    </Button>
+                    <Button
+                        Margin="0 8 8 0"
+                        Command="md:DialogHost.CloseDialogCommand"
+                        FontFamily="{DynamicResource BaseFontFamily}"
+                        IsCancel="True"
+                        Style="{StaticResource MaterialDesignFlatButton}">
+                        <Button.CommandParameter>
+                            <system:Boolean xmlns:system="clr-namespace:System;assembly=mscorlib">
+                                False
+                            </system:Boolean>
+                        </Button.CommandParameter>
+                        لغو
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+        </md:DialogHost.DialogContent>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <StackPanel
+                Grid.Row="0"
+                HorizontalAlignment="Center"
+                Orientation="Horizontal">
+                <TextBlock
+                    Name="TxtNotificationSortId"
+                    Text="0"
+                    Visibility="Collapsed" />
+                <TextBox
+                    Name="TxtNotificationId"
+                    MinWidth="150"
+                    Margin="10 0"
+                    VerticalAlignment="Center"
+                    md:HintAssist.Hint="شماره اعلان"
+                    md:HintAssist.IsFloating="True"
+                    Visibility="Collapsed">
+                    <!--<md:HintAssist.Hint>
+                        <StackPanel Orientation="Horizontal">
+                            <md:PackIcon
+                                Width="20"
+                                Height="20"
+                                Margin="5 15"
+                                VerticalAlignment="Center"
+                                Kind="Numbers" />
+                            <Label
+                                Padding="0"
+                                VerticalAlignment="Center"
+                                Foreground="Black">
+                                شماره اعلان
+                            </Label>
+                        </StackPanel>
+                    </md:HintAssist.Hint>-->
+                </TextBox>
+
+                <TextBox
+                    Name="TxtNotificationDescription"
+                    Grid.Row="0"
+                    MinWidth="400"
+                    MaxWidth="400"
+                    VerticalAlignment="Center"
+                    md:HintAssist.Hint="متن اعلان"
+                    md:HintAssist.IsFloating="True"
+                    AcceptsReturn="True"
+                    TextWrapping="Wrap">
+                    <!--<md:HintAssist.Hint>
+                        <StackPanel Orientation="Horizontal">
+                            <md:PackIcon
+                                Width="20"
+                                Height="20"
+                                Margin="5 15"
+                                VerticalAlignment="Center"
+                                Kind="Notifications" />
+                            <Label
+                                Padding="0"
+                                VerticalAlignment="Center"
+                                Foreground="Black">
+                                متن اعلان
+                            </Label>
+                        </StackPanel>
+                    </md:HintAssist.Hint>-->
+                </TextBox>
+            </StackPanel>
+
+            <TextBox
+                Name="TxtNotificationName"
+                Grid.Row="1"
+                Grid.Column="0"
+                MinWidth="400"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                md:HintAssist.Hint="عنوان اعلان"
+                md:HintAssist.IsFloating="True"
+                MaxLength="250">
+                <!--<md:HintAssist.Hint>
+                    <StackPanel Orientation="Horizontal">
+                        <md:PackIcon
+                            Width="20"
+                            Height="20"
+                            Margin="5 15"
+                            VerticalAlignment="Center"
+                            Kind="FormatTitle" />
+                        <Label
+                            Padding="0"
+                            VerticalAlignment="Center"
+                            Foreground="Black">
+                            عنوان اعلان
+                        </Label>
+                    </StackPanel>
+                </md:HintAssist.Hint>-->
+            </TextBox>
+
+            <Grid Grid.Row="2" Width="400">
+                <ComboBox
+                    Name="ComboBoxGroupName"
+                    Grid.Column="0"
+                    Width="200"
+                    VerticalAlignment="Center"
+                    md:ComboBoxAssist.ClassicMode="True"
+                    md:HintAssist.Hint="نام گروه"
+                    md:HintAssist.IsFloating="True"
+                    ItemsSource="{Binding}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                    <!--<md:HintAssist.Hint>
+                        <StackPanel Orientation="Horizontal">
+                            <md:PackIcon
+                                Width="20"
+                                Height="20"
+                                Margin="5 0"
+                                VerticalAlignment="Top"
+                                Kind="Group" />
+                            <Label
+                                Padding="0"
+                                VerticalAlignment="Center"
+                                Foreground="Black">
+                                نام گروه
+                            </Label>
+                        </StackPanel>
+                    </md:HintAssist.Hint>-->
+                </ComboBox>
+
+                <Button
+                    Grid.Row="0"
+                    HorizontalAlignment="Left"
+                    Command="{x:Static md:DialogHost.OpenDialogCommand}"
+                    Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}">
+                    <md:PackIcon
+                        Width="22"
+                        Height="22"
+                        Foreground="White"
+                        Kind="Plus" />
+                </Button>
+            </Grid>
+
+            <Button
+                Name="BtnSubmit"
+                Grid.Row="3"
+                Width="200"
+                Click="BtnSubmit_OnClick"
+                Content="ثبت اعلان"
+                Foreground="White" />
+        </Grid>
+    </md:DialogHost>
+</UserControl>

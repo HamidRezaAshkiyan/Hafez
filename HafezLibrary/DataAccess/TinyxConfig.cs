@@ -1,0 +1,9 @@
+﻿namespace HafezLibrary.DataAccess
+{
+    public static class TinyxConfig
+    {
+        public static string StrSafeKey2 { get; } = "71F4914D71AB1D7B8F4B4C669C30EC5FBE9F63DF0CE65C70ACA10481BDA174F4E408D4C661E6DA06F936F9D579FDAA1DB1FD";
+        public static string StrSafeKey1 { get; } = "8449F4D8648025B03CE08B736B0F4B08BD380428D1BF112551F64DC6FAD6113F51E59162D9324EC2C63DD68AA6990FD9AD19";
+        public static string StrUserKey { get; } = "963AAAEE6C46D873FCB46921F6C341EE";
+    }
+}

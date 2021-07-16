@@ -1,0 +1,248 @@
+﻿<Window
+    x:Class="HafezWPFUI.Views.Windows.OutputWindowView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:HafezWpfui="clr-namespace:HafezWPFUI"
+    Title="حافظ _ خروجی"
+    Width="auto"
+    Height="auto"
+    FlowDirection="RightToLeft"
+    Loaded="OutputWindow_OnLoaded"
+    ResizeMode="NoResize"
+    Style="{DynamicResource WindowDefaultStyle}"
+    Topmost="True"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+
+    <Window.Background>
+        <SolidColorBrush Opacity="0" Color="White" />
+    </Window.Background>
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../Resources/Styles/StoryBoardStyleClass.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <Storyboard x:Key="LogoStoryBoard">
+                <DoubleAnimation
+                    AutoReverse="True"
+                    Completed="Delay"
+                    Storyboard.TargetName="Logo"
+                    Storyboard.TargetProperty="(Image.Opacity)"
+                    From="0.0"
+                    To="1.0"
+                    Duration="0:0:3" />
+            </Storyboard>
+            <RoutedUICommand x:Key="MyCommand1" Text="1" />
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Window.InputBindings>
+        <KeyBinding
+            Key="Q"
+            Command="{StaticResource MyCommand1}"
+            Modifiers="Control" />
+    </Window.InputBindings>
+
+    <Window.CommandBindings>
+        <CommandBinding Command="{StaticResource MyCommand1}" Executed="CommandBinding_OnExecuted" />
+    </Window.CommandBindings>
+
+    <Grid>
+        <MediaElement
+            Name="SelectedFilmPreview"
+            LoadedBehavior="Manual"
+            Visibility="Collapsed"
+            Volume="{Binding Source={x:Static Application.Current}, Path=Volume.Value, Mode=TwoWay}" />
+
+        <Image
+            Name="ImgInput"
+            Grid.Row="0"
+            Grid.Column="0"
+            Width="auto"
+            Height="auto"
+            Stretch="Fill"
+            Visibility="Collapsed" />
+
+        <Image
+            Name="PictureInput"
+            Grid.Row="0"
+            Grid.Column="0"
+            Width="auto"
+            Height="auto"
+            Stretch="Fill"
+            Visibility="Hidden" />
+
+        <Image
+            Name="Logo"
+            Grid.Row="0"
+            Grid.Column="0"
+            Width="auto"
+            Height="auto"
+            Stretch="Uniform"
+            Visibility="Hidden" />
+
+
+        <Image
+            Name="LogoScreenSaver"
+            Grid.Row="0"
+            Grid.Column="0"
+            Width="auto"
+            Height="auto"
+            Stretch="Uniform"
+            Visibility="Hidden">
+            <Image.Triggers>
+                <EventTrigger RoutedEvent="Image.Loaded">
+                    <BeginStoryboard>
+                        <Storyboard Name="ScreenSaverStoryBoard">
+                            <DoubleAnimation
+                                AutoReverse="True"
+                                RepeatBehavior="Forever"
+                                Storyboard.TargetName="LogoScreenSaver"
+                                Storyboard.TargetProperty="(Image.Opacity)"
+                                From="0.20"
+                                To="1.0"
+                                Duration="0:0:4" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Image.Triggers>
+        </Image>
+
+        <StackPanel Name="TopStackContainer" VerticalAlignment="Top" />
+
+        <StackPanel Name="BottomStackContainer" VerticalAlignment="Bottom">
+            <StackPanel
+                Name="NotificationContainer"
+                VerticalAlignment="Bottom"
+                Visibility="Collapsed">
+                <Grid
+                    Name="NotificationTitleBox"
+                    HorizontalAlignment="Left"
+                    Style="{DynamicResource NotificationTitleStyle}"
+                    Visibility="Collapsed">
+                    <Label
+                        Name="NotificationTitle"
+                        Padding="10 0"
+                        VerticalAlignment="Center"
+                        FontWeight="Bold" />
+                </Grid>
+
+                <Grid Name="NotificationPanel" Style="{DynamicResource NotificationPanelStyle}">
+
+                    <TextBlock Name="NotificationMarquee" />
+
+                    <Image
+                        Name="NotificationPanelLogo"
+                        Margin="0 0 16 0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Stretch" />
+                </Grid>
+            </StackPanel>
+
+            <StackPanel Name="QuranContainer" Visibility="Collapsed">
+                <Grid
+                    Name="QuranTitleBox"
+                    HorizontalAlignment="Left"
+                    Style="{DynamicResource QuranTitleStyle}">
+                    <Label
+                        Name="QuranTitle"
+                        Padding="10 0"
+                        VerticalAlignment="Center"
+                        FontWeight="Bold" />
+                </Grid>
+
+                <Grid
+                    Name="QuranPanel"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Top"
+                    Style="{DynamicResource QuranPanelStyle}">
+
+                    <TextBlock Name="QuranMarquee" />
+
+                    <Image
+                        Name="QuranPanelLogo"
+                        Margin="0 0 16 0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Stretch" />
+                </Grid>
+            </StackPanel>
+
+            <StackPanel Name="MafatihContainer" Visibility="Collapsed">
+                <Grid
+                    Name="MafatihTitleBox"
+                    HorizontalAlignment="Left"
+                    Style="{DynamicResource MafatihTitleStyle}">
+                    <Label
+                        Name="MafatihTitle"
+                        Padding="10 0"
+                        VerticalAlignment="Center"
+                        FontWeight="Bold" />
+                </Grid>
+
+                <Grid
+                    Name="MafatihPanel"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Top"
+                    Style="{DynamicResource MafatihPanelStyle}">
+
+                    <TextBlock Name="MafatihMarquee" />
+
+                    <Image
+                        Name="MafatihPanelLogo"
+                        Margin="0 0 16 0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Stretch" />
+                </Grid>
+            </StackPanel>
+
+            <StackPanel Name="QuranTranslationContainer" Visibility="Collapsed">
+
+                <Grid
+                    Name="QuranTranslationPanel"
+                    HorizontalAlignment="Stretch"
+                    Style="{DynamicResource QuranTranslationPanelStyle}">
+
+                    <TextBlock Name="QuranTranslationMarquee" />
+
+                    <Image
+                        Name="QuranTranslationPanelLogo"
+                        Margin="0 0 16 0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Stretch" />
+                </Grid>
+            </StackPanel>
+
+            <StackPanel Name="MafatihTranslationContainer" Visibility="Collapsed">
+
+                <Grid
+                    Name="MafatihTranslationPanel"
+                    HorizontalAlignment="Stretch"
+                    Style="{DynamicResource MafatihTranslationPanelStyle}">
+
+                    <TextBlock Name="MafatihTranslationMarquee" />
+
+                    <Image
+                        Name="MafatihTranslationPanelLogo"
+                        Margin="0 0 16 0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Stretch" />
+                </Grid>
+            </StackPanel>
+
+        </StackPanel>
+
+         <!-- checkout  -->
+        <Image
+            Name="LogoLayer"
+            Grid.Row="0"
+            Grid.Column="0"
+            Width="auto"
+            Height="auto"
+            Stretch="Fill"
+            Visibility="Hidden" />
+    </Grid>
+</Window>

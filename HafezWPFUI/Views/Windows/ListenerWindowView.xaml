@@ -1,0 +1,78 @@
+﻿<Window
+    x:Class="HafezWPFUI.Views.Windows.ListenerWindowView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:HafezWPFUI"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="گیرنده"
+    Width="500"
+    Height="600"
+    Activated="ListenerWindow_OnActivated"
+    FontFamily="{DynamicResource BaseFontFamily}"
+    WindowStartupLocation="CenterScreen"
+    WindowState="Normal"
+    WindowStyle="None"
+    mc:Ignorable="d">
+    <!--  if you want to disable border on top just add resize mode none  -->
+
+    <!--<Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/materialdesigntheme.dark.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>-->
+
+    <Grid Name="MainGrid" MouseLeftButtonDown="MainGrid_OnMouseLeftButtonDown">
+        <GroupBox>
+            <GroupBox.Header>
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    FontSize="18"
+                    FontWeight="Bold"
+                    Foreground="White">
+                    فرمان‌های دریافتی از سمت کابران شبکه
+                </TextBlock>
+            </GroupBox.Header>
+            <Grid>
+                <DataGrid
+                    Name="DataGridListener"
+                    AlternatingRowBackground="#FFC04E"
+                    AutoGenerateColumns="False"
+                    CanUserAddRows="False"
+                    IsReadOnly="True">
+                    <DataGrid.Columns>
+                        <!--<DataGridTextColumn Binding="{Binding Id}" Header="ID" />
+                        <DataGridTextColumn Binding="{Binding UserId}" Header="UserId" />
+                        <DataGridTextColumn Binding="{Binding Password}" Header="Password" />-->
+                        <DataGridTextColumn Binding="{Binding Name}" Header="نام کاربر" />
+                        <DataGridTextColumn Binding="{Binding Command}" Header="دستور ارسالی" />
+                        <DataGridTextColumn Binding="{Binding ReceiveTime}" Header="زمان دریافت" />
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <materialDesign:ColorZone HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                    <StackPanel Orientation="Horizontal">
+                        <ComboBox Name="ComboBoxAllIpAddresses" SelectionChanged="ComboBoxAllIpAddresses_OnSelectionChanged" />
+                        <Button
+                            Width="20"
+                            Height="20"
+                            Padding="0"
+                            Click="ButtonClearScreen_OnClick"
+                            Style="{StaticResource MaterialDesignFlatButton}">
+                            <materialDesign:PackIcon Kind="Clear" />
+                        </Button>
+                        <materialDesign:PackIcon VerticalAlignment="Center" Kind="Wifi" />
+                        <TextBlock
+                            Name="TextBlockInternet"
+                            VerticalAlignment="Center"
+                            Text="Internet Statue" />
+                    </StackPanel>
+                </materialDesign:ColorZone>
+            </Grid>
+        </GroupBox>
+    </Grid>
+</Window>

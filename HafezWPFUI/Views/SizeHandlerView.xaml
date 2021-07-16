@@ -1,0 +1,1267 @@
+﻿<UserControl
+    x:Class="HafezWPFUI.Views.SizeHandlerView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:system="clr-namespace:System;assembly=mscorlib"
+    d:DesignHeight="600"
+    d:DesignWidth="800"
+    FlowDirection="RightToLeft"
+    Loaded="SizeHandlerUserControl_OnLoaded"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Resources/Styles/StyleClass.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <!--<system:Double x:Key="NotificationFontSize">20</system:Double>-->
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.Resources>
+            <Style BasedOn="{StaticResource {x:Type GroupBox}}" TargetType="GroupBox">
+                <Setter Property="MaxWidth" Value="120" />
+                <Setter Property="MaxHeight" Value="120" />
+            </Style>
+            <Style BasedOn="{StaticResource {x:Type ComboBox}}" TargetType="ComboBox">
+                <Setter Property="FontSize" Value="18" />
+                <Setter Property="BorderBrush" Value="{DynamicResource PrimaryHueMidBrush}" />
+                <Setter Property="materialDesign:ComboBoxAssist.ClassicMode" Value="True" />
+            </Style>
+        </Grid.Resources>
+
+        <TabControl
+            Grid.RowSpan="2"
+            Grid.ColumnSpan="2"
+            FlowDirection="RightToLeft">
+
+            <TabItem Header="اعلان">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <GroupBox Grid.Row="1" Header="اندازه نوار">
+                        <ComboBox
+                            Name="ComboBoxNotificationPanelHeight"
+                            Uid="1"
+                            Foreground="{DynamicResource {x:Static SystemColors.InactiveCaptionTextBrushKey}}"
+                            Loaded="OnLoadAllComBox"
+                            SelectionChanged="ComboBoxPanelHeight_OnSelectionChanged">
+
+                            <ComboBoxItem Content="70" />
+                            <ComboBoxItem Content="80" />
+                            <ComboBoxItem Content="90" />
+                            <ComboBoxItem Content="100" />
+                            <ComboBoxItem Content="110" />
+                            <ComboBoxItem Content="120" />
+                            <ComboBoxItem Content="130" />
+                            <ComboBoxItem Content="140" />
+                            <ComboBoxItem Content="150" />
+                            <ComboBoxItem Content="160" />
+                            <ComboBoxItem Content="170" />
+                            <ComboBoxItem Content="180" />
+                            <ComboBoxItem Content="190" />
+                            <ComboBoxItem Content="200" />
+                            <ComboBoxItem Content="210" />
+                            <ComboBoxItem Content="220" />
+                            <ComboBoxItem Content="230" />
+                            <ComboBoxItem Content="240" />
+                            <ComboBoxItem Content="250" />
+                            <ComboBoxItem Content="260" />
+                            <ComboBoxItem Content="270" />
+                            <ComboBoxItem Content="280" />
+                            <ComboBoxItem Content="290" />
+                            <ComboBoxItem Content="300" />
+                            <ComboBoxItem Content="300" />
+                            <ComboBoxItem Content="310" />
+                            <ComboBoxItem Content="320" />
+                            <ComboBoxItem Content="330" />
+                            <ComboBoxItem Content="340" />
+                            <ComboBoxItem Content="350" />
+                            <ComboBoxItem Content="360" />
+                            <ComboBoxItem Content="370" />
+                            <ComboBoxItem Content="390" />
+                            <ComboBoxItem Content="400" />
+                            <ComboBoxItem Content="410" />
+                            <ComboBoxItem Content="420" />
+                            <ComboBoxItem Content="430" />
+                            <ComboBoxItem Content="440" />
+                            <ComboBoxItem Content="450" />
+                            <ComboBoxItem Content="460" />
+                            <ComboBoxItem Content="470" />
+                            <ComboBoxItem Content="480" />
+                            <ComboBoxItem Content="490" />
+                            <ComboBoxItem Content="500" />
+                        </ComboBox>
+                    </GroupBox>
+
+                    <GroupBox
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Header="اندازه متن">
+                        <ComboBox
+                            Name="ComboBoxNotificationPanelFontSize"
+                            Uid="1"
+                            Foreground="{DynamicResource {x:Static SystemColors.InactiveCaptionTextBrushKey}}"
+                            Loaded="OnLoadAllComBox"
+                            SelectionChanged="ComboBoxFontSize_OnSelectionChanged">
+
+                            <ComboBoxItem Content="5" />
+                            <ComboBoxItem Content="10" />
+                            <ComboBoxItem Content="12" />
+                            <ComboBoxItem Content="14" />
+                            <ComboBoxItem Content="16" />
+                            <ComboBoxItem Content="18" />
+                            <ComboBoxItem Content="20" />
+                            <ComboBoxItem Content="22" />
+                            <ComboBoxItem Content="24" />
+                            <ComboBoxItem Content="26" />
+                            <ComboBoxItem Content="28" />
+                            <ComboBoxItem Content="30" />
+                            <ComboBoxItem Content="32" />
+                            <ComboBoxItem Content="34" />
+                            <ComboBoxItem Content="36" />
+                            <ComboBoxItem Content="38" />
+                            <ComboBoxItem Content="40" />
+                            <ComboBoxItem Content="42" />
+                            <ComboBoxItem Content="44" />
+                            <ComboBoxItem Content="46" />
+                            <ComboBoxItem Content="48" />
+                            <ComboBoxItem Content="50" />
+                            <ComboBoxItem Content="52" />
+                            <ComboBoxItem Content="54" />
+                            <ComboBoxItem Content="56" />
+                            <ComboBoxItem Content="58" />
+                            <ComboBoxItem Content="60" />
+                            <ComboBoxItem Content="62" />
+                            <ComboBoxItem Content="64" />
+                            <ComboBoxItem Content="66" />
+                            <ComboBoxItem Content="68" />
+                            <ComboBoxItem Content="70" />
+                            <ComboBoxItem Content="72" />
+                            <ComboBoxItem Content="74" />
+                            <ComboBoxItem Content="76" />
+                            <ComboBoxItem Content="78" />
+                            <ComboBoxItem Content="80" />
+                            <ComboBoxItem Content="82" />
+                            <ComboBoxItem Content="84" />
+                            <ComboBoxItem Content="86" />
+                            <ComboBoxItem Content="88" />
+                            <ComboBoxItem Content="90" />
+                            <ComboBoxItem Content="92" />
+                            <ComboBoxItem Content="94" />
+                            <ComboBoxItem Content="96" />
+                            <ComboBoxItem Content="98" />
+                            <ComboBoxItem Content="100" />
+                            <ComboBoxItem Content="102" />
+                            <ComboBoxItem Content="104" />
+                            <ComboBoxItem Content="106" />
+                            <ComboBoxItem Content="108" />
+                            <ComboBoxItem Content="110" />
+                            <ComboBoxItem Content="112" />
+                            <ComboBoxItem Content="114" />
+                            <ComboBoxItem Content="116" />
+                            <ComboBoxItem Content="118" />
+                            <ComboBoxItem Content="120" />
+                            <ComboBoxItem Content="122" />
+                            <ComboBoxItem Content="124" />
+                            <ComboBoxItem Content="126" />
+                            <ComboBoxItem Content="128" />
+                            <ComboBoxItem Content="130" />
+                            <ComboBoxItem Content="132" />
+                            <ComboBoxItem Content="134" />
+                            <ComboBoxItem Content="136" />
+                        </ComboBox>
+                    </GroupBox>
+
+                    <GroupBox
+                        Grid.Row="1"
+                        Grid.Column="2"
+                        Header="فونت نوار">
+                        <ComboBox
+                            Name="ComboBoxNotificationPanelFontFamily"
+                            Uid="1"
+                            ItemsSource="{Binding IsAsync=True}"
+                            SelectionChanged="ComboBoxFontFamily_OnSelectionChanged" />
+                    </GroupBox>
+
+                    <GroupBox Grid.Row="0" Header="اندازه نوار عنوان">
+                        <ComboBox
+                            Name="ComboBoxNotificationTitleHeight"
+                            Uid="1"
+                            Loaded="OnLoadAllComBox"
+                            SelectionChanged="ComboBoxPanelHeight_OnSelectionChanged">
+
+                            <ComboBoxItem Content="70" />
+                            <ComboBoxItem Content="80" />
+                            <ComboBoxItem Content="90" />
+                            <ComboBoxItem Content="100" />
+                            <ComboBoxItem Content="110" />
+                            <ComboBoxItem Content="120" />
+                            <ComboBoxItem Content="130" />
+                            <ComboBoxItem Content="140 " />
+                            <ComboBoxItem Content="150" />
+                            <ComboBoxItem Content="160" />
+                            <ComboBoxItem Content="170" />
+                            <ComboBoxItem Content="180" />
+                            <ComboBoxItem Content="190" />
+                            <ComboBoxItem Content="200" />
+                            <ComboBoxItem Content="210" />
+                            <ComboBoxItem Content="220" />
+                            <ComboBoxItem Content="230" />
+                            <ComboBoxItem Content="240" />
+                            <ComboBoxItem Content="250" />
+                            <ComboBoxItem Content="260" />
+                            <ComboBoxItem Content="270" />
+                            <ComboBoxItem Content="280" />
+                        </ComboBox>
+                    </GroupBox>
+
+                    <GroupBox
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Header="اندازه متن عنوان">
+                        <ComboBox
+                            Name="ComboBoxNotificationTitleFontSize"
+                            Uid="1"
+                            Loaded="OnLoadAllComBox"
+                            SelectionChanged="ComboBoxFontSize_OnSelectionChanged">
+
+                            <ComboBoxItem Content="5" />
+                            <ComboBoxItem Content="10" />
+                            <ComboBoxItem Content="12" />
+                            <ComboBoxItem Content="14" />
+                            <ComboBoxItem Content="16" />
+                            <ComboBoxItem Content="18" />
+                            <ComboBoxItem Content="20" />
+                            <ComboBoxItem Content="22" />
+                            <ComboBoxItem Content="24" />
+                            <ComboBoxItem Content="26" />
+                            <ComboBoxItem Content="28" />
+                            <ComboBoxItem Content="30" />
+                            <ComboBoxItem Content="32" />
+                            <ComboBoxItem Content="34" />
+                            <ComboBoxItem Content="36" />
+                            <ComboBoxItem Content="38" />
+                            <ComboBoxItem Content="40" />
+                            <ComboBoxItem Content="42" />
+                            <ComboBoxItem Content="44" />
+                            <ComboBoxItem Content="46" />
+                            <ComboBoxItem Content="48" />
+                            <ComboBoxItem Content="50" />
+                            <ComboBoxItem Content="54" />
+                            <ComboBoxItem Content="58" />
+                            <ComboBoxItem Content="62" />
+                            <ComboBoxItem Content="66" />
+                            <ComboBoxItem Content="70" />
+                            <ComboBoxItem Content="74" />
+                            <ComboBoxItem Content="78" />
+                            <ComboBoxItem Content="82" />
+                            <ComboBoxItem Content="86" />
+                            <ComboBoxItem Content="90" />
+                            <ComboBoxItem Content="94" />
+                            <ComboBoxItem Content="98" />
+                            <ComboBoxItem Content="102" />
+                            <ComboBoxItem Content="106" />
+                            <ComboBoxItem Content="108" />
+                            <ComboBoxItem Content="112" />
+                            <ComboBoxItem Content="116" />
+                            <ComboBoxItem Content="120" />
+                            <ComboBoxItem Content="124" />
+                        </ComboBox>
+                    </GroupBox>
+
+                    <GroupBox
+                        Grid.Row="0"
+                        Grid.Column="2"
+                        Header="فونت عنوان">
+                        <ComboBox
+                            Name="ComboBoxNotificationTitleFontFamily"
+                            Uid="1"
+                            ItemsSource="{Binding IsAsync=True}"
+                            SelectionChanged="ComboBoxFontFamily_OnSelectionChanged" />
+                    </GroupBox>
+                </Grid>
+                <!--
+                    <StackPanel Orientation="Horizontal">
+                        <GroupBox
+                            Width="500"
+                            Margin="20,0"
+                            Header="سرعت">
+                            <ComboBox
+                                Name="ComboBoxNotificationAnimationSpeed"
+                                materialDesign:ComboBoxAssist.ClassicMode="True"
+                                BorderBrush="{DynamicResource PrimaryHueMidBrush}"
+                                FontSize="18"
+                                Foreground="{DynamicResource {x:Static SystemColors.InactiveCaptionTextBrushKey}}"
+                                SelectionChanged="ComboBoxNotificationAnimationSpeed_OnSelectionChanged"
+                                Style="{StaticResource MaterialDesignComboBox}">
+
+                                <ComboBoxItem Name="S20" Content="3" />
+                                <ComboBoxItem Name="S19" Content="4" />
+                                <ComboBoxItem Name="S18" Content="5" />
+                                <ComboBoxItem Name="S17" Content="6" />
+                                <ComboBoxItem Name="S16" Content="7" />
+                                <ComboBoxItem Name="S15" Content="8" />
+                                <ComboBoxItem Name="S14" Content="9" />
+                                <ComboBoxItem Name="S13" Content="10" />
+                                <ComboBoxItem Name="S12" Content="11" />
+                                <ComboBoxItem Name="S11" Content="12" />
+                                <ComboBoxItem Name="S10" Content="13" />
+                                <ComboBoxItem Name="S9" Content="14" />
+                                <ComboBoxItem Name="S8" Content="15" />
+                                <ComboBoxItem Name="S7" Content="16" />
+                                <ComboBoxItem Name="S6" Content="17" />
+                                <ComboBoxItem Name="S5" Content="18" />
+                                <ComboBoxItem Name="S4" Content="19" />
+                                <ComboBoxItem Name="S3" Content="20" />
+                            </ComboBox>
+                        </GroupBox>
+
+                        <GroupBox
+                            Width="500"
+                            Margin="20,0"
+                            Header="فاصله از لبه">
+                            <ComboBox
+                                Name="ComboBoxNotificationPanelMargin"
+                                materialDesign:ComboBoxAssist.ClassicMode="True"
+                                BorderBrush="{DynamicResource PrimaryHueMidBrush}"
+                                FontSize="18"
+                                Foreground="{DynamicResource {x:Static SystemColors.InactiveCaptionTextBrushKey}}"
+                                Loaded="OnLoadAllComBox"
+                                SelectionChanged="ComboBoxNotificationPanelMargin_OnSelectionChanged"
+                                Style="{StaticResource MaterialDesignComboBox}">
+
+                                <ComboBoxItem Name="M0" Content="0" />
+                                <ComboBoxItem Name="M10" Content="1" />
+                                <ComboBoxItem Name="M30" Content="2" />
+                                <ComboBoxItem Name="M50" Content="3" />
+                                <ComboBoxItem Name="M70" Content="4" />
+                                <ComboBoxItem Name="M100" Content="5" />
+                                <ComboBoxItem Name="M110" Content="6" />
+                                <ComboBoxItem Name="M130" Content="7" />
+                                <ComboBoxItem Name="M150" Content="8" />
+                                <ComboBoxItem Name="M170" Content="9" />
+                                <ComboBoxItem Name="M200" Content="10" />
+                                <ComboBoxItem Name="M210" Content="11" />
+                                <ComboBoxItem Name="M230" Content="12" />
+                                <ComboBoxItem Name="M250" Content="13" />
+                                <ComboBoxItem Name="M270" Content="14" />
+                                <ComboBoxItem Name="M300" Content="15" />
+                            </ComboBox>
+                        </GroupBox>
+
+                        <GroupBox
+                            Width="500"
+                            Margin="20,0"
+                            Header="مکان نوار">
+                            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                                <StackPanel Orientation="Vertical">
+                                    <Label Content="بالا" />
+                                    <Label Content="پایین" />
+                                </StackPanel>
+
+                                <ToggleButton
+                                    x:Name="ToggleButtonNotificationPanelVerticalAlignment"
+                                    Click="ToggleButtonNotificationPanelVerticalAlignment_OnClick"
+                                    IsChecked="false"
+                                    Loaded="OnloadAllToggleButton"
+                                    RenderTransformOrigin="0.5,0.5">
+                                    <ToggleButton.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform />
+                                            <SkewTransform />
+                                            <RotateTransform Angle="90" />
+                                            <TranslationTransform />
+                                        </TransformGroup>
+                                    </ToggleButton.RenderTransform>
+                                </ToggleButton>
+                            </StackPanel>
+                        </GroupBox>
+
+
+                    </StackPanel>-->
+            </TabItem>
+
+            <TabItem Header="قرآن">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock
+                        Grid.Row="0"
+                        Grid.ColumnSpan="4"
+                        HorizontalAlignment="Stretch"
+                        Background="Yellow"
+                        FontWeight="Bold"
+                        Text="عنوان"
+                        TextAlignment="Center" />
+
+                    <GroupBox Grid.Row="1" Header="اندازه نوار">
+                        <ComboBox
+                            Name="ComboBoxQuranTitleHeight"
+                            Uid="2"
+                            Loaded="OnLoadAllComBox"
+                            SelectionChanged="ComboBoxPanelHeight_OnSelectionChanged">
+
+                            <ComboBoxItem Content="70" />
+                            <ComboBoxItem Content="80" />
+                            <ComboBoxItem Content="90" />
+                            <ComboBoxItem Content="100" />
+                            <ComboBoxItem Content="110" />
+                            <ComboBoxItem Content="120" />
+                            <ComboBoxItem Content="130" />
+                            <ComboBoxItem Content="140 " />
+                            <ComboBoxItem Content="150" />
+                            <ComboBoxItem Content="160" />
+                            <ComboBoxItem Content="170" />
+                            <ComboBoxItem Content="180" />
+                            <ComboBoxItem Content="190" />
+                            <ComboBoxItem Content="200" />
+                            <ComboBoxItem Content="210" />
+                            <ComboBoxItem Content="220" />
+                            <ComboBoxItem Content="230" />
+                            <ComboBoxItem Content="240" />
+                            <ComboBoxItem Content="250" />
+                            <ComboBoxItem Content="260" />
+                            <ComboBoxItem Content="270" />
+                            <ComboBoxItem Content="280" />
+                        </ComboBox>
+                    </GroupBox>
+
+                    <GroupBox
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Header="اندازه متن">
+                        <ComboBox
+                            Name="ComboBoxQuranTitleFontSize"
+                            Uid="2"
+                            Loaded="OnLoadAllComBox"
+                            SelectionChanged="ComboBoxFontSize_OnSelectionChanged">
+
+                            <ComboBoxItem Content="5" />
+                            <ComboBoxItem Content="10" />
+                            <ComboBoxItem Content="12" />
+                            <ComboBoxItem Content="14" />
+                            <ComboBoxItem Content="16" />
+                            <ComboBoxItem Content="18" />
+                            <ComboBoxItem Content="20" />
+                            <ComboBoxItem Content="22" />
+                            <ComboBoxItem Content="24" />
+                            <ComboBoxItem Content="26" />
+                            <ComboBoxItem Content="28" />
+                            <ComboBoxItem Content="30" />
+                            <ComboBoxItem Content="32" />
+                            <ComboBoxItem Content="34" />
+                            <ComboBoxItem Content="36" />
+                            <ComboBoxItem Content="38" />
+                            <ComboBoxItem Content="40" />
+                            <ComboBoxItem Content="42" />
+                            <ComboBoxItem Content="44" />
+                            <ComboBoxItem Content="46" />
+                            <ComboBoxItem Content="48" />
+                            <ComboBoxItem Content="50" />
+                            <ComboBoxItem Content="54" />
+                            <ComboBoxItem Content="58" />
+                            <ComboBoxItem Content="62" />
+                            <ComboBoxItem Content="66" />
+                            <ComboBoxItem Content="70" />
+                            <ComboBoxItem Content="74" />
+                            <ComboBoxItem Content="78" />
+                            <ComboBoxItem Content="82" />
+                            <ComboBoxItem Content="86" />
+                            <ComboBoxItem Content="90" />
+                            <ComboBoxItem Content="94" />
+                            <ComboBoxItem Content="98" />
+                            <ComboBoxItem Content="102" />
+                            <ComboBoxItem Content="106" />
+                            <ComboBoxItem Content="108" />
+                            <ComboBoxItem Content="112" />
+                            <ComboBoxItem Content="116" />
+                            <ComboBoxItem Content="120" />
+                            <ComboBoxItem Content="124" />
+                        </ComboBox>
+                    </GroupBox>
+
+                    <GroupBox
+                        Grid.Row="1"
+                        Grid.Column="2"
+                        Header="فونت عنوان">
+                        <ComboBox
+                            Name="ComboBoxQuranTitleFontFamily"
+                            Uid="2"
+                            ItemsSource="{Binding IsAsync=True}"
+                            SelectionChanged="ComboBoxFontFamily_OnSelectionChanged" />
+                    </GroupBox>
+
+                    <TextBlock
+                        Grid.Row="2"
+                        Grid.ColumnSpan="4"
+                        HorizontalAlignment="Stretch"
+                        Background="Yellow"
+                        FontWeight="Bold"
+                        Text="متن اصلی"
+                        TextAlignment="Center" />
+
+                    <GroupBox Grid.Row="3" Header="اندازه نوار">
+                        <ComboBox
+                            Name="ComboBoxQuranPanelHeight"
+                            Uid="2"
+                            Loaded="OnLoadAllComBox"
+                            SelectionChanged="ComboBoxPanelHeight_OnSelectionChanged">
+
+                            <ComboBoxItem Content="70" />
+                            <ComboBoxItem Content="80" />
+                            <ComboBoxItem Content="90" />
+                            <ComboBoxItem Content="100" />
+                            <ComboBoxItem Content="110" />
+                            <ComboBoxItem Content="120" />
+                            <ComboBoxItem Content="130" />
+                            <ComboBoxItem Content="140" />
+                            <ComboBoxItem Content="150" />
+                            <ComboBoxItem Content="160" />
+                            <ComboBoxItem Content="170" />
+                            <ComboBoxItem Content="180" />
+                            <ComboBoxItem Content="190" />
+                            <ComboBoxItem Content="200" />
+                            <ComboBoxItem Content="210" />
+                            <ComboBoxItem Content="220" />
+                            <ComboBoxItem Content="230" />
+                            <ComboBoxItem Content="240" />
+                            <ComboBoxItem Content="250" />
+                            <ComboBoxItem Content="260" />
+                            <ComboBoxItem Content="270" />
+                            <ComboBoxItem Content="280" />
+                            <ComboBoxItem Content="290" />
+                            <ComboBoxItem Content="300" />
+                            <ComboBoxItem Content="300" />
+                            <ComboBoxItem Content="310" />
+                            <ComboBoxItem Content="320" />
+                            <ComboBoxItem Content="330" />
+                            <ComboBoxItem Content="340" />
+                            <ComboBoxItem Content="350" />
+                            <ComboBoxItem Content="360" />
+                            <ComboBoxItem Content="370" />
+                            <ComboBoxItem Content="390" />
+                            <ComboBoxItem Content="400" />
+                            <ComboBoxItem Content="410" />
+                            <ComboBoxItem Content="420" />
+                            <ComboBoxItem Content="430" />
+                            <ComboBoxItem Content="440" />
+                            <ComboBoxItem Content="450" />
+                            <ComboBoxItem Content="460" />
+                            <ComboBoxItem Content="470" />
+                            <ComboBoxItem Content="480" />
+                            <ComboBoxItem Content="490" />
+                            <ComboBoxItem Content="500" />
+                        </ComboBox>
+                    </GroupBox>
+
+                    <GroupBox
+                        Grid.Row="3"
+                        Grid.Column="1"
+                        Header="اندازه متن">
+                        <ComboBox
+                            Name="ComboBoxQuranPanelFontSize"
+                            Uid="2"
+                            Loaded="OnLoadAllComBox"
+                            SelectionChanged="ComboBoxFontSize_OnSelectionChanged">
+
+                            <ComboBoxItem Content="5" />
+                            <ComboBoxItem Content="10" />
+                            <ComboBoxItem Content="12" />
+                            <ComboBoxItem Content="14" />
+                            <ComboBoxItem Content="16" />
+                            <ComboBoxItem Content="18" />
+                            <ComboBoxItem Content="20" />
+                            <ComboBoxItem Content="22" />
+                            <ComboBoxItem Content="24" />
+                            <ComboBoxItem Content="26" />
+                            <ComboBoxItem Content="28" />
+                            <ComboBoxItem Content="30" />
+                            <ComboBoxItem Content="32" />
+                            <ComboBoxItem Content="34" />
+                            <ComboBoxItem Content="36" />
+                            <ComboBoxItem Content="38" />
+                            <ComboBoxItem Content="40" />
+                            <ComboBoxItem Content="42" />
+                            <ComboBoxItem Content="44" />
+                            <ComboBoxItem Content="46" />
+                            <ComboBoxItem Content="48" />
+                            <ComboBoxItem Content="50" />
+                            <ComboBoxItem Content="52" />
+                            <ComboBoxItem Content="54" />
+                            <ComboBoxItem Content="56" />
+                            <ComboBoxItem Content="58" />
+                            <ComboBoxItem Content="60" />
+                            <ComboBoxItem Content="62" />
+                            <ComboBoxItem Content="64" />
+                            <ComboBoxItem Content="66" />
+                            <ComboBoxItem Content="68" />
+                            <ComboBoxItem Content="70" />
+                            <ComboBoxItem Content="72" />
+                            <ComboBoxItem Content="74" />
+                            <ComboBoxItem Content="76" />
+                            <ComboBoxItem Content="78" />
+                            <ComboBoxItem Content="80" />
+                            <ComboBoxItem Content="82" />
+                            <ComboBoxItem Content="84" />
+                            <ComboBoxItem Content="86" />
+                            <ComboBoxItem Content="88" />
+                            <ComboBoxItem Content="90" />
+                            <ComboBoxItem Content="92" />
+                            <ComboBoxItem Content="94" />
+                            <ComboBoxItem Content="96" />
+                            <ComboBoxItem Content="98" />
+                            <ComboBoxItem Content="100" />
+                            <ComboBoxItem Content="102" />
+                            <ComboBoxItem Content="104" />
+                            <ComboBoxItem Content="106" />
+                            <ComboBoxItem Content="108" />
+                            <ComboBoxItem Content="110" />
+                            <ComboBoxItem Content="112" />
+                            <ComboBoxItem Content="114" />
+                            <ComboBoxItem Content="116" />
+                            <ComboBoxItem Content="118" />
+                            <ComboBoxItem Content="120" />
+                            <ComboBoxItem Content="122" />
+                            <ComboBoxItem Content="124" />
+                            <ComboBoxItem Content="126" />
+                            <ComboBoxItem Content="128" />
+                            <ComboBoxItem Content="130" />
+                            <ComboBoxItem Content="132" />
+                            <ComboBoxItem Content="134" />
+                            <ComboBoxItem Content="136" />
+                        </ComboBox>
+                    </GroupBox>
+
+                    <GroupBox
+                        Grid.Row="3"
+                        Grid.Column="2"
+                        Header="فونت نوار">
+                        <ComboBox
+                            Name="ComboBoxQuranPanelFontFamily"
+                            Uid="2"
+                            ItemsSource="{Binding IsAsync=True}"
+                            SelectionChanged="ComboBoxFontFamily_OnSelectionChanged" />
+                    </GroupBox>
+
+                    <TextBlock
+                        Grid.Row="4"
+                        Grid.ColumnSpan="4"
+                        HorizontalAlignment="Stretch"
+                        Background="Yellow"
+                        FontWeight="Bold"
+                        Text="ترجمه"
+                        TextAlignment="Center" />
+
+                    <GroupBox
+                        Grid.Row="5"
+                        Grid.Column="0"
+                        Header="اندازه نوار">
+                        <ComboBox
+                            Name="ComboBoxQuranTranslationPanelHeight"
+                            Uid="4"
+                            Loaded="OnLoadAllComBox"
+                            SelectionChanged="ComboBoxPanelHeight_OnSelectionChanged">
+
+                            <ComboBoxItem Content="70" />
+                            <ComboBoxItem Content="80" />
+                            <ComboBoxItem Content="90" />
+                            <ComboBoxItem Content="100" />
+                            <ComboBoxItem Content="110" />
+                            <ComboBoxItem Content="120" />
+                            <ComboBoxItem Content="130" />
+                            <ComboBoxItem Content="140" />
+                            <ComboBoxItem Content="150" />
+                            <ComboBoxItem Content="160" />
+                            <ComboBoxItem Content="170" />
+                            <ComboBoxItem Content="180" />
+                            <ComboBoxItem Content="190" />
+                            <ComboBoxItem Content="200" />
+                            <ComboBoxItem Content="210" />
+                            <ComboBoxItem Content="220" />
+                            <ComboBoxItem Content="230" />
+                            <ComboBoxItem Content="240" />
+                            <ComboBoxItem Content="250" />
+                            <ComboBoxItem Content="260" />
+                            <ComboBoxItem Content="270" />
+                            <ComboBoxItem Content="280" />
+                            <ComboBoxItem Content="290" />
+                            <ComboBoxItem Content="300" />
+                            <ComboBoxItem Content="300" />
+                            <ComboBoxItem Content="310" />
+                            <ComboBoxItem Content="320" />
+                            <ComboBoxItem Content="330" />
+                            <ComboBoxItem Content="340" />
+                            <ComboBoxItem Content="350" />
+                            <ComboBoxItem Content="360" />
+                            <ComboBoxItem Content="370" />
+                            <ComboBoxItem Content="390" />
+                            <ComboBoxItem Content="400" />
+                            <ComboBoxItem Content="410" />
+                            <ComboBoxItem Content="420" />
+                            <ComboBoxItem Content="430" />
+                            <ComboBoxItem Content="440" />
+                            <ComboBoxItem Content="450" />
+                            <ComboBoxItem Content="460" />
+                            <ComboBoxItem Content="470" />
+                            <ComboBoxItem Content="480" />
+                            <ComboBoxItem Content="490" />
+                            <ComboBoxItem Content="500" />
+                        </ComboBox>
+                    </GroupBox>
+
+                    <GroupBox
+                        Grid.Row="5"
+                        Grid.Column="1"
+                        Header="اندازه متن">
+                        <ComboBox
+                            Name="ComboBoxQuranTranslationPanelFontSize"
+                            Uid="4"
+                            Loaded="OnLoadAllComBox"
+                            SelectionChanged="ComboBoxFontSize_OnSelectionChanged">
+
+                            <ComboBoxItem Content="5" />
+                            <ComboBoxItem Content="10" />
+                            <ComboBoxItem Content="12" />
+                            <ComboBoxItem Content="14" />
+                            <ComboBoxItem Content="16" />
+                            <ComboBoxItem Content="18" />
+                            <ComboBoxItem Content="20" />
+                            <ComboBoxItem Content="22" />
+                            <ComboBoxItem Content="24" />
+                            <ComboBoxItem Content="26" />
+                            <ComboBoxItem Content="28" />
+                            <ComboBoxItem Content="30" />
+                            <ComboBoxItem Content="32" />
+                            <ComboBoxItem Content="34" />
+                            <ComboBoxItem Content="36" />
+                            <ComboBoxItem Content="38" />
+                            <ComboBoxItem Content="40" />
+                            <ComboBoxItem Content="42" />
+                            <ComboBoxItem Content="44" />
+                            <ComboBoxItem Content="46" />
+                            <ComboBoxItem Content="48" />
+                            <ComboBoxItem Content="50" />
+                            <ComboBoxItem Content="52" />
+                            <ComboBoxItem Content="54" />
+                            <ComboBoxItem Content="56" />
+                            <ComboBoxItem Content="58" />
+                            <ComboBoxItem Content="60" />
+                            <ComboBoxItem Content="62" />
+                            <ComboBoxItem Content="64" />
+                            <ComboBoxItem Content="66" />
+                            <ComboBoxItem Content="68" />
+                            <ComboBoxItem Content="70" />
+                            <ComboBoxItem Content="72" />
+                            <ComboBoxItem Content="74" />
+                            <ComboBoxItem Content="76" />
+                            <ComboBoxItem Content="78" />
+                            <ComboBoxItem Content="80" />
+                            <ComboBoxItem Content="82" />
+                            <ComboBoxItem Content="84" />
+                            <ComboBoxItem Content="86" />
+                            <ComboBoxItem Content="88" />
+                            <ComboBoxItem Content="90" />
+                            <ComboBoxItem Content="92" />
+                            <ComboBoxItem Content="94" />
+                            <ComboBoxItem Content="96" />
+                            <ComboBoxItem Content="98" />
+                            <ComboBoxItem Content="100" />
+                            <ComboBoxItem Content="102" />
+                            <ComboBoxItem Content="104" />
+                            <ComboBoxItem Content="106" />
+                            <ComboBoxItem Content="108" />
+                            <ComboBoxItem Content="110" />
+                            <ComboBoxItem Content="112" />
+                            <ComboBoxItem Content="114" />
+                            <ComboBoxItem Content="116" />
+                            <ComboBoxItem Content="118" />
+                            <ComboBoxItem Content="120" />
+                            <ComboBoxItem Content="122" />
+                            <ComboBoxItem Content="124" />
+                            <ComboBoxItem Content="126" />
+                            <ComboBoxItem Content="128" />
+                            <ComboBoxItem Content="130" />
+                            <ComboBoxItem Content="132" />
+                            <ComboBoxItem Content="134" />
+                            <ComboBoxItem Content="136" />
+                        </ComboBox>
+
+                    </GroupBox>
+
+                    <GroupBox
+                        Grid.Row="5"
+                        Grid.Column="2"
+                        Header="فونت نوار">
+                        <ComboBox
+                            Name="ComboBoxQuranTranslationPanelFontFamily"
+                            Uid="4"
+                            ItemsSource="{Binding IsAsync=True}"
+                            Loaded="OnLoadAllComBox"
+                            SelectionChanged="ComboBoxFontFamily_OnSelectionChanged" />
+
+                    </GroupBox>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="مفاتیح">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock
+                        Grid.Row="0"
+                        Grid.ColumnSpan="4"
+                        HorizontalAlignment="Stretch"
+                        Background="Yellow"
+                        FontWeight="Bold"
+                        Text="عنوان"
+                        TextAlignment="Center" />
+
+                    <GroupBox Grid.Row="1" Header="اندازه نوار عنوان">
+                        <ComboBox
+                            Name="ComboBoxMafatihTitleHeight"
+                            Uid="3"
+                            Loaded="OnLoadAllComBox"
+                            SelectionChanged="ComboBoxPanelHeight_OnSelectionChanged">
+
+                            <ComboBoxItem Content="70" />
+                            <ComboBoxItem Content="80" />
+                            <ComboBoxItem Content="90" />
+                            <ComboBoxItem Content="100" />
+                            <ComboBoxItem Content="110" />
+                            <ComboBoxItem Content="120" />
+                            <ComboBoxItem Content="130" />
+                            <ComboBoxItem Content="140 " />
+                            <ComboBoxItem Content="150" />
+                            <ComboBoxItem Content="160" />
+                            <ComboBoxItem Content="170" />
+                            <ComboBoxItem Content="180" />
+                            <ComboBoxItem Content="190" />
+                            <ComboBoxItem Content="200" />
+                            <ComboBoxItem Content="210" />
+                            <ComboBoxItem Content="220" />
+                            <ComboBoxItem Content="230" />
+                            <ComboBoxItem Content="240" />
+                            <ComboBoxItem Content="250" />
+                            <ComboBoxItem Content="260" />
+                            <ComboBoxItem Content="270" />
+                            <ComboBoxItem Content="280" />
+                        </ComboBox>
+                    </GroupBox>
+
+                    <GroupBox
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Header="اندازه متن عنوان">
+                        <ComboBox
+                            Name="ComboBoxMafatihTitleFontSize"
+                            Uid="3"
+                            Loaded="OnLoadAllComBox"
+                            SelectionChanged="ComboBoxFontSize_OnSelectionChanged">
+
+                            <ComboBoxItem Content="5" />
+                            <ComboBoxItem Content="10" />
+                            <ComboBoxItem Content="12" />
+                            <ComboBoxItem Content="14" />
+                            <ComboBoxItem Content="16" />
+                            <ComboBoxItem Content="18" />
+                            <ComboBoxItem Content="20" />
+                            <ComboBoxItem Content="22" />
+                            <ComboBoxItem Content="24" />
+                            <ComboBoxItem Content="26" />
+                            <ComboBoxItem Content="28" />
+                            <ComboBoxItem Content="30" />
+                            <ComboBoxItem Content="32" />
+                            <ComboBoxItem Content="34" />
+                            <ComboBoxItem Content="36" />
+                            <ComboBoxItem Content="38" />
+                            <ComboBoxItem Content="40" />
+                            <ComboBoxItem Content="42" />
+                            <ComboBoxItem Content="44" />
+                            <ComboBoxItem Content="46" />
+                            <ComboBoxItem Content="48" />
+                            <ComboBoxItem Content="50" />
+                            <ComboBoxItem Content="54" />
+                            <ComboBoxItem Content="58" />
+                            <ComboBoxItem Content="62" />
+                            <ComboBoxItem Content="66" />
+                            <ComboBoxItem Content="70" />
+                            <ComboBoxItem Content="74" />
+                            <ComboBoxItem Content="78" />
+                            <ComboBoxItem Content="82" />
+                            <ComboBoxItem Content="86" />
+                            <ComboBoxItem Content="90" />
+                            <ComboBoxItem Content="94" />
+                            <ComboBoxItem Content="98" />
+                            <ComboBoxItem Content="102" />
+                            <ComboBoxItem Content="106" />
+                            <ComboBoxItem Content="108" />
+                            <ComboBoxItem Content="112" />
+                            <ComboBoxItem Content="116" />
+                            <ComboBoxItem Content="120" />
+                            <ComboBoxItem Content="124" />
+                        </ComboBox>
+                    </GroupBox>
+
+                    <GroupBox
+                        Grid.Row="1"
+                        Grid.Column="2"
+                        Header="فونت عنوان">
+                        <ComboBox
+                            Name="ComboBoxMafatihTitleFontFamily"
+                            Uid="3"
+                            ItemsSource="{Binding IsAsync=True}"
+                            SelectionChanged="ComboBoxFontFamily_OnSelectionChanged" />
+                    </GroupBox>
+
+                    <TextBlock
+                        Grid.Row="2"
+                        Grid.ColumnSpan="4"
+                        HorizontalAlignment="Stretch"
+                        Background="Yellow"
+                        FontWeight="Bold"
+                        Text="متن اصلی"
+                        TextAlignment="Center" />
+
+                    <GroupBox Grid.Row="3" Header="اندازه نوار">
+                        <ComboBox
+                            Name="ComboBoxMafatihPanelHeight"
+                            Uid="3"
+                            Loaded="OnLoadAllComBox"
+                            SelectionChanged="ComboBoxPanelHeight_OnSelectionChanged">
+
+                            <ComboBoxItem Content="70" />
+                            <ComboBoxItem Content="80" />
+                            <ComboBoxItem Content="90" />
+                            <ComboBoxItem Content="100" />
+                            <ComboBoxItem Content="110" />
+                            <ComboBoxItem Content="120" />
+                            <ComboBoxItem Content="130" />
+                            <ComboBoxItem Content="140" />
+                            <ComboBoxItem Content="150" />
+                            <ComboBoxItem Content="160" />
+                            <ComboBoxItem Content="170" />
+                            <ComboBoxItem Content="180" />
+                            <ComboBoxItem Content="190" />
+                            <ComboBoxItem Content="200" />
+                            <ComboBoxItem Content="210" />
+                            <ComboBoxItem Content="220" />
+                            <ComboBoxItem Content="230" />
+                            <ComboBoxItem Content="240" />
+                            <ComboBoxItem Content="250" />
+                            <ComboBoxItem Content="260" />
+                            <ComboBoxItem Content="270" />
+                            <ComboBoxItem Content="280" />
+                            <ComboBoxItem Content="290" />
+                            <ComboBoxItem Content="300" />
+                            <ComboBoxItem Content="300" />
+                            <ComboBoxItem Content="310" />
+                            <ComboBoxItem Content="320" />
+                            <ComboBoxItem Content="330" />
+                            <ComboBoxItem Content="340" />
+                            <ComboBoxItem Content="350" />
+                            <ComboBoxItem Content="360" />
+                            <ComboBoxItem Content="370" />
+                            <ComboBoxItem Content="390" />
+                            <ComboBoxItem Content="400" />
+                            <ComboBoxItem Content="410" />
+                            <ComboBoxItem Content="420" />
+                            <ComboBoxItem Content="430" />
+                            <ComboBoxItem Content="440" />
+                            <ComboBoxItem Content="450" />
+                            <ComboBoxItem Content="460" />
+                            <ComboBoxItem Content="470" />
+                            <ComboBoxItem Content="480" />
+                            <ComboBoxItem Content="490" />
+                            <ComboBoxItem Content="500" />
+                        </ComboBox>
+                    </GroupBox>
+
+                    <GroupBox
+                        Grid.Row="3"
+                        Grid.Column="1"
+                        Header="اندازه متن">
+                        <ComboBox
+                            Name="ComboBoxMafatihPanelFontSize"
+                            Uid="3"
+                            Loaded="OnLoadAllComBox"
+                            SelectionChanged="ComboBoxFontSize_OnSelectionChanged">
+
+                            <ComboBoxItem Content="5" />
+                            <ComboBoxItem Content="10" />
+                            <ComboBoxItem Content="12" />
+                            <ComboBoxItem Content="14" />
+                            <ComboBoxItem Content="16" />
+                            <ComboBoxItem Content="18" />
+                            <ComboBoxItem Content="20" />
+                            <ComboBoxItem Content="22" />
+                            <ComboBoxItem Content="24" />
+                            <ComboBoxItem Content="26" />
+                            <ComboBoxItem Content="28" />
+                            <ComboBoxItem Content="30" />
+                            <ComboBoxItem Content="32" />
+                            <ComboBoxItem Content="34" />
+                            <ComboBoxItem Content="36" />
+                            <ComboBoxItem Content="38" />
+                            <ComboBoxItem Content="40" />
+                            <ComboBoxItem Content="42" />
+                            <ComboBoxItem Content="44" />
+                            <ComboBoxItem Content="46" />
+                            <ComboBoxItem Content="48" />
+                            <ComboBoxItem Content="50" />
+                            <ComboBoxItem Content="52" />
+                            <ComboBoxItem Content="54" />
+                            <ComboBoxItem Content="56" />
+                            <ComboBoxItem Content="58" />
+                            <ComboBoxItem Content="60" />
+                            <ComboBoxItem Content="62" />
+                            <ComboBoxItem Content="64" />
+                            <ComboBoxItem Content="66" />
+                            <ComboBoxItem Content="68" />
+                            <ComboBoxItem Content="70" />
+                            <ComboBoxItem Content="72" />
+                            <ComboBoxItem Content="74" />
+                            <ComboBoxItem Content="76" />
+                            <ComboBoxItem Content="78" />
+                            <ComboBoxItem Content="80" />
+                            <ComboBoxItem Content="82" />
+                            <ComboBoxItem Content="84" />
+                            <ComboBoxItem Content="86" />
+                            <ComboBoxItem Content="88" />
+                            <ComboBoxItem Content="90" />
+                            <ComboBoxItem Content="92" />
+                            <ComboBoxItem Content="94" />
+                            <ComboBoxItem Content="96" />
+                            <ComboBoxItem Content="98" />
+                            <ComboBoxItem Content="100" />
+                            <ComboBoxItem Content="102" />
+                            <ComboBoxItem Content="104" />
+                            <ComboBoxItem Content="106" />
+                            <ComboBoxItem Content="108" />
+                            <ComboBoxItem Content="110" />
+                            <ComboBoxItem Content="112" />
+                            <ComboBoxItem Content="114" />
+                            <ComboBoxItem Content="116" />
+                            <ComboBoxItem Content="118" />
+                            <ComboBoxItem Content="120" />
+                            <ComboBoxItem Content="122" />
+                            <ComboBoxItem Content="124" />
+                            <ComboBoxItem Content="126" />
+                            <ComboBoxItem Content="128" />
+                            <ComboBoxItem Content="130" />
+                            <ComboBoxItem Content="132" />
+                            <ComboBoxItem Content="134" />
+                            <ComboBoxItem Content="136" />
+                        </ComboBox>
+                    </GroupBox>
+
+                    <GroupBox
+                        Grid.Row="3"
+                        Grid.Column="2"
+                        Header="فونت نوار">
+                        <ComboBox
+                            Name="ComboBoxMafatihPanelFontFamily"
+                            Uid="3"
+                            ItemsSource="{Binding IsAsync=True}"
+                            SelectionChanged="ComboBoxFontFamily_OnSelectionChanged" />
+                    </GroupBox>
+
+                    <TextBlock
+                        Grid.Row="4"
+                        Grid.ColumnSpan="4"
+                        HorizontalAlignment="Stretch"
+                        Background="Yellow"
+                        FontWeight="Bold"
+                        Text="ترجمه"
+                        TextAlignment="Center" />
+
+                    <GroupBox
+                        Grid.Row="5"
+                        Grid.Column="0"
+                        Header="اندازه نوار">
+                        <ComboBox
+                            Name="ComboBoxMafatihTranslationPanelHeight"
+                            Uid="5"
+                            Loaded="OnLoadAllComBox"
+                            SelectionChanged="ComboBoxPanelHeight_OnSelectionChanged">
+
+                            <ComboBoxItem Content="70" />
+                            <ComboBoxItem Content="80" />
+                            <ComboBoxItem Content="90" />
+                            <ComboBoxItem Content="100" />
+                            <ComboBoxItem Content="110" />
+                            <ComboBoxItem Content="120" />
+                            <ComboBoxItem Content="130" />
+                            <ComboBoxItem Content="140" />
+                            <ComboBoxItem Content="150" />
+                            <ComboBoxItem Content="160" />
+                            <ComboBoxItem Content="170" />
+                            <ComboBoxItem Content="180" />
+                            <ComboBoxItem Content="190" />
+                            <ComboBoxItem Content="200" />
+                            <ComboBoxItem Content="210" />
+                            <ComboBoxItem Content="220" />
+                            <ComboBoxItem Content="230" />
+                            <ComboBoxItem Content="240" />
+                            <ComboBoxItem Content="250" />
+                            <ComboBoxItem Content="260" />
+                            <ComboBoxItem Content="270" />
+                            <ComboBoxItem Content="280" />
+                            <ComboBoxItem Content="290" />
+                            <ComboBoxItem Content="300" />
+                            <ComboBoxItem Content="300" />
+                            <ComboBoxItem Content="310" />
+                            <ComboBoxItem Content="320" />
+                            <ComboBoxItem Content="330" />
+                            <ComboBoxItem Content="340" />
+                            <ComboBoxItem Content="350" />
+                            <ComboBoxItem Content="360" />
+                            <ComboBoxItem Content="370" />
+                            <ComboBoxItem Content="390" />
+                            <ComboBoxItem Content="400" />
+                            <ComboBoxItem Content="410" />
+                            <ComboBoxItem Content="420" />
+                            <ComboBoxItem Content="430" />
+                            <ComboBoxItem Content="440" />
+                            <ComboBoxItem Content="450" />
+                            <ComboBoxItem Content="460" />
+                            <ComboBoxItem Content="470" />
+                            <ComboBoxItem Content="480" />
+                            <ComboBoxItem Content="490" />
+                            <ComboBoxItem Content="500" />
+                        </ComboBox>
+                    </GroupBox>
+
+                    <GroupBox
+                        Grid.Row="5"
+                        Grid.Column="1"
+                        Header="اندازه متن">
+                        <ComboBox
+                            Name="ComboBoxMafatihTranslationPanelFontSize"
+                            Uid="5"
+                            Loaded="OnLoadAllComBox"
+                            SelectionChanged="ComboBoxFontSize_OnSelectionChanged">
+
+                            <ComboBoxItem Content="5" />
+                            <ComboBoxItem Content="10" />
+                            <ComboBoxItem Content="12" />
+                            <ComboBoxItem Content="14" />
+                            <ComboBoxItem Content="16" />
+                            <ComboBoxItem Content="18" />
+                            <ComboBoxItem Content="20" />
+                            <ComboBoxItem Content="22" />
+                            <ComboBoxItem Content="24" />
+                            <ComboBoxItem Content="26" />
+                            <ComboBoxItem Content="28" />
+                            <ComboBoxItem Content="30" />
+                            <ComboBoxItem Content="32" />
+                            <ComboBoxItem Content="34" />
+                            <ComboBoxItem Content="36" />
+                            <ComboBoxItem Content="38" />
+                            <ComboBoxItem Content="40" />
+                            <ComboBoxItem Content="42" />
+                            <ComboBoxItem Content="44" />
+                            <ComboBoxItem Content="46" />
+                            <ComboBoxItem Content="48" />
+                            <ComboBoxItem Content="50" />
+                            <ComboBoxItem Content="52" />
+                            <ComboBoxItem Content="54" />
+                            <ComboBoxItem Content="56" />
+                            <ComboBoxItem Content="58" />
+                            <ComboBoxItem Content="60" />
+                            <ComboBoxItem Content="62" />
+                            <ComboBoxItem Content="64" />
+                            <ComboBoxItem Content="66" />
+                            <ComboBoxItem Content="68" />
+                            <ComboBoxItem Content="70" />
+                            <ComboBoxItem Content="72" />
+                            <ComboBoxItem Content="74" />
+                            <ComboBoxItem Content="76" />
+                            <ComboBoxItem Content="78" />
+                            <ComboBoxItem Content="80" />
+                            <ComboBoxItem Content="82" />
+                            <ComboBoxItem Content="84" />
+                            <ComboBoxItem Content="86" />
+                            <ComboBoxItem Content="88" />
+                            <ComboBoxItem Content="90" />
+                            <ComboBoxItem Content="92" />
+                            <ComboBoxItem Content="94" />
+                            <ComboBoxItem Content="96" />
+                            <ComboBoxItem Content="98" />
+                            <ComboBoxItem Content="100" />
+                            <ComboBoxItem Content="102" />
+                            <ComboBoxItem Content="104" />
+                            <ComboBoxItem Content="106" />
+                            <ComboBoxItem Content="108" />
+                            <ComboBoxItem Content="110" />
+                            <ComboBoxItem Content="112" />
+                            <ComboBoxItem Content="114" />
+                            <ComboBoxItem Content="116" />
+                            <ComboBoxItem Content="118" />
+                            <ComboBoxItem Content="120" />
+                            <ComboBoxItem Content="122" />
+                            <ComboBoxItem Content="124" />
+                            <ComboBoxItem Content="126" />
+                            <ComboBoxItem Content="128" />
+                            <ComboBoxItem Content="130" />
+                            <ComboBoxItem Content="132" />
+                            <ComboBoxItem Content="134" />
+                            <ComboBoxItem Content="136" />
+                        </ComboBox>
+                    </GroupBox>
+
+                    <GroupBox
+                        Grid.Row="5"
+                        Grid.Column="2"
+                        Header="فونت نوار">
+                        <ComboBox
+                            Name="ComboBoxMafatihTranslationPanelFontFamily"
+                            Uid="5"
+                            ItemsSource="{Binding IsAsync=True}"
+                            Loaded="OnLoadAllComBox"
+                            SelectionChanged="ComboBoxFontFamily_OnSelectionChanged" />
+
+                    </GroupBox>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</UserControl>

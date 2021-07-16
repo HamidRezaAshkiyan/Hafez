@@ -1,0 +1,410 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <!--  Notification Values  -->
+
+    <SolidColorBrush x:Key="NotificationTitleBackground">Red</SolidColorBrush>
+    <system:Double x:Key="NotificationTitleHeight">80</system:Double>
+
+    <FontFamily x:Key="NotificationTitleFontFamily">/Resources/Fonts/#Vazir</FontFamily>
+    <system:Double x:Key="NotificationTitleFontSize">40</system:Double>
+    <SolidColorBrush x:Key="NotificationTitleForeground">Black</SolidColorBrush>
+
+
+    <SolidColorBrush x:Key="NotificationPanelBackground">Yellow</SolidColorBrush>
+    <system:Double x:Key="NotificationPanelHeight">80</system:Double>
+    <Thickness x:Key="NotificationPanelMargin">0, 0, 0, 0</Thickness>
+
+    <FontFamily x:Key="NotificationPanelFontFamily">/Resources/Fonts/#Vazir</FontFamily>
+    <system:Double x:Key="NotificationPanelFontSize">40</system:Double>
+    <SolidColorBrush x:Key="NotificationPanelForeground">Black</SolidColorBrush>
+
+    <!--  Notification Values  -->
+
+    <!--  Quran Values  -->
+
+    <SolidColorBrush x:Key="QuranPanelBackground" Color="Purple" />
+    <system:Double x:Key="QuranPanelHeight">120</system:Double>
+    <Thickness x:Key="QuranPanelMargin">0, 0, 0, 0</Thickness>
+
+    <!-- <SolidColorBrush x:Key="QuranPanelStrokeColor" Color="White" /> -->
+    <!-- <system:Double x:Key="QuranPanelStrokeSize">1</system:Double> -->
+    <FontFamily x:Key="QuranPanelFontFamily">/Resources/Fonts/#Vazir</FontFamily>
+    <system:Double x:Key="QuranPanelFontSize">50</system:Double>
+    <SolidColorBrush x:Key="QuranPanelForeground" Color="White" />
+
+    <!--  Quran Values  -->
+
+
+    <!--  Mafatih Values  -->
+
+    <SolidColorBrush x:Key="MafatihPanelBackground" Color="ForestGreen" />
+    <system:Double x:Key="MafatihPanelHeight">120</system:Double>
+    <Thickness x:Key="MafatihPanelMargin">0, 0, 0, 0</Thickness>
+
+
+    <!-- <SolidColorBrush x:Key="MafatihPanelStrokeColor" Color="White" /> -->
+    <!-- <system:Double x:Key="MafatihPanelStrokeSize">1</system:Double> -->
+    <FontFamily x:Key="MafatihPanelFontFamily">/Resources/Fonts/#Vazir</FontFamily>
+    <system:Double x:Key="MafatihPanelFontSize">100</system:Double>
+    <SolidColorBrush x:Key="MafatihPanelForeground" Color="White" />
+
+    <!--  Mafatih Values  -->
+
+    <!--  QuranTranslation Values  -->
+    <SolidColorBrush x:Key="QuranTranslationTitleBackground" Color="DarkRed" />
+    <system:Double x:Key="QuranTranslationTitleHeight">60</system:Double>
+
+    <FontFamily x:Key="QuranTranslationTitleFontFamily">/Resources/Fonts/#Vazir</FontFamily>
+    <system:Double x:Key="QuranTranslationTitleFontSize">30</system:Double>
+    <SolidColorBrush x:Key="QuranTranslationTitleForeground" Color="White" />
+
+    <SolidColorBrush x:Key="QuranTranslationPanelBackground" Color="ForestGreen" />
+    <system:Double x:Key="QuranTranslationPanelHeight">120</system:Double>
+    <Thickness x:Key="QuranTranslationPanelMargin">0, 0, 0, 0</Thickness>
+
+    <FontFamily x:Key="QuranTranslationPanelFontFamily">/Resources/Fonts/#Vazir</FontFamily>
+    <system:Double x:Key="QuranTranslationPanelFontSize">60</system:Double>
+    <SolidColorBrush x:Key="QuranTranslationPanelForeground" Color="White" />
+
+    <!--  QuranTranslation Values  -->
+
+    <!--  MafatihTranslation Values  -->
+    <SolidColorBrush x:Key="MafatihTranslationTitleBackground" Color="DarkRed" />
+    <system:Double x:Key="MafatihTranslationTitleHeight">60</system:Double>
+
+    <FontFamily x:Key="MafatihTranslationTitleFontFamily">/Resources/Fonts/#Vazir</FontFamily>
+    <system:Double x:Key="MafatihTranslationTitleFontSize">30</system:Double>
+    <SolidColorBrush x:Key="MafatihTranslationTitleForeground" Color="White" />
+
+    <SolidColorBrush x:Key="MafatihTranslationPanelBackground" Color="Purple" />
+    <system:Double x:Key="MafatihTranslationPanelHeight">120</system:Double>
+    <Thickness x:Key="MafatihTranslationPanelMargin">0, 0, 0, 0</Thickness>
+
+    <FontFamily x:Key="MafatihTranslationPanelFontFamily">/Resources/Fonts/#Vazir</FontFamily>
+    <system:Double x:Key="MafatihTranslationPanelFontSize">60</system:Double>
+    <SolidColorBrush x:Key="MafatihTranslationPanelForeground" Color="White" />
+
+    <!--  MafatihTranslation Values  -->
+
+    <!--  Output Panels  -->
+    <Style
+        x:Key="TitleLabelStyle"
+        BasedOn="{StaticResource {x:Type Label}}"
+        TargetType="Label">
+        <Setter Property="Content" Value="" />
+    </Style>
+
+    <Style x:Key="PanelTextBlock" TargetType="TextBlock">
+        <!-- <Setter Property="TextWrapping" Value="Wrap" /> -->
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+
+    <Style x:Key="NotificationTitleStyle" TargetType="Grid">
+        <Setter Property="Height" Value="{DynamicResource NotificationTitleHeight}" />
+        <Setter Property="Background" Value="{DynamicResource NotificationTitleBackground}" />
+        <Style.Resources>
+            <!-- <Style TargetType="Label">
+                <Setter Property="Foreground" Value="{DynamicResource NotificationTitleForeground}" />
+                <Setter Property="FontFamily" Value="{DynamicResource NotificationTitleFontFamily}" />
+                <Setter Property="FontSize" Value="{DynamicResource NotificationTitleFontSize}" />
+            </Style>-->
+            <Style BasedOn="{StaticResource PanelTextBlock}" TargetType="TextBlock">
+                <Setter Property="Foreground" Value="{DynamicResource QuranPanelForeground}" />
+                <Setter Property="FontFamily" Value="{DynamicResource QuranPanelFontFamily}" />
+                <Setter Property="FontSize" Value="{DynamicResource QuranPanelFontSize}" />
+            </Style>
+        </Style.Resources>
+    </Style>
+
+    <Style x:Key="NotificationPanelStyle" TargetType="Grid">
+        <Setter Property="Height" Value="{DynamicResource NotificationPanelHeight}" />
+        <Setter Property="Background" Value="{DynamicResource NotificationPanelBackground}" />
+        <Setter Property="Margin" Value="{DynamicResource NotificationPanelMargin}" />
+        <Style.Resources>
+            <!--<Style BasedOn="{StaticResource TitleLabelStyle}" TargetType="Label">
+                <Setter Property="Foreground" Value="{DynamicResource NotificationPanelForeground}" />
+                <Setter Property="FontFamily" Value="{DynamicResource NotificationPanelFontFamily}" />
+                <Setter Property="FontSize" Value="{DynamicResource NotificationPanelFontSize}" />
+            </Style>-->
+            <Style BasedOn="{StaticResource PanelTextBlock}" TargetType="TextBlock">
+                <Setter Property="Foreground" Value="{DynamicResource NotificationPanelForeground}" />
+                <Setter Property="FontFamily" Value="{DynamicResource NotificationPanelFontFamily}" />
+                <Setter Property="FontSize" Value="{DynamicResource NotificationPanelFontSize}" />
+            </Style>
+        </Style.Resources>
+    </Style>
+
+    <Style x:Key="QuranTitleStyle" TargetType="Grid">
+        <Setter Property="Height" Value="{DynamicResource QuranTitleHeight}" />
+        <Setter Property="Background" Value="{DynamicResource QuranTitleBackground}" />
+        <Style.Resources>
+            <Style BasedOn="{StaticResource {x:Type Label}}" TargetType="Label">
+                <Setter Property="Foreground" Value="{DynamicResource QuranTitleForeground}" />
+                <Setter Property="FontFamily" Value="{DynamicResource QuranTitleFontFamily}" />
+                <Setter Property="FontSize" Value="{DynamicResource QuranTitleFontSize}" />
+            </Style>
+        </Style.Resources>
+    </Style>
+
+    <Style x:Key="QuranPanelStyle" TargetType="Grid">
+        <Setter Property="Height" Value="{DynamicResource QuranPanelHeight}" />
+        <Setter Property="Background" Value="{DynamicResource QuranPanelBackground}" />
+        <Setter Property="Margin" Value="{DynamicResource QuranPanelMargin}" />
+        <Style.Resources>
+            <!--<Style BasedOn="{StaticResource TitleLabelStyle}" TargetType="Label">
+                <Setter Property="Foreground" Value="{DynamicResource QuranPanelForeground}" />
+                <Setter Property="FontFamily" Value="{DynamicResource QuranPanelFontFamily}" />
+                <Setter Property="FontSize" Value="{DynamicResource QuranPanelFontSize}" />
+            </Style>-->
+            <Style BasedOn="{StaticResource PanelTextBlock}" TargetType="TextBlock">
+                <Setter Property="TextWrapping" Value="Wrap" />
+                <!-- <Setter Property="StrokeThickness" Value="{DynamicResource QuranPanelStrokeSize}" /> -->
+                <!-- <Setter Property="Stroke" Value="{DynamicResource QuranPanelStrokeColor}" /> -->
+                <Setter Property="Foreground" Value="{DynamicResource QuranPanelForeground}" />
+                <Setter Property="FontFamily" Value="{DynamicResource QuranPanelFontFamily}" />
+                <Setter Property="FontSize" Value="{DynamicResource QuranPanelFontSize}" />
+            </Style>
+        </Style.Resources>
+    </Style>
+
+    <Style x:Key="MafatihTitleStyle" TargetType="Grid">
+        <Setter Property="Height" Value="{DynamicResource MafatihTitleHeight}" />
+        <Setter Property="Background" Value="{DynamicResource MafatihTitleBackground}" />
+        <Style.Resources>
+            <Style BasedOn="{StaticResource {x:Type Label}}" TargetType="Label">
+                <Setter Property="Foreground" Value="{DynamicResource MafatihTitleForeground}" />
+                <Setter Property="FontFamily" Value="{DynamicResource MafatihTitleFontFamily}" />
+                <Setter Property="FontSize" Value="{DynamicResource MafatihTitleFontSize}" />
+            </Style>
+        </Style.Resources>
+    </Style>
+
+    <Style x:Key="MafatihPanelStyle" TargetType="Grid">
+        <Setter Property="Height" Value="{DynamicResource MafatihPanelHeight}" />
+        <Setter Property="Background" Value="{DynamicResource MafatihPanelBackground}" />
+        <Setter Property="Margin" Value="{DynamicResource MafatihPanelMargin}" />
+        <Style.Resources>
+            <!--<Style BasedOn="{StaticResource TitleLabelStyle}" TargetType="Label">
+                <Setter Property="Foreground" Value="{DynamicResource MafatihPanelForeground}" />
+                <Setter Property="FontFamily" Value="{DynamicResource MafatihPanelFontFamily}" />
+                <Setter Property="FontSize" Value="{DynamicResource MafatihPanelFontSize}" />
+            </Style>-->
+            <Style BasedOn="{StaticResource PanelTextBlock}" TargetType="TextBlock">
+                <Setter Property="TextWrapping" Value="Wrap" />
+                <!-- <Setter Property="StrokeThickness" Value="{DynamicResource MafatihPanelStrokeSize}" /> -->
+                <!-- <Setter Property="Stroke" Value="{DynamicResource MafatihPanelStrokeColor}" /> -->
+                <Setter Property="Foreground" Value="{DynamicResource MafatihPanelForeground}" />
+                <Setter Property="FontFamily" Value="{DynamicResource MafatihPanelFontFamily}" />
+                <Setter Property="FontSize" Value="{DynamicResource MafatihPanelFontSize}" />
+            </Style>
+        </Style.Resources>
+    </Style>
+
+    <Style x:Key="TranslationTitleStyle" TargetType="Grid">
+        <Setter Property="Height" Value="{DynamicResource TranslationTitleHeight}" />
+        <Setter Property="Background" Value="{DynamicResource TranslationTitleBackground}" />
+        <Style.Resources>
+            <Style BasedOn="{StaticResource {x:Type Label}}" TargetType="Label">
+                <Setter Property="Foreground" Value="{DynamicResource TranslationTitleForeground}" />
+                <Setter Property="FontFamily" Value="{DynamicResource TranslationTitleFontFamily}" />
+                <Setter Property="FontSize" Value="{DynamicResource TranslationTitleFontSize}" />
+            </Style>
+        </Style.Resources>
+    </Style>
+
+    <Style x:Key="QuranTranslationPanelStyle" TargetType="Grid">
+        <Setter Property="Height" Value="{DynamicResource QuranTranslationPanelHeight}" />
+        <Setter Property="Background" Value="{DynamicResource QuranTranslationPanelBackground}" />
+        <Setter Property="Margin" Value="{DynamicResource QuranTranslationPanelMargin}" />
+        <Style.Resources>
+            <!--<Style BasedOn="{StaticResource TitleLabelStyle}" TargetType="Label">
+                <Setter Property="Foreground" Value="{DynamicResource QuranTranslationPanelForeground}" />
+                <Setter Property="FontFamily" Value="{DynamicResource QuranTranslationPanelFontFamily}" />
+                <Setter Property="FontSize" Value="{DynamicResource QuranTranslationPanelFontSize}" />
+            </Style>-->
+            <Style BasedOn="{StaticResource PanelTextBlock}" TargetType="TextBlock">
+                <Setter Property="TextWrapping" Value="Wrap" />
+                <Setter Property="Foreground" Value="{DynamicResource QuranTranslationPanelForeground}" />
+                <Setter Property="FontFamily" Value="{DynamicResource QuranTranslationPanelFontFamily}" />
+                <Setter Property="FontSize" Value="{DynamicResource QuranTranslationPanelFontSize}" />
+            </Style>
+        </Style.Resources>
+    </Style>
+
+    <Style x:Key="MafatihTranslationPanelStyle" TargetType="Grid">
+        <Setter Property="Height" Value="{DynamicResource MafatihTranslationPanelHeight}" />
+        <Setter Property="Background" Value="{DynamicResource MafatihTranslationPanelBackground}" />
+        <Setter Property="Margin" Value="{DynamicResource MafatihTranslationPanelMargin}" />
+        <Style.Resources>
+            <Style BasedOn="{StaticResource PanelTextBlock}" TargetType="TextBlock">
+                <Setter Property="TextWrapping" Value="Wrap" />
+                <Setter Property="Foreground" Value="{DynamicResource MafatihTranslationPanelForeground}" />
+                <Setter Property="FontFamily" Value="{DynamicResource MafatihTranslationPanelFontFamily}" />
+                <Setter Property="FontSize" Value="{DynamicResource MafatihTranslationPanelFontSize}" />
+            </Style>
+        </Style.Resources>
+    </Style>
+    <!--  Output Panels  -->
+
+
+    <!--  templates  -->
+    <Style BasedOn="{StaticResource {x:Type ToolTip}}" TargetType="ToolTip">
+        <Setter Property="FontFamily" Value="{DynamicResource BaseFontFamily}" />
+        <Setter Property="Background" Value="{DynamicResource PrimaryHueMidBrush}" />
+    </Style>
+
+    <Style
+        x:Key="MainMenu"
+        BasedOn="{StaticResource {x:Type Button}}"
+        TargetType="{x:Type Button}">
+        <Style.Resources>
+            <Style TargetType="{x:Type TextBlock}">
+                <Setter Property="Margin" Value="0 0 5 0" />
+                <Setter Property="FontFamily" Value="{DynamicResource BaseFontFamily}" />
+                <Setter Property="FontSize" Value="20" />
+                <Setter Property="Foreground" Value="White" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+            </Style>
+            <Style TargetType="StackPanel">
+                <Setter Property="Orientation" Value="Horizontal" />
+                <Setter Property="HorizontalAlignment" Value="Right" />
+            </Style>
+        </Style.Resources>
+
+        <Setter Property="Padding" Value="8 2" />
+        <!--<Setter Property="Background" Value="{DynamicResource PrimaryHueMidBrush}" />-->
+        <!--<Setter Property="HorizontalContentAlignment" Value="Right" />-->
+    </Style>
+
+    <Style x:Key="CanvasText" TargetType="{x:Type TextBlock}">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="Width" Value="300" />
+
+    </Style>
+
+    <Style
+        x:Key="MainTextBoxStyle"
+        BasedOn="{StaticResource {x:Type TextBox}}"
+        TargetType="TextBox">
+        <Setter Property="FontFamily" Value="{StaticResource BaseFontFamily}" />
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="Background" Value="Transparent" />
+    </Style>
+
+    <Style
+        x:Key="MainTextBlockStyle"
+        BasedOn="{StaticResource {x:Type TextBlock}}"
+        TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource BaseFontFamily}" />
+        <Setter Property="FontSize" Value="16" />
+    </Style>
+
+    <Style
+        x:Key="MainButtonStyle"
+        BasedOn="{StaticResource {x:Type Button}}"
+        TargetType="Button">
+        <Setter Property="FontFamily" Value="{StaticResource BaseFontFamily}" />
+        <Setter Property="FontSize" Value="18" />
+    </Style>
+
+    <Style
+        x:Key="MenuItemStyle"
+        BasedOn="{StaticResource {x:Type MenuItem}}"
+        TargetType="MenuItem">
+        <Setter Property="FontFamily" Value="{StaticResource BaseFontFamily}" />
+    </Style>
+
+    <Style BasedOn="{StaticResource {x:Type ContextMenu}}" TargetType="ContextMenu">
+        <Setter Property="FontFamily" Value="{StaticResource BaseFontFamily}" />
+        <Setter Property="FlowDirection" Value="RightToLeft" />
+        <Setter Property="Background" Value="{DynamicResource PrimaryHueDarkBrush}" />
+    </Style>
+
+    <Style BasedOn="{StaticResource {x:Type Label}}" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource BasePersianNumberFontFamily}" />
+    </Style>
+    <!--  /templates  -->
+
+    <Style
+        x:Key="PatientList"
+        BasedOn="{StaticResource {x:Type ListView}}"
+        TargetType="ListView">
+        <Setter Property="FontFamily" Value="{StaticResource BaseFontFamily}" />
+        <Setter Property="FontSize" Value="23" />
+        <Style.Resources>
+            <Style BasedOn="{StaticResource {x:Type GridViewColumnHeader}}" TargetType="{x:Type GridViewColumnHeader}">
+                <Setter Property="Background" Value="Transparent" />
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="true">
+                        <Setter Property="Foreground" Value="{DynamicResource SecondaryAccentBrush}" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </Style.Resources>
+    </Style>
+
+    <!--  submit and cancel Style  -->
+    <Style
+        x:Key="Button"
+        BasedOn="{StaticResource {x:Type Button}}"
+        TargetType="Button">
+        <Setter Property="Foreground" Value="{StaticResource LightTextColor}" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="FontFamily" Value="{StaticResource BaseFontFamily}" />
+        <Style.Resources>
+            <Style TargetType="TextBlock">
+                <Setter Property="Margin" Value="0 0 0 0" />
+                <Setter Property="FontSize" Value="20" />
+                <Setter Property="Foreground" Value="{StaticResource ImportantTextColor}" />
+            </Style>
+        </Style.Resources>
+    </Style>
+
+    <Style TargetType="materialDesign:TimePicker">
+        <Setter Property="FontFamily" Value="{StaticResource BasePersianNumberFontFamily}" />
+        <Setter Property="Is24Hours" Value="true" />
+        <Setter Property="SelectedTimeFormat" Value="Long" />
+        <Setter Property="FlowDirection" Value="LeftToRight" />
+    </Style>
+
+    <Style x:Key="MainStackPanel" TargetType="StackPanel">
+        <Setter Property="FlowDirection" Value="RightToLeft" />
+        <Style.Resources>
+            <Style TargetType="StackPanel">
+                <Setter Property="Margin" Value="0 20 0 0" />
+                <Setter Property="Orientation" Value="Horizontal" />
+                <Setter Property="Width" Value="350" />
+            </Style>
+
+            <Style BasedOn="{StaticResource {x:Type TextBox}}" TargetType="TextBox">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="FontFamily" Value="{StaticResource BasePersianNumberFontFamily}" />
+                <Setter Property="FontSize" Value="18" />
+                <Setter Property="Width" Value="200" />
+            </Style>
+
+            <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="TextBlock">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="FontFamily" Value="{StaticResource BaseFontFamily}" />
+                <Setter Property="FontSize" Value="18" />
+                <Setter Property="FontWeight" Value="Bold" />
+                <Setter Property="FlowDirection" Value="RightToLeft" />
+                <Setter Property="Width" Value="100" />
+                <Setter Property="VerticalAlignment" Value="Bottom" />
+                <Setter Property="Margin" Value="0 0 15 0" />
+            </Style>
+
+            <Style BasedOn="{StaticResource {x:Type ComboBox}}" TargetType="ComboBox">
+                <Setter Property="FontFamily" Value="{StaticResource BaseFontFamily}" />
+            </Style>
+        </Style.Resources>
+    </Style>
+</ResourceDictionary>

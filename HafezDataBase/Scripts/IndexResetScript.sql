@@ -1,0 +1,1 @@
+﻿DBCC CHECKIDENT (notification, RESEED, 0)

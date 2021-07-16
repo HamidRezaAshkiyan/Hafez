@@ -1,0 +1,595 @@
+﻿<UserControl
+    x:Class="HafezWPFUI.Views.MonitorHandlerView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="600"
+    d:DesignWidth="800"
+    FlowDirection="RightToLeft"
+    Loaded="MonitorHandlerUserControl_OnLoaded"
+    mc:Ignorable="d">
+
+    <Grid Name="Grid">
+        <Grid.Resources>
+            <Style BasedOn="{StaticResource {x:Type GroupBox}}" TargetType="GroupBox">
+                <Setter Property="Width" Value="150" />
+                <Setter Property="Height" Value="150" />
+            </Style>
+            <Style BasedOn="{StaticResource {x:Type ComboBox}}" TargetType="ComboBox">
+                <Setter Property="materialDesign:ComboBoxAssist.ClassicMode" Value="True" />
+                <Setter Property="FontSize" Value="18" />
+                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.InactiveCaptionTextBrushKey}}" />
+            </Style>
+            <Style BasedOn="{StaticResource {x:Type ToggleButton}}" TargetType="ToggleButton">
+                <Setter Property="IsChecked" Value="False" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="RenderTransformOrigin" Value="0.5, 0.5" />
+                <Setter Property="RenderTransform">
+                    <Setter.Value>
+                        <TransformGroup>
+                            <ScaleTransform />
+                            <SkewTransform />
+                            <RotateTransform Angle="270" />
+                            <TranslateTransform />
+                        </TransformGroup>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </Grid.Resources>
+
+        <TabControl>
+            <TabItem Header="عمومی">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <GroupBox Grid.Column="0" Header=" مانیتور نمایش">
+                        <ComboBox
+                            Name="ComboBoxOutputMonitorIndex"
+                            Loaded="OnLoadAllComBox"
+                            SelectionChanged="ComboBoxOutputMonitorIndex_OnSelectionChanged" />
+                    </GroupBox>
+
+                    <GroupBox
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Header="مانیتور کنترلر">
+                        <ComboBox
+                            Name="ComboBoxControllerMonitorIndex"
+                            Loaded="OnLoadAllComBox"
+                            SelectionChanged="ComboBoxControllerMonitorIndex_OnSelectionChanged" />
+                    </GroupBox>
+
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="اعلان">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <GroupBox Grid.Column="0" Header="فاصله از لبه">
+                        <ComboBox
+                            Name="ComboBoxNotificationPanelMargin"
+                            Uid="1"
+                            Loaded="OnLoadAllComBox"
+                            SelectionChanged="ComboBoxPanelMargin_OnSelectionChanged">
+
+                            <ComboBoxItem Name="NP0" Content="0" />
+                            <ComboBoxItem Name="NP10" Content="1" />
+                            <ComboBoxItem Name="NP30" Content="2" />
+                            <ComboBoxItem Name="NP50" Content="3" />
+                            <ComboBoxItem Name="NP70" Content="4" />
+                            <ComboBoxItem Name="NP100" Content="5" />
+                            <ComboBoxItem Name="NP110" Content="6" />
+                            <ComboBoxItem Name="NP130" Content="7" />
+                            <ComboBoxItem Name="NP150" Content="8" />
+                            <ComboBoxItem Name="NP170" Content="9" />
+                            <ComboBoxItem Name="NP200" Content="10" />
+                            <ComboBoxItem Name="NP210" Content="11" />
+                            <ComboBoxItem Name="NP230" Content="12" />
+                            <ComboBoxItem Name="NP250" Content="13" />
+                            <ComboBoxItem Name="NP270" Content="14" />
+                            <ComboBoxItem Name="NP300" Content="15" />
+                        </ComboBox>
+                    </GroupBox>
+
+                    <GroupBox Grid.Column="1" Header="مکان نوار">
+                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                            <StackPanel VerticalAlignment="Center">
+                                <Label Content="بالا" />
+                                <Label Content="پایین" />
+                            </StackPanel>
+
+                            <ToggleButton
+                                x:Name="ToggleButtonNotificationPanelVerticalAlignment"
+                                Uid="1"
+                                Click="ToggleButtonPanelVerticalAlignment_OnClick"
+                                Loaded="OnloadAllToggleButton" />
+                        </StackPanel>
+                    </GroupBox>
+
+                    <GroupBox Grid.Column="2" Header="سرعت">
+                        <ComboBox
+                            Name="ComboBoxNotificationAnimationSpeed"
+                            Uid="1"
+                            Loaded="OnLoadAllComBox"
+                            SelectionChanged="ComboBoxAnimationSpeed_OnSelectionChanged">
+
+                            <ComboBoxItem Name="NPS3" Content="3" />
+                            <ComboBoxItem Name="NPS4" Content="4" />
+                            <ComboBoxItem Name="NPS5" Content="5" />
+                            <ComboBoxItem Name="NPS6" Content="6" />
+                            <ComboBoxItem Name="NPS7" Content="7" />
+                            <ComboBoxItem Name="NPS8" Content="8" />
+                            <ComboBoxItem Name="NPS9" Content="9" />
+                            <ComboBoxItem Name="NPS10" Content="10" />
+                            <ComboBoxItem Name="NPS11" Content="11" />
+                            <ComboBoxItem Name="NPS12" Content="12" />
+                            <ComboBoxItem Name="NPS13" Content="13" />
+                            <ComboBoxItem Name="NPS14" Content="14" />
+                            <ComboBoxItem Name="NPS15" Content="15" />
+                            <ComboBoxItem Name="NPS16" Content="16" />
+                            <ComboBoxItem Name="NPS17" Content="17" />
+                            <ComboBoxItem Name="NPS18" Content="18" />
+                            <ComboBoxItem Name="NPS19" Content="19" />
+                            <ComboBoxItem Name="NPS20" Content="20" />
+                            <ComboBoxItem Name="NPS21" Content="21" />
+                            <ComboBoxItem Name="NPS22" Content="22" />
+                            <ComboBoxItem Name="NPS23" Content="23" />
+                            <ComboBoxItem Name="NPS24" Content="24" />
+                            <ComboBoxItem Name="NPS25" Content="25" />
+                            <ComboBoxItem Name="NPS26" Content="26" />
+                            <ComboBoxItem Name="NPS27" Content="27" />
+                            <ComboBoxItem Name="NPS28" Content="28" />
+                            <ComboBoxItem Name="NPS29" Content="29" />
+                            <ComboBoxItem Name="NPS30" Content="30" />
+                        </ComboBox>
+                    </GroupBox>
+                </Grid>
+            </TabItem>
+            <TabItem Header="قرآن">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock
+                        Grid.ColumnSpan="3"
+                        HorizontalAlignment="Stretch"
+                        Background="Yellow"
+                        FontWeight="Bold"
+                        Text="نوار اصلی"
+                        TextAlignment="Center" />
+
+                    <GroupBox
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Header="فاصله از لبه">
+                        <ComboBox
+                            x:Name="ComboBoxQuranPanelMargin"
+                            Uid="2"
+                            Loaded="OnLoadAllComBox"
+                            SelectionChanged="ComboBoxPanelMargin_OnSelectionChanged">
+
+                            <ComboBoxItem Name="QP0" Content="0" />
+                            <ComboBoxItem Name="QP10" Content="1" />
+                            <ComboBoxItem Name="QP30" Content="2" />
+                            <ComboBoxItem Name="QP50" Content="3" />
+                            <ComboBoxItem Name="QP70" Content="4" />
+                            <ComboBoxItem Name="QP100" Content="5" />
+                            <ComboBoxItem Name="QP110" Content="6" />
+                            <ComboBoxItem Name="QP130" Content="7" />
+                            <ComboBoxItem Name="QP150" Content="8" />
+                            <ComboBoxItem Name="QP170" Content="9" />
+                            <ComboBoxItem Name="QP200" Content="10" />
+                            <ComboBoxItem Name="QP210" Content="11" />
+                            <ComboBoxItem Name="QP230" Content="12" />
+                            <ComboBoxItem Name="QP250" Content="13" />
+                            <ComboBoxItem Name="QP270" Content="14" />
+                            <ComboBoxItem Name="QP300" Content="15" />
+                        </ComboBox>
+                    </GroupBox>
+
+                    <GroupBox
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Header="مکان نوار">
+                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                            <StackPanel VerticalAlignment="Center">
+                                <Label Content="بالا" />
+                                <Label Content="پایین" />
+                            </StackPanel>
+
+                            <ToggleButton
+                                x:Name="ToggleButtonQuranPanelVerticalAlignment"
+                                Uid="2"
+                                Click="ToggleButtonPanelVerticalAlignment_OnClick"
+                                Loaded="OnloadAllToggleButton" />
+                        </StackPanel>
+                    </GroupBox>
+
+                    <GroupBox
+                        Grid.Row="1"
+                        Grid.Column="2"
+                        Header="سرعت">
+                        <ComboBox
+                            x:Name="ComboBoxQuranAnimationSpeed"
+                            Uid="2"
+                            IsEnabled="False"
+                            SelectionChanged="ComboBoxAnimationSpeed_OnSelectionChanged">
+
+                            <ComboBoxItem x:Name="QPS1" Content="0" />
+                            <ComboBoxItem x:Name="QPS3" Content="3" />
+                            <ComboBoxItem x:Name="QPS5" Content="4" />
+                            <ComboBoxItem x:Name="QPS7" Content="5" />
+                            <ComboBoxItem x:Name="QPS9" Content="6" />
+                            <ComboBoxItem x:Name="QPS11" Content="7" />
+                            <ComboBoxItem x:Name="QPS13" Content="8" />
+                            <ComboBoxItem x:Name="QPS15" Content="9" />
+                            <ComboBoxItem x:Name="QPS17" Content="10" />
+                            <ComboBoxItem x:Name="QPS19" Content="11" />
+                            <ComboBoxItem x:Name="QPS21" Content="12" />
+                            <ComboBoxItem x:Name="QPS23" Content="13" />
+                            <ComboBoxItem x:Name="QPS25" Content="14" />
+                            <ComboBoxItem x:Name="QPS27" Content="15" />
+                            <ComboBoxItem x:Name="QPS29" Content="16" />
+                            <ComboBoxItem x:Name="QPS31" Content="17" />
+                            <ComboBoxItem x:Name="QPS33" Content="18" />
+                            <ComboBoxItem x:Name="QPS35" Content="19" />
+                            <ComboBoxItem x:Name="QPS37" Content="20" />
+                        </ComboBox>
+                    </GroupBox>
+
+                    <TextBlock
+                        Grid.Row="2"
+                        Grid.ColumnSpan="3"
+                        HorizontalAlignment="Stretch"
+                        Background="Yellow"
+                        FontWeight="Bold"
+                        Text="ترجمه"
+                        TextAlignment="Center" />
+
+                    <GroupBox
+                        Grid.Row="3"
+                        Grid.Column="0"
+                        Header="فاصله از لبه">
+                        <ComboBox
+                            x:Name="ComboBoxQuranTranslationPanelMargin"
+                            Uid="4"
+                            Loaded="OnLoadAllComBox"
+                            SelectionChanged="ComboBoxPanelMargin_OnSelectionChanged">
+
+                            <ComboBoxItem Name="QT0" Content="0" />
+                            <ComboBoxItem Name="QT10" Content="1" />
+                            <ComboBoxItem Name="QT30" Content="2" />
+                            <ComboBoxItem Name="QT50" Content="3" />
+                            <ComboBoxItem Name="QT70" Content="4" />
+                            <ComboBoxItem Name="QT100" Content="5" />
+                            <ComboBoxItem Name="QT110" Content="6" />
+                            <ComboBoxItem Name="QT130" Content="7" />
+                            <ComboBoxItem Name="QT150" Content="8" />
+                            <ComboBoxItem Name="QT170" Content="9" />
+                            <ComboBoxItem Name="QT200" Content="10" />
+                            <ComboBoxItem Name="QT210" Content="11" />
+                            <ComboBoxItem Name="QT230" Content="12" />
+                            <ComboBoxItem Name="QT250" Content="13" />
+                            <ComboBoxItem Name="QT270" Content="14" />
+                            <ComboBoxItem Name="QT300" Content="15" />
+                        </ComboBox>
+                    </GroupBox>
+
+                    <GroupBox
+                        Grid.Row="3"
+                        Grid.Column="1"
+                        Header="مکان نوار">
+                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                            <StackPanel VerticalAlignment="Center">
+                                <Label Content="بالا" />
+                                <Label Content="پایین" />
+                            </StackPanel>
+
+                            <ToggleButton
+                                x:Name="ToggleButtonQuranTranslationPanelVerticalAlignment"
+                                Uid="4"
+                                Click="ToggleButtonPanelVerticalAlignment_OnClick"
+                                Loaded="OnloadAllToggleButton" />
+                        </StackPanel>
+                    </GroupBox>
+
+                    <GroupBox
+                        Grid.Row="3"
+                        Grid.Column="2"
+                        Header="سرعت">
+                        <ComboBox
+                            x:Name="ComboBoxQuranTranslationAnimationSpeed"
+                            Uid="4"
+                            IsEnabled="False"
+                            SelectionChanged="ComboBoxAnimationSpeed_OnSelectionChanged">
+
+                            <ComboBoxItem x:Name="QTS3" Content="3" />
+                            <ComboBoxItem x:Name="QTS4" Content="4" />
+                            <ComboBoxItem x:Name="QTS5" Content="5" />
+                            <ComboBoxItem x:Name="QTS6" Content="6" />
+                            <ComboBoxItem x:Name="QTS7" Content="7" />
+                            <ComboBoxItem x:Name="QTS8" Content="8" />
+                            <ComboBoxItem x:Name="QTS9" Content="9" />
+                            <ComboBoxItem x:Name="QTS10" Content="10" />
+                            <ComboBoxItem x:Name="QTS11" Content="11" />
+                            <ComboBoxItem x:Name="QTS12" Content="12" />
+                            <ComboBoxItem x:Name="QTS13" Content="13" />
+                            <ComboBoxItem x:Name="QTS14" Content="14" />
+                            <ComboBoxItem x:Name="QTS15" Content="15" />
+                            <ComboBoxItem x:Name="QTS16" Content="16" />
+                            <ComboBoxItem x:Name="QTS17" Content="17" />
+                            <ComboBoxItem x:Name="QTS18" Content="18" />
+                            <ComboBoxItem x:Name="QTS19" Content="19" />
+                            <ComboBoxItem x:Name="QTS20" Content="20" />
+                        </ComboBox>
+
+                    </GroupBox>
+                </Grid>
+            </TabItem>
+            <TabItem Header="مفاتیح">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock
+                        Grid.ColumnSpan="3"
+                        HorizontalAlignment="Stretch"
+                        Background="Yellow"
+                        FontWeight="Bold"
+                        Text="نوار اصلی"
+                        TextAlignment="Center" />
+
+                    <GroupBox Grid.Row="1" Header="فاصله از لبه">
+                        <ComboBox
+                            x:Name="ComboBoxMafatihPanelMargin"
+                            Uid="3"
+                            Loaded="OnLoadAllComBox"
+                            SelectionChanged="ComboBoxPanelMargin_OnSelectionChanged">
+
+                            <ComboBoxItem Name="MP0" Content="0" />
+                            <ComboBoxItem Name="MP10" Content="1" />
+                            <ComboBoxItem Name="MP30" Content="2" />
+                            <ComboBoxItem Name="MP50" Content="3" />
+                            <ComboBoxItem Name="MP70" Content="4" />
+                            <ComboBoxItem Name="MP100" Content="5" />
+                            <ComboBoxItem Name="MP110" Content="6" />
+                            <ComboBoxItem Name="MP130" Content="7" />
+                            <ComboBoxItem Name="MP150" Content="8" />
+                            <ComboBoxItem Name="MP170" Content="9" />
+                            <ComboBoxItem Name="MP200" Content="10" />
+                            <ComboBoxItem Name="MP210" Content="11" />
+                            <ComboBoxItem Name="MP230" Content="12" />
+                            <ComboBoxItem Name="MP250" Content="13" />
+                            <ComboBoxItem Name="MP270" Content="14" />
+                            <ComboBoxItem Name="MP300" Content="15" />
+                        </ComboBox>
+                    </GroupBox>
+
+                    <GroupBox
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Header="مکان نوار">
+                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                            <StackPanel VerticalAlignment="Center">
+                                <Label Content="بالا" />
+                                <Label Content="پایین" />
+                            </StackPanel>
+
+                            <ToggleButton
+                                x:Name="ToggleButtonMafatihPanelVerticalAlignment"
+                                Uid="3"
+                                Click="ToggleButtonPanelVerticalAlignment_OnClick"
+                                Loaded="OnloadAllToggleButton" />
+                        </StackPanel>
+                    </GroupBox>
+
+                    <GroupBox
+                        Grid.Row="1"
+                        Grid.Column="2"
+                        Header="سرعت">
+                        <ComboBox
+                            x:Name="ComboBoxMafatihAnimationSpeed"
+                            Uid="3"
+                            IsEnabled="False"
+                            SelectionChanged="ComboBoxAnimationSpeed_OnSelectionChanged">
+
+                            <ComboBoxItem x:Name="MPS3" Content="3" />
+                            <ComboBoxItem x:Name="MPS4" Content="4" />
+                            <ComboBoxItem x:Name="MPS5" Content="5" />
+                            <ComboBoxItem x:Name="MPS6" Content="6" />
+                            <ComboBoxItem x:Name="MPS7" Content="7" />
+                            <ComboBoxItem x:Name="MPS8" Content="8" />
+                            <ComboBoxItem x:Name="MPS9" Content="9" />
+                            <ComboBoxItem x:Name="MPS10" Content="10" />
+                            <ComboBoxItem x:Name="MPS11" Content="11" />
+                            <ComboBoxItem x:Name="MPS12" Content="12" />
+                            <ComboBoxItem x:Name="MPS13" Content="13" />
+                            <ComboBoxItem x:Name="MPS14" Content="14" />
+                            <ComboBoxItem x:Name="MPS15" Content="15" />
+                            <ComboBoxItem x:Name="MPS16" Content="16" />
+                            <ComboBoxItem x:Name="MPS17" Content="17" />
+                            <ComboBoxItem x:Name="MPS18" Content="18" />
+                            <ComboBoxItem x:Name="MPS19" Content="19" />
+                            <ComboBoxItem x:Name="MPS20" Content="20" />
+                        </ComboBox>
+                    </GroupBox>
+
+                    <TextBlock
+                        Grid.Row="2"
+                        Grid.ColumnSpan="3"
+                        HorizontalAlignment="Stretch"
+                        Background="Yellow"
+                        FontWeight="Bold"
+                        Text="ترجمه"
+                        TextAlignment="Center" />
+
+                    <GroupBox
+                        Grid.Row="3"
+                        Grid.Column="0"
+                        Header="فاصله از لبه">
+                        <ComboBox
+                            x:Name="ComboBoxMafatihTranslationPanelMargin"
+                            Uid="5"
+                            Loaded="OnLoadAllComBox"
+                            SelectionChanged="ComboBoxPanelMargin_OnSelectionChanged">
+
+                            <ComboBoxItem Name="MT0" Content="0" />
+                            <ComboBoxItem Name="MT10" Content="1" />
+                            <ComboBoxItem Name="MT30" Content="2" />
+                            <ComboBoxItem Name="MT50" Content="3" />
+                            <ComboBoxItem Name="MT70" Content="4" />
+                            <ComboBoxItem Name="MT100" Content="5" />
+                            <ComboBoxItem Name="MT110" Content="6" />
+                            <ComboBoxItem Name="MT130" Content="7" />
+                            <ComboBoxItem Name="MT150" Content="8" />
+                            <ComboBoxItem Name="MT170" Content="9" />
+                            <ComboBoxItem Name="MT200" Content="10" />
+                            <ComboBoxItem Name="MT210" Content="11" />
+                            <ComboBoxItem Name="MT230" Content="12" />
+                            <ComboBoxItem Name="MT250" Content="13" />
+                            <ComboBoxItem Name="MT270" Content="14" />
+                            <ComboBoxItem Name="MT300" Content="15" />
+                        </ComboBox>
+
+                    </GroupBox>
+
+                    <GroupBox
+                        Grid.Row="3"
+                        Grid.Column="1"
+                        Header="مکان نوار">
+                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                            <StackPanel VerticalAlignment="Center">
+                                <Label Content="بالا" />
+                                <Label Content="پایین" />
+                            </StackPanel>
+
+                            <ToggleButton
+                                x:Name="ToggleButtonMafatihTranslationPanelVerticalAlignment"
+                                Uid="5"
+                                Click="ToggleButtonPanelVerticalAlignment_OnClick"
+                                Loaded="OnloadAllToggleButton" />
+                        </StackPanel>
+                    </GroupBox>
+
+                    <GroupBox
+                        Grid.Row="3"
+                        Grid.Column="2"
+                        Header="سرعت">
+                        <ComboBox
+                            x:Name="ComboBoxMafatihTranslationAnimationSpeed"
+                            Uid="4"
+                            IsEnabled="False"
+                            SelectionChanged="ComboBoxAnimationSpeed_OnSelectionChanged">
+
+                            <ComboBoxItem x:Name="MTS3" Content="3" />
+                            <ComboBoxItem x:Name="MTS4" Content="4" />
+                            <ComboBoxItem x:Name="MTS5" Content="5" />
+                            <ComboBoxItem x:Name="MTS6" Content="6" />
+                            <ComboBoxItem x:Name="MTS7" Content="7" />
+                            <ComboBoxItem x:Name="MTS8" Content="8" />
+                            <ComboBoxItem x:Name="MTS9" Content="9" />
+                            <ComboBoxItem x:Name="MTS10" Content="10" />
+                            <ComboBoxItem x:Name="MTS11" Content="11" />
+                            <ComboBoxItem x:Name="MTS12" Content="12" />
+                            <ComboBoxItem x:Name="MTS13" Content="13" />
+                            <ComboBoxItem x:Name="MTS14" Content="14" />
+                            <ComboBoxItem x:Name="MTS15" Content="15" />
+                            <ComboBoxItem x:Name="MTS16" Content="16" />
+                            <ComboBoxItem x:Name="MTS17" Content="17" />
+                            <ComboBoxItem x:Name="MTS18" Content="18" />
+                            <ComboBoxItem x:Name="MTS19" Content="19" />
+                            <ComboBoxItem x:Name="MTS20" Content="20" />
+                        </ComboBox>
+                    </GroupBox>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+        <!--<GroupBox
+                Grid.Column="0"
+                Width="100"
+                Height="100"
+                Margin="10"
+                FlowDirection="RightToLeft"
+                Header="جهت حرکت">
+                <StackPanel
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Orientation="Horizontal">
+                    <StackPanel Orientation="Vertical">
+                        <Label Content="چپ" />
+                        <Label Content="راست" />
+                    </StackPanel>
+                    <ToggleButton
+                        x:Name="ToggleButtonAlignment"
+                        Height="28"
+                        Click="ToggleButtonAlignment_OnClick"
+                        IsChecked="false"
+                        RenderTransformOrigin="0.5,0.5">
+                        <ToggleButton.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform />
+                                <SkewTransform />
+                                <RotateTransform Angle="90" />
+                                <TranslateTransform />
+                            </TransformGroup>
+                        </ToggleButton.RenderTransform>
+                    </ToggleButton>
+                </StackPanel>
+            </GroupBox>-->
+
+        <!--<GroupBox
+                Grid.Column="0"
+                Width="100"
+                Height="100"
+                Margin="10"
+                FlowDirection="RightToLeft"
+                Header="نوع نمایش">
+                <ComboBox
+                    Name="ComboBoxAnimation"
+                    Grid.Row="0"
+                    MinWidth="50"
+                    HorizontalAlignment="Center"
+                    materialDesign:ComboBoxAssist.ClassicMode="True"
+                    BorderBrush="{DynamicResource PrimaryHueMidBrush}"
+                    FontSize="18"
+                    Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
+                    SelectionChanged="ComboBoxAnimation_OnSelectionChanged"
+                    Style="{StaticResource MaterialDesignComboBox}">
+
+                    <ComboBoxItem Name="Scroll" Content="حرکتی"/>
+                    <ComboBoxItem Name="MachineType" Content="تایپی"/>
+                </ComboBox>
+            </GroupBox>-->
+
+    </Grid>
+</UserControl>

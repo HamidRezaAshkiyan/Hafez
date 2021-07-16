@@ -1,0 +1,120 @@
+﻿<UserControl
+    x:Class="HafezWPFUI.Views.User.UserList_View"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:handlers="clr-namespace:HafezWPFUI.Helper.Handlers"
+    xmlns:local="clr-namespace:HafezWPFUI.Views.User"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="clr-namespace:HafezLibrary.Models;assembly=HafezLibrary"
+    d:DesignHeight="600"
+    d:DesignWidth="800"
+    FlowDirection="RightToLeft"
+    Loaded="UserList_OnLoaded"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ContextMenu
+                x:Key="RightClickMenu"
+                FontFamily="{StaticResource BaseFontFamily}"
+                Foreground="White">
+                <MenuItem Click="MenuItemNewUser_OnClick" Header="کاربر جدید" />
+                <MenuItem Click="MenuItemEditUser_OnClick" Header="ویرایش" />
+            </ContextMenu>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <GroupBox materialDesign:ShadowAssist.ShadowDepth="Depth3" BorderThickness="0">
+            <GroupBox.Header>
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    FontWeight="Bold"
+                    Foreground="White"
+                    Text="لیست کاربران" />
+            </GroupBox.Header>
+
+            <ScrollViewer
+                CanContentScroll="True"
+                HorizontalScrollBarVisibility="Auto"
+                VerticalScrollBarVisibility="Auto">
+                <ListView
+                    Name="UserListView"
+                    d:DataContext="{d:DesignData UserModel}"
+                    handlers:SortHelper.AutoSort="True"
+                    IsSynchronizedWithCurrentItem="True"
+                    MouseRightButtonUp="UserListView_OnMouseRightButtonUp">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="حذف">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate DataType="models:UserModel">
+                                        <Button
+                                            Uid="{Binding Id}"
+                                            Margin="0 -5"
+                                            Padding="0"
+                                            Click="ButtonRemoveUser_OnClick"
+                                            Style="{StaticResource MaterialDesignFlatButton}"
+                                            ToolTip="حذف">
+                                            <materialDesign:PackIcon
+                                                Width="30"
+                                                Height="25"
+                                                Kind="Close" />
+                                        </Button>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn
+                                handlers:SortHelper.PropertyName="Id"
+                                DisplayMemberBinding="{Binding Id, IsAsync=True}"
+                                Header="ID" />
+                            <GridViewColumn handlers:SortHelper.PropertyName="color" Header="وضعیت">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate DataType="models:UserModel">
+                                        <materialDesign:PackIcon
+                                            Width="30"
+                                            Height="30"
+                                            Padding="0"
+                                            Foreground="{Binding StatusColor, IsAsync=True}"
+                                            Kind="CircleSlice8"
+                                            ToolTip="{Binding StatusName, IsAsync=True}" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn handlers:SortHelper.PropertyName="color" Header="نوع کاربر">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate DataType="models:UserModel">
+                                        <materialDesign:PackIcon
+                                            Width="30"
+                                            Height="30"
+                                            Padding="0"
+                                            Foreground="{Binding UserTypeColor, IsAsync=True}"
+                                            Kind="CircleSlice8"
+                                            ToolTip="{Binding UserTypeName, IsAsync=True}" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn
+                                handlers:SortHelper.PropertyName="Name"
+                                DisplayMemberBinding="{Binding Name, IsAsync=True}"
+                                Header="نام" />
+                            <GridViewColumn
+                                handlers:SortHelper.PropertyName="UserId"
+                                DisplayMemberBinding="{Binding UserId, IsAsync=True}"
+                                Header="شناسه کاربری" />
+                            <!--<GridViewColumn
+                            events:GridViewSort.PropertyName="Password"
+                            DisplayMemberBinding="{Binding Password, IsAsync=True}"
+                            Header="پسورد" />-->
+
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+
+            </ScrollViewer>
+        </GroupBox>
+    </Grid>
+</UserControl>
