@@ -5,7 +5,7 @@
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
     <LangVersion>latest</LangVersion>
-    <StartupObject>HafezWPFUI.App</StartupObject>
+    <StartupObject></StartupObject>
     <ApplicationIcon>Hafez.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>

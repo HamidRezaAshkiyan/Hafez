@@ -1,7 +1,7 @@
 Now
 [] user setting in json
 [] change DB data
-[] upgrade to .net 5
+[] upgrade library to .net core or .net standard
 [] Flutter app
 [x] add microsoft app analysis
 [x] remove extra stuff (look at DB)
@@ -10,8 +10,8 @@ Now
 [x] change logo
 [x] upgrade to .net core 3.1
 
-
 Future
+[] upgrade to .net 5?
 [] sqllite?
 [] add twitter integration
 [] change app color?
