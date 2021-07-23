@@ -7,6 +7,9 @@
     <LangVersion>latest</LangVersion>
     <StartupObject></StartupObject>
     <ApplicationIcon>Hafez.ico</ApplicationIcon>
+    <Company>Hafez co</Company>
+    <Product>Hafez</Product>
+    <Authors>Hafez co</Authors>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="App_Start\**" />
@@ -20,6 +23,8 @@
     <None Remove="Gallery\Logo\Sample\Hafez.png" />
     <None Remove="Resources\Fonts\Vazir.ttf" />
     <None Remove="Resources\Fonts\VazirFD.ttf" />
+    <None Remove="Resources\Images\Hafez.png" />
+    <None Remove="Resources\Images\index.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Gallery\Album\Sample\Hafez.png">
@@ -35,6 +40,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Fonts\VazirFD.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Hafez.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\index.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
