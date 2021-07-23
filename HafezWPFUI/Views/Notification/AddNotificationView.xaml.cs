@@ -1,4 +1,5 @@
-﻿using MahApps.Metro.Controls;
+﻿using FluentValidation.Results;
+using MahApps.Metro.Controls;
 using System;
 using System.Data;
 using System.Linq;
@@ -24,8 +25,8 @@ namespace HafezWPFUI.Views.Notification
             //DataContext = Notification;
         }
 
-        private bool _isEditMode;
-        public NotificationGroupModel SelectedNotificationGroup { get; set; }
+        private bool                   _isEditMode;
+        public  NotificationGroupModel SelectedNotificationGroup { get; set; }
 
         public char TypeOfNotification { get; set; } = 'L';
         //private NotificationModel Notification { get; set; } = new NotificationModel();
@@ -54,14 +55,14 @@ namespace HafezWPFUI.Views.Notification
 
         public void FillControlsByNotificationModel(NotificationModel notification)
         {
-            TxtNotificationId.Text = notification.Id.ToString();
-            TxtNotificationName.Text = notification.Name;
+            TxtNotificationId.Text          = notification.Id.ToString();
+            TxtNotificationName.Text        = notification.Name;
             TxtNotificationDescription.Text = notification.Description;
-            TxtNotificationSortId.Text = notification.SortId.ToString();
+            TxtNotificationSortId.Text      = notification.SortId.ToString();
 
             //ComboBoxGroupName.SelectedItem = ComboBoxGroupName.Items.Cast<NotificationGroupModel>()
             ComboBoxGroupName.SelectedItem = ComboBoxGroupName.Items.Cast<NotificationGroupModel>()
-                .First(x => x.Id == notification.GroupId);
+                                                              .First(x => x.Id == notification.GroupId);
 
             /*foreach (NotificationGroupModel notificationGroup in ComboBoxGroupName.Items)
                 if (notificationGroup.Id == notification.GroupId)
@@ -73,14 +74,14 @@ namespace HafezWPFUI.Views.Notification
 
         public void FillGroupNameComboBox()
         {
-            var notificationGroups = GetAllNotificationGroup_Obsolete();
+            DataTable notificationGroups = GetAllNotificationGroup_Obsolete();
 
             ComboBoxGroupName.Items.Clear();
             foreach ( DataRow notificationGroupsRow in notificationGroups.Rows )
             {
-                var notificationGroup = new NotificationGroupModel
+                NotificationGroupModel notificationGroup = new NotificationGroupModel
                 {
-                    Id = Convert.ToInt32(notificationGroupsRow["Id"]),
+                    Id   = Convert.ToInt32(notificationGroupsRow["Id"]),
                     Name = notificationGroupsRow["Name"].ToString()
                 };
 
@@ -103,29 +104,31 @@ namespace HafezWPFUI.Views.Notification
                 }
 
                 //Create Model
-                var notification = new NotificationModel
+                NotificationModel notification = new NotificationModel
                 {
                     NotificationType = TypeOfNotification,
-                    Description = TxtNotificationDescription.Text,
-                    Name = TxtNotificationName.Text,
-                    SortId = Convert.ToInt32(TxtNotificationSortId.Text),
-                    GroupId = ((NotificationGroupModel)ComboBoxGroupName.SelectedItem).Id
+                    Description      = TxtNotificationDescription.Text,
+                    Name             = TxtNotificationName.Text,
+                    SortId           = Convert.ToInt32(TxtNotificationSortId.Text),
+                    GroupId          = ((NotificationGroupModel) ComboBoxGroupName.SelectedItem).Id
                 };
                 if ( IsEditMode )
+                {
                     notification.Id = Convert.ToInt32(TxtNotificationId.Text);
+                }
 
                 #region Test
 
                 if ( notification.GroupId != 2 )
                 {
-                    TypeOfNotification = (char) Enums.NotificationType.Local;
+                    TypeOfNotification            = (char) Enums.NotificationType.Local;
                     notification.NotificationType = TypeOfNotification;
                 }
 
                 #endregion
 
                 //Validate Data
-                var result = await new NotificationValidator().ValidateAsync(notification);
+                ValidationResult result = await new NotificationValidator().ValidateAsync(notification);
                 if ( result.IsValid == false )
                 {
                     MessageBoxHandler.ShowMessage("خطا", result.Errors[0].ErrorMessage);
@@ -143,9 +146,9 @@ namespace HafezWPFUI.Views.Notification
                     MessageBoxHandler.ShowMessage("ثبت", "اعلان با موفقیت ثبت شد");
                 }
 
-                Main.NotificationList.Visibility = Visibility.Visible;
+                Main.NotificationList.Visibility                = Visibility.Visible;
                 Main.NotificationList.SelectedNotificationGroup = SelectedNotificationGroup;
-                Visibility = Visibility.Collapsed;
+                Visibility                                      = Visibility.Collapsed;
 
                 //UPDATE BINDING
                 //todo update with adding to binding source
@@ -169,10 +172,10 @@ namespace HafezWPFUI.Views.Notification
                     await Main.NotificationList.GetNotificationListByType();
 
                 //CLEAR Fields
-                TxtNotificationSortId.Text = "0";
-                TxtNotificationId.Text = "";
+                TxtNotificationSortId.Text      = "0";
+                TxtNotificationId.Text          = "";
                 TxtNotificationDescription.Text = "";
-                TypeOfNotification = (char) Enums.NotificationType.Local;
+                TypeOfNotification              = (char) Enums.NotificationType.Local;
             }
             catch ( Exception exception )
             {
@@ -182,9 +185,9 @@ namespace HafezWPFUI.Views.Notification
 
         private bool ValidateForm()
         {
-            var output = !(string.IsNullOrWhiteSpace(TxtNotificationDescription.Text)
-                           || string.IsNullOrWhiteSpace(TxtNotificationName.Text)
-                           || ComboBoxGroupName.SelectedIndex == -1);
+            bool output = !(string.IsNullOrWhiteSpace(TxtNotificationDescription.Text)
+                         || string.IsNullOrWhiteSpace(TxtNotificationName.Text)
+                         || ComboBoxGroupName.SelectedIndex == -1);
 
             return output;
         }
@@ -196,10 +199,10 @@ namespace HafezWPFUI.Views.Notification
             try
             {
                 //Create Model
-                var notificationGroup = new NotificationGroupModel { Name = TxtGroupName.Text };
+                NotificationGroupModel notificationGroup = new NotificationGroupModel {Name = TxtGroupName.Text};
 
                 //Validate Model
-                var result = new NotificationGroupValidator().Validate(notificationGroup);
+                ValidationResult result = new NotificationGroupValidator().Validate(notificationGroup);
                 if ( result.IsValid == false )
                 {
                     MessageBoxHandler.ShowMessage("هشدار", result.Errors[0].ErrorMessage);
@@ -214,7 +217,7 @@ namespace HafezWPFUI.Views.Notification
                 TxtGroupName.Text = "";
 
                 //UPDATE BINDING
-                var parent = this.TryFindParent<MainWindowView>();
+                MainWindowView parent = this.TryFindParent<MainWindowView>();
                 parent.NotificationGroupList.FillListView(GetAllNotificationGroup_Obsolete());
                 FillGroupNameComboBox();
 

@@ -12,7 +12,7 @@ namespace HafezWPFUI
 {
     public class Bootstrapper : BootstrapperBase
     {
-        private SimpleContainer _container = new SimpleContainer();
+        private SimpleContainer _container = new();
 
         public Bootstrapper()
         {
@@ -21,13 +21,13 @@ namespace HafezWPFUI
 
         public static IMapper ConfigureAutoMapper()
         {
-            var config = new MapperConfiguration(cfg =>
+            MapperConfiguration config = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<PersonalDuaListModel, PersonalDuaListDisplayModel>();
                 cfg.CreateMap<PersonalDuaListDisplayModel, PersonalDuaListModel>();
             });
 
-            var output = config.CreateMapper();
+            IMapper output = config.CreateMapper();
 
             return output;
         }
@@ -49,11 +49,12 @@ namespace HafezWPFUI
             // .Singleton<ListenerWindowView>();
 
             GetType().Assembly.GetTypes()
-                .Where(type => type.IsClass)
-                .Where(type => type.Name.EndsWith("ViewModel"))
-                .ToList()
-                .ForEach(viewModelType => _container.RegisterPerRequest(
-                    viewModelType, viewModelType.ToString(), viewModelType));
+                     .Where(type => type.IsClass)
+                     .Where(type => type.Name.EndsWith("ViewModel"))
+                     .ToList()
+                     .ForEach(viewModelType => _container.RegisterPerRequest(
+                                                                             viewModelType, viewModelType.ToString(),
+                                                                             viewModelType));
         }
 
         protected override void OnStartup(object sender, StartupEventArgs e)

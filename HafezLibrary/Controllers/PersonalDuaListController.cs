@@ -14,9 +14,9 @@ namespace HafezLibrary.Controllers
         {
             using IDbConnection connection = new SqlConnection(SqlConnector.GetConnectionString());
 
-            var p = new DynamicParameters();
+            DynamicParameters p = new DynamicParameters();
             p.Add("@DuaName", model.DuaName);
-            p.Add("@Id", 0, DbType.Int32, ParameterDirection.Output);
+            p.Add("@Id",      0, DbType.Int32, ParameterDirection.Output);
 
             connection.Execute("spPersonalDua_Insert", p, commandType: CommandType.StoredProcedure);
 
@@ -29,8 +29,8 @@ namespace HafezLibrary.Controllers
         {
             const string query = "SELECT * FROM PersonalDuaList";
 
-            using IDbConnection connection = new SqlConnection(SqlConnector.GetConnectionString());
-            var output = connection.Query<PersonalDuaListModel>(query).ToList();
+            using IDbConnection        connection = new SqlConnection(SqlConnector.GetConnectionString());
+            List<PersonalDuaListModel> output     = connection.Query<PersonalDuaListModel>(query).ToList();
 
             return output;
         }

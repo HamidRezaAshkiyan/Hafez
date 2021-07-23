@@ -15,7 +15,7 @@ namespace HafezWPFUI.Views
     public partial class SizeHandlerView
     {
         private ObservableCollection<string> Fonts { get; } =
-            new ObservableCollection<string>(SystemFontFamilies.Select(x => x.Source).ToList());
+            new(SystemFontFamilies.Select(x => x.Source).ToList());
 
         public SizeHandlerView()
         {
@@ -33,22 +33,22 @@ namespace HafezWPFUI.Views
         {
             ComboBoxNotificationPanelFontFamily.SelectedItem = UserConfig.NotificationPanelFontFamily;
             ComboBoxNotificationTitleFontFamily.SelectedItem = UserConfig.NotificationTitleFontFamily;
-            ComboBoxQuranPanelFontFamily.SelectedItem = UserConfig.QuranPanelFontFamily;
-            ComboBoxQuranTitleFontFamily.SelectedItem = UserConfig.QuranTitleFontFamily;
-            ComboBoxMafatihPanelFontFamily.SelectedItem = UserConfig.MafatihPanelFontFamily;
-            ComboBoxMafatihTitleFontFamily.SelectedItem = UserConfig.MafatihTitleFontFamily;
+            ComboBoxQuranPanelFontFamily.SelectedItem        = UserConfig.QuranPanelFontFamily;
+            ComboBoxQuranTitleFontFamily.SelectedItem        = UserConfig.QuranTitleFontFamily;
+            ComboBoxMafatihPanelFontFamily.SelectedItem      = UserConfig.MafatihPanelFontFamily;
+            ComboBoxMafatihTitleFontFamily.SelectedItem      = UserConfig.MafatihTitleFontFamily;
         }
 
         private void ComboBoxPanelHeight_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
-                var senderComboBox = sender as ComboBox;
-                var panelHeight = ((ComboBoxItem) senderComboBox.SelectedItem).Content.ToString();
-                var propertyName = senderComboBox.GetPropertyName();
+                ComboBox senderComboBox = sender as ComboBox;
+                string?  panelHeight    = ((ComboBoxItem) senderComboBox.SelectedItem).Content.ToString();
+                string   propertyName   = senderComboBox.GetPropertyName();
 
                 //DB update
-                UserConfigModel.Update(new Dictionary<string, string> { { propertyName, panelHeight } });
+                UserConfigModel.Update(new Dictionary<string, string> {{propertyName, panelHeight}});
 
                 //GlobalConfig update
                 propertyName.SetProperty(panelHeight);
@@ -66,13 +66,13 @@ namespace HafezWPFUI.Views
         {
             try
             {
-                var senderComboBox = sender as ComboBox;
-                var panelName = GetPanelName(Convert.ToInt32(senderComboBox.Uid));
-                var fontSize = ((ComboBoxItem) senderComboBox.SelectedItem).Content.ToString();
-                var propertyName = senderComboBox.GetPropertyName();
+                ComboBox senderComboBox = sender as ComboBox;
+                string   panelName      = GetPanelName(Convert.ToInt32(senderComboBox.Uid));
+                string?  fontSize       = ((ComboBoxItem) senderComboBox.SelectedItem).Content.ToString();
+                string   propertyName   = senderComboBox.GetPropertyName();
 
                 //DB update
-                UserConfigModel.Update(new Dictionary<string, string> { { propertyName, fontSize } });
+                UserConfigModel.Update(new Dictionary<string, string> {{propertyName, fontSize}});
 
                 //GlobalConfig update
                 propertyName.SetProperty(fontSize);
@@ -92,15 +92,18 @@ namespace HafezWPFUI.Views
         {
             try
             {
-                var senderComboBox = sender as ComboBox;
-                var panelName = GetPanelName(Convert.ToInt32(senderComboBox.Uid));
+                ComboBox senderComboBox = sender as ComboBox;
+                string   panelName      = GetPanelName(Convert.ToInt32(senderComboBox.Uid));
                 if ( senderComboBox.SelectedItem == null )
+                {
                     return;
-                var familyName = senderComboBox.SelectedItem.ToString();
-                var propertyName = senderComboBox.GetPropertyName();
+                }
+
+                string? familyName   = senderComboBox.SelectedItem.ToString();
+                string  propertyName = senderComboBox.GetPropertyName();
 
                 //DB update
-                UserConfigModel.Update(new Dictionary<string, string> { { propertyName, familyName } });
+                UserConfigModel.Update(new Dictionary<string, string> {{propertyName, familyName}});
 
                 //GlobalConfig update
                 propertyName.SetProperty(familyName);

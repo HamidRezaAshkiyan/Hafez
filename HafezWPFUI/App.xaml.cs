@@ -12,21 +12,21 @@ namespace HafezWPFUI
 {
     public partial class App
     {
-        public Volume Volume { get; set; } = new Volume { Value = 10 };
+        public Volume Volume { get; set; } = new() {Value = 10};
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             ControlHandlers.PhysicalKeyValidation();
 
             Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Debug()
-                .WriteTo.Debug()
-                .WriteTo.File("Logs\\Log.log", fileSizeLimitBytes: 10000, retainedFileCountLimit: 5)
-                //.WriteTo.RollingFile("Logs\\Log.log", fileSizeLimitBytes: 10000, retainedFileCountLimit: 5)
-                .CreateLogger();
+                         .MinimumLevel.Debug()
+                         .WriteTo.Debug()
+                         .WriteTo.File("Logs\\Log.log", fileSizeLimitBytes: 10000, retainedFileCountLimit: 5)
+                         //.WriteTo.RollingFile("Logs\\Log.log", fileSizeLimitBytes: 10000, retainedFileCountLimit: 5)
+                         .CreateLogger();
 
             AppCenter.Start("0e71973a-7f39-4947-ab8d-70bb5dd33445",
-                   typeof(Analytics), typeof(Crashes));
+                            typeof(Analytics), typeof(Crashes));
 
             Log.Information("Application Stated.");
         }

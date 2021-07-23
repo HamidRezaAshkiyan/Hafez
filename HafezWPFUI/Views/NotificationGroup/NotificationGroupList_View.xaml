@@ -13,22 +13,6 @@
 
     <UserControl.Resources>
         <ResourceDictionary>
-            <ContextMenu
-                x:Key="RightClickMenu"
-                FontFamily="{StaticResource BaseFontFamily}"
-                Foreground="White">
-                <MenuItem Click="MenuItemNewNotificationGroup_OnClick" Header="ثبت گروه" />
-                <MenuItem Click="MenuItemEditNewNotificationGroup_OnClick" Header="ویرایش گروه" />
-                <MenuItem Click="MenuItemShowNotification_OnClick" Header="نمایش اعلانات" />
-                <Separator />
-                <MenuItem Click="MenuItemImportGroupNotifications_OnClick" Header="وارد کردن به گروه" />
-                <MenuItem Click="MenuItemExportGroupNotifications_OnClick" Header="خروجی گرفتن از گروه" />
-                <Separator />
-                <MenuItem Click="MenuItemShowGroupNotifications_OnClick" Header="پخش گروه" />
-                <Separator />
-                <MenuItem Click="MenuItemShowGroupSortedNotifications_OnClick" Header="پخش گروه با الویت" />
-                <MenuItem Click="MenuItemRemoveSortIds_OnClick" Header="پاک کردن اولویت ها" />
-            </ContextMenu>
         </ResourceDictionary>
     </UserControl.Resources>
 

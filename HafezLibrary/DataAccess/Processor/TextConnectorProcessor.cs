@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using HafezLibrary.Models;
+using System.Reflection;
 
 namespace HafezLibrary.DataAccess.Processor
 {
@@ -18,7 +19,7 @@ namespace HafezLibrary.DataAccess.Processor
 
         public static List<string> LoadFile(this string file)
         {
-            if (!File.Exists(file))
+            if ( !File.Exists(file) )
             {
                 return new List<string>();
             }
@@ -28,25 +29,25 @@ namespace HafezLibrary.DataAccess.Processor
 
         public static List<T> LoadFromTextFile<T>(string filePath) where T : class, new()
         {
-            var lines = File.ReadAllLines(filePath).ToList();
-            var output = new List<T>();
-            T entry = new T();
-            var cols = entry.GetType().GetProperties();
+            List<string>   lines  = File.ReadAllLines(filePath).ToList();
+            List<T>        output = new List<T>();
+            T              entry  = new T();
+            PropertyInfo[] cols   = entry.GetType().GetProperties();
 
             // Checks to be sure we have at least one header row and one data row
-            if (lines.Count < 2)
+            if ( lines.Count < 2 )
             {
                 throw new IndexOutOfRangeException("The file was either empty or missing.");
             }
 
             // Splits the header into one column header per entry
-            var headers = lines[0].Split(',');
+            string[] headers = lines[0].Split(',');
 
             // Removes the header row from the lines so we don't
             // have to worry about skipping over that first row.
             lines.RemoveAt(0);
 
-            foreach (var row in lines)
+            foreach ( string row in lines )
             {
                 entry = new T();
 
@@ -54,18 +55,18 @@ namespace HafezLibrary.DataAccess.Processor
                 // of this row matches the index of the header so the
                 // FirstName column header lines up with the FirstName
                 // value in this row.
-                var values = row.Split(',');
+                string[] values = row.Split(',');
 
                 // Loops through each header entry so we can compare that
                 // against the list of columns from reflection. Once we get
                 // the matching column, we can do the "SetValue" method to 
                 // set the column value for our entry variable to the vals
                 // item at the same index as this particular header.
-                for (var i = 0; i < headers.Length; i++)
+                for ( int i = 0; i < headers.Length; i++ )
                 {
-                    foreach (var col in cols)
+                    foreach ( PropertyInfo col in cols )
                     {
-                        if (col.Name == headers[i])
+                        if ( col.Name == headers[i] )
                         {
                             col.SetValue(entry, Convert.ChangeType(values[i], col.PropertyType));
                         }
@@ -80,18 +81,20 @@ namespace HafezLibrary.DataAccess.Processor
 
         public static void SaveToTextFile<T>(List<T> data, string filePath) where T : class
         {
-            var lines = new List<string>();
-            var line = new StringBuilder();
+            List<string>  lines = new List<string>();
+            StringBuilder line  = new StringBuilder();
 
-            if (data == null || data.Count == 0)
+            if ( data == null || data.Count == 0 )
             {
-                throw new ArgumentNullException(nameof(data), "You must populate the data parameter with at least one value.");
+                throw new ArgumentNullException(nameof(data),
+                                                "You must populate the data parameter with at least one value.");
             }
-            var cols = data[0].GetType().GetProperties();
+
+            PropertyInfo[] cols = data[0].GetType().GetProperties();
 
             // Loops through each column and gets the name so it can comma 
             // separate it into the header row.
-            foreach (var col in cols)
+            foreach ( PropertyInfo col in cols )
             {
                 line.Append(col.Name);
                 line.Append(",");
@@ -101,11 +104,11 @@ namespace HafezLibrary.DataAccess.Processor
             // the last comma from the end first).
             lines.Add(line.ToString().Substring(0, line.Length - 1));
 
-            foreach (var row in data)
+            foreach ( T row in data )
             {
                 line = new StringBuilder();
 
-                foreach (var col in cols)
+                foreach ( PropertyInfo col in cols )
                 {
                     line.Append(col.GetValue(row));
                     line.Append(",");
@@ -155,7 +158,7 @@ namespace HafezLibrary.DataAccess.Processor
 
         public static void SaveToNotificationGroupFile(this List<NotificationModel> models, string fileName)
         {
-            var lines = models.Select(n => $"{n.Description},{n.Name}").ToList();
+            List<string> lines = models.Select(n => $"{n.Description},{n.Name}").ToList();
             //lines.Insert(0, $"Description,Name"); // add header
 
             File.WriteAllLines(fileName.FullFilePath(), lines, Encoding.UTF8);

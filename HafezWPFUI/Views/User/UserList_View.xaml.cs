@@ -59,9 +59,12 @@ namespace HafezWPFUI.Views.User
         private void CreateRightClickMenu(object sender, RoutedEventArgs e)
         {
             if ( !(FindResource("RightClickMenu") is ContextMenu cm) )
+            {
                 return;
+            }
+
             cm.PlacementTarget = sender as Button;
-            cm.IsOpen = true;
+            cm.IsOpen          = true;
         }
 
         private void MenuItemNewUser_OnClick(object sender, RoutedEventArgs e)
@@ -71,7 +74,6 @@ namespace HafezWPFUI.Views.User
                 Main.ClearPage();
                 Main.AddUser.IsEditMode = false;
                 Main.AddUser.Visibility = Visibility.Visible;
-
             }
             catch ( Exception exception )
             {
@@ -83,7 +85,7 @@ namespace HafezWPFUI.Views.User
         {
             try
             {
-                var user = UserListView.SelectedItem as UserModel;
+                UserModel user = UserListView.SelectedItem as UserModel;
 
                 Main.AddUser.FillControllers(user);
                 Main.ClearPage();
@@ -100,8 +102,8 @@ namespace HafezWPFUI.Views.User
         {
             try
             {
-                var button = sender as Button;
-                var deleteUser = new UserModel { Id = Convert.ToInt32(button.Uid) };
+                Button    button     = sender as Button;
+                UserModel deleteUser = new UserModel {Id = Convert.ToInt32(button.Uid)};
                 UserController.DeleteUser(deleteUser);
                 UserListView.ItemsSource = UserController.GetAllUserList();
                 //FillListView(UserController.GetAllUser());

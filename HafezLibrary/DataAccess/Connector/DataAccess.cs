@@ -10,21 +10,21 @@ namespace HafezLibrary.DataAccess.Connector
         /*private static readonly SqlConnection Con = new SqlConnection(
             @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename='|DataDirectory|\Data\DB.mdf';Integrated Security=True;Connect Timeout=30");*/
 
-        private static readonly SqlConnection Con = new SqlConnection(GetConnectionString());
+        private static readonly SqlConnection  Con = new SqlConnection(GetConnectionString());
         private static readonly SqlDataAdapter Sda = new SqlDataAdapter();
-        private static readonly SqlCommand Cmd = new SqlCommand();
-        private static DataTable _dt;
+        private static readonly SqlCommand     Cmd = new SqlCommand();
+        private static          DataTable      _dt;
 
         public static DataTable Select(string query) // method for database select query
         {
             try
             {
-                Cmd.Connection = Con;
+                Cmd.Connection    = Con;
                 Sda.SelectCommand = Cmd;
 
                 if ( Connect() )
                 {
-                    _dt = new DataTable();
+                    _dt             = new DataTable();
                     Cmd.CommandText = query;
                     Sda.Fill(_dt);
                 }
@@ -48,8 +48,12 @@ namespace HafezLibrary.DataAccess.Connector
 
             try
             {
-                if ( !Connect() ) return;
-                Cmd.Connection = Con;
+                if ( !Connect() )
+                {
+                    return;
+                }
+
+                Cmd.Connection  = Con;
                 Cmd.CommandText = query;
                 Cmd.ExecuteNonQuery();
             }

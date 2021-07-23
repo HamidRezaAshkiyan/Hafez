@@ -384,7 +384,8 @@
                                 SelectionChanged="ComboBoxQuranSure_OnSelectionChanged">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
-                                        <TextBlock d:DataContext="{d:DesignInstance models:SureListModel}" FontFamily="{DynamicResource BasePersianNumberFontFamily}">
+                                        <TextBlock d:DataContext="{d:DesignInstance models:SureListModel}"
+                                                   FontFamily="{DynamicResource BasePersianNumberFontFamily}">
                                             <TextBlock.Text>
                                                 <MultiBinding StringFormat="{}{0} - {1}">
                                                     <Binding Path="Id" />
@@ -406,7 +407,8 @@
                                 SelectionChanged="ComboBoxQuranAyah_OnSelectionChanged">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
-                                        <TextBlock d:DataContext="{d:DesignInstance models:QuranModel}" Text="{Binding AyahID}" />
+                                        <TextBlock d:DataContext="{d:DesignInstance models:QuranModel}"
+                                                   Text="{Binding AyahID}" />
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>
                             </ComboBox>

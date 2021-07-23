@@ -8,7 +8,6 @@ using HafezLibrary.Models;
 
 namespace HafezLibrary.DataAccess.Connector
 {
-
     // This is build with Excel COM but you can do it with a package office.interop...
     // Find a better library
     public static class ExcelConnector
@@ -20,17 +19,17 @@ namespace HafezLibrary.DataAccess.Connector
         {
             try
             {
-                var xlApp = new Application();
-                var hWnd = xlApp.Application.Hwnd;
-                var xlWorkbook = xlApp.Workbooks.Add();
-                var xlWorksheet = (Worksheet)xlWorkbook.ActiveSheet;
+                Application xlApp       = new Application();
+                int         hWnd        = xlApp.Application.Hwnd;
+                Workbook    xlWorkbook  = xlApp.Workbooks.Add();
+                Worksheet   xlWorksheet = (Worksheet) xlWorkbook.ActiveSheet;
                 xlWorksheet.Name = "خروجی اطلاعات";
 
                 // var array = new List<object> { xlApp, xlWorkbook, xlWorksheet };
 
-                var rowsCount = input.Count;
+                int rowsCount = input.Count;
 
-                for ( var i = 0; i < rowsCount; i++ )
+                for ( int i = 0; i < rowsCount; i++ )
                 {
                     xlWorksheet.Cells[i + 1, 1] = input[i].SortId;
                     xlWorksheet.Cells[i + 1, 2] = input[i].Description;
@@ -39,13 +38,12 @@ namespace HafezLibrary.DataAccess.Connector
 
                 xlWorkbook.SaveAs(saveFilePath, AccessMode: XlSaveAsAccessMode.xlExclusive);
 
-                GetWindowThreadProcessId((IntPtr) hWnd, out var processId);
+                GetWindowThreadProcessId((IntPtr) hWnd, out uint processId);
                 Process.GetProcessById((int) processId).Kill();
 
                 // xlWorkbook.Close();
                 // xlApp.Quit();
                 // array.ReleaseResources();
-
             }
             catch ( Exception exception )
             {
@@ -55,90 +53,87 @@ namespace HafezLibrary.DataAccess.Connector
 
         public static List<NotificationModel> ImportFromExcelToList(string filePath)
         {
-            var output = new List<NotificationModel>();
-            
+            List<NotificationModel> output = new List<NotificationModel>();
+
             try
             {
-                var xlApp = new Application();
-                var hWnd = xlApp.Application.Hwnd;
+                Application xlApp = new Application();
+                int         hWnd  = xlApp.Application.Hwnd;
                 // var xlWorkbook = xlApp.Workbooks.Open(filePath);
-                var xlWorkbooks = xlApp.Workbooks;
-                var xlWorkbook = xlWorkbooks.Open(filePath); // Fixed
-                var xlWorksheet = xlWorkbook.Sheets[1];
-                var xlRange = xlWorksheet.UsedRange;
+                Workbooks xlWorkbooks = xlApp.Workbooks;
+                Workbook  xlWorkbook  = xlWorkbooks.Open(filePath); // Fixed
+                dynamic   xlWorksheet = xlWorkbook.Sheets[1];
+                dynamic   xlRange     = xlWorksheet.UsedRange;
                 //var array = new List<object> {  xlRange, xlWorksheet, xlWorkbook, xlApp};
-            
+
                 int colCount = xlRange.Columns.Count;
                 int rowCount = xlRange.Rows.Count;
                 switch ( colCount )
                 {
                     case 1:
                         {
-                            for ( var i = 1; i <= rowCount; i++ )
+                            for ( int i = 1; i <= rowCount; i++ )
                             {
-                                var notificationModel = new NotificationModel
+                                NotificationModel notificationModel = new NotificationModel
                                 {
-                                    SortId = 0,
-                                    Description = xlRange.Cells[i, 1].Value.ToString(),
+                                    SortId = 0, Description = xlRange.Cells[i, 1].Value.ToString()
                                 };
-            
+
                                 output.Add(notificationModel);
                             }
-            
+
                             break;
                         }
                     case 2:
                         {
-                            for ( var i = 1; i <= rowCount; i++ )
+                            for ( int i = 1; i <= rowCount; i++ )
                             {
-                                var notificationModel = new NotificationModel
+                                NotificationModel notificationModel = new NotificationModel
                                 {
                                     SortId = xlRange.Cells[i, 1].Value == null
-                                        ? 0
-                                        : Convert.ToInt32(xlRange.Cells[i, 1].Value.ToString()),
-                                    Description = xlRange.Cells[i, 2].Value.ToString(),
+                                                 ? 0
+                                                 : Convert.ToInt32(xlRange.Cells[i, 1].Value.ToString()),
+                                    Description = xlRange.Cells[i, 2].Value.ToString()
                                 };
-            
+
                                 output.Add(notificationModel);
                             }
-            
+
                             break;
                         }
                     case 3:
                         {
-                            for ( var i = 1; i <= rowCount; i++ )
+                            for ( int i = 1; i <= rowCount; i++ )
                             {
-                                var notificationModel = new NotificationModel
+                                NotificationModel notificationModel = new NotificationModel
                                 {
                                     SortId = xlRange.Cells[i, 1].Value == null
-                                        ? 0
-                                        : Convert.ToInt32(xlRange.Cells[i, 1].Value.ToString()),
-            
+                                                 ? 0
+                                                 : Convert.ToInt32(xlRange.Cells[i, 1].Value.ToString()),
                                     Description = xlRange.Cells[i, 2].Value.ToString(),
-            
                                     Name = xlRange.Cells[i, 3].Value == null
-                                        ? string.Empty
-                                        : xlRange.Cells[i, 3].Value.ToString()
+                                               ? string.Empty
+                                               : xlRange.Cells[i, 3].Value.ToString()
                                 };
-            
+
                                 output.Add(notificationModel);
                             }
-            
+
                             break;
                         }
                 }
-            
+
                 // xlWorkbook.Close();
                 // xlWorkbooks.Close();
                 // xlApp.Quit();
-            
-                GetWindowThreadProcessId((IntPtr) hWnd, out var processId);
+
+                GetWindowThreadProcessId((IntPtr) hWnd, out uint processId);
                 Process.GetProcessById((int) processId).Kill();
-            
+
                 // xlWorkbook.Close(0);
                 // xlApp.Quit();
                 // array.ReleaseResources();
-            
+
                 // Marshal.ReleaseComObject(xlWorkbook);
                 // Marshal.ReleaseComObject(xlWorkbooks);
                 // Marshal.ReleaseComObject(xlApp);
@@ -147,7 +142,7 @@ namespace HafezLibrary.DataAccess.Connector
             {
                 Console.WriteLine(exception);
             }
-            
+
             return output;
         }
 
@@ -158,25 +153,25 @@ namespace HafezLibrary.DataAccess.Connector
 
         public static List<PersonalDuaModel> ImportPersonalDuaFromExcelToList(string filePath)
         {
-            var output = new List<PersonalDuaModel>();
+            List<PersonalDuaModel> output = new List<PersonalDuaModel>();
 
             try
             {
-                var xlApp = new Application();
-                var hWnd = xlApp.Application.Hwnd;
-                var xlWorkbook = xlApp.Workbooks.Open(filePath);
-                var xlWorksheet = xlWorkbook.Sheets[1];
-                var xlRange = xlWorksheet.UsedRange;
+                Application xlApp       = new Application();
+                int         hWnd        = xlApp.Application.Hwnd;
+                Workbook    xlWorkbook  = xlApp.Workbooks.Open(filePath);
+                dynamic     xlWorksheet = xlWorkbook.Sheets[1];
+                dynamic     xlRange     = xlWorksheet.UsedRange;
                 // var array = new List<object> { xlApp, xlWorkbook, xlWorksheet, xlRange };
 
                 // int colCount = xlRange.Columns.Count;
                 int rowCount = xlRange.Rows.Count;
 
-                for ( var i = 1; i <= rowCount; i++ )
+                for ( int i = 1; i <= rowCount; i++ )
                 {
-                    var personalDua = new PersonalDuaModel
+                    PersonalDuaModel personalDua = new PersonalDuaModel
                     {
-                        ArabicText = xlRange.Cells[i, 1].Value.ToString(),
+                        ArabicText  = xlRange.Cells[i, 1].Value.ToString(),
                         PersianText = xlRange.Cells[i, 2].Value.ToString()
                     };
 
@@ -187,7 +182,7 @@ namespace HafezLibrary.DataAccess.Connector
                 // xlApp.Quit();
                 // array.ReleaseResources();
 
-                GetWindowThreadProcessId((IntPtr) hWnd, out var processId);
+                GetWindowThreadProcessId((IntPtr) hWnd, out uint processId);
                 Process.GetProcessById((int) processId).Kill();
             }
             catch ( Exception exception )
@@ -206,8 +201,11 @@ namespace HafezLibrary.DataAccess.Connector
             //cleanup
 
             //release com objects to fully kill excel process from running in the background
-            foreach ( var o in input )
+            foreach ( object o in input )
+            {
                 Marshal.ReleaseComObject(o);
+            }
+
             GC.Collect();
             GC.WaitForPendingFinalizers();
         }

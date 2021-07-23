@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using HafezLibrary.DataAccess.Connector;
 using HafezLibrary.Models;
+using System.Collections.Generic;
 using static HafezLibrary.Controllers.NotificationController;
 using static HafezWPFUI.GlobalConfig;
 
@@ -14,20 +15,24 @@ namespace HafezWPFUI.Helper
         {
             try
             {
-                var notificationModels = await Task.Run(() => ExcelConnector.ImportFromExcelToList(filePath));
+                List<NotificationModel> notificationModels =
+                    await Task.Run(() => ExcelConnector.ImportFromExcelToList(filePath));
 
-                foreach ( var notificationModel in notificationModels )
+                foreach ( NotificationModel notificationModel in notificationModels )
                 {
-                    notificationModel.GroupId = notificationGroup.Id;
+                    notificationModel.GroupId          = notificationGroup.Id;
                     notificationModel.NotificationType = 'L';
 
                     if ( string.IsNullOrWhiteSpace(notificationModel.Name) )
+                    {
                         notificationModel.Name = notificationGroup.Name;
+                    }
                 }
 
                 await ImportNotificationListDataAsync(notificationModels);
 
-                Main.NotificationList.NotificationListView.ItemsSource = await Main.NotificationList.GetNotificationListByType();
+                Main.NotificationList.NotificationListView.ItemsSource =
+                    await Main.NotificationList.GetNotificationListByType();
             }
             catch ( Exception exception )
             {

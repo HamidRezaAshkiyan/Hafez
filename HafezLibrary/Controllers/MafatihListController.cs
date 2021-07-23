@@ -14,8 +14,8 @@ namespace HafezLibrary.Controllers
         {
             const string query = "SELECT * FROM MafatihList";
 
-            using IDbConnection connection = new SqlConnection(SqlConnector.GetConnectionString());
-            var output = connection.Query<MafatihListModel>(query).ToList();
+            using IDbConnection    connection = new SqlConnection(SqlConnector.GetConnectionString());
+            List<MafatihListModel> output     = connection.Query<MafatihListModel>(query).ToList();
 
             return output;
         }

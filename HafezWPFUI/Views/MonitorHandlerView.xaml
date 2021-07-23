@@ -20,7 +20,8 @@
             <Style BasedOn="{StaticResource {x:Type ComboBox}}" TargetType="ComboBox">
                 <Setter Property="materialDesign:ComboBoxAssist.ClassicMode" Value="True" />
                 <Setter Property="FontSize" Value="18" />
-                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.InactiveCaptionTextBrushKey}}" />
+                <Setter Property="Foreground"
+                        Value="{DynamicResource {x:Static SystemColors.InactiveCaptionTextBrushKey}}" />
             </Style>
             <Style BasedOn="{StaticResource {x:Type ToggleButton}}" TargetType="ToggleButton">
                 <Setter Property="IsChecked" Value="False" />

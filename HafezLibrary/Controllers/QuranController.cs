@@ -15,7 +15,7 @@ namespace HafezLibrary.Controllers
             const string query = "SELECT * FROM Quran";
 
             using IDbConnection connection = new SqlConnection(SqlConnector.GetConnectionString());
-            var output = connection.Query<QuranModel>(query).ToList();
+            List<QuranModel>    output     = connection.Query<QuranModel>(query).ToList();
 
             return output;
         }
@@ -25,10 +25,10 @@ namespace HafezLibrary.Controllers
         {
             const string query = "SELECT AyahID FROM Quran WHERE suraID = @SureId";
 
-            var p = new { SureId = sureId };
+            var p = new {SureId = sureId};
 
             using IDbConnection connection = new SqlConnection(SqlConnector.GetConnectionString());
-            var outputList = connection.Query<QuranModel>(query, p).ToList();
+            List<QuranModel>    outputList = connection.Query<QuranModel>(query, p).ToList();
 
             return outputList.ToDataTable();
         }
@@ -37,10 +37,10 @@ namespace HafezLibrary.Controllers
         {
             const string query = "SELECT SuraID FROM Quran WHERE PageNumber = @PageNumber ORDER BY SuraID";
 
-            var p = new { PageNumber = pageNumber };
+            var p = new {PageNumber = pageNumber};
 
             using IDbConnection connection = new SqlConnection(SqlConnector.GetConnectionString());
-            var outputList = connection.Query<QuranModel>(query, p).ToList();
+            List<QuranModel>    outputList = connection.Query<QuranModel>(query, p).ToList();
 
             return outputList.ToDataTable();
         }
@@ -48,13 +48,14 @@ namespace HafezLibrary.Controllers
         public static DataTable GetAyahsByPageNumber(int pageNumber)
         {
             // BUG JOIN not impletement by dapper ( by me) implement it
-            const string query = "SELECT Quran.ID, AyahID, SuraName, AyahText, AyahPersianTranslation, AyahEnglishTranslation " +
-                                 "FROM Quran JOIN SureList ON Quran.SuraID = SureList.ID AND PageNumber = @PageNumber";
+            const string query =
+                "SELECT Quran.ID, AyahID, SuraName, AyahText, AyahPersianTranslation, AyahEnglishTranslation " +
+                "FROM Quran JOIN SureList ON Quran.SuraID = SureList.ID AND PageNumber = @PageNumber";
 
-            var p = new { PageNumber = pageNumber };
+            var p = new {PageNumber = pageNumber};
 
             using IDbConnection connection = new SqlConnection(SqlConnector.GetConnectionString());
-            var outputList = connection.Query<QuranModel>(query, p).ToList();
+            List<QuranModel>    outputList = connection.Query<QuranModel>(query, p).ToList();
 
             return outputList.ToDataTable();
         }

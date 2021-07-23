@@ -25,17 +25,21 @@ namespace HafezLibrary.DataAccess.Connector
 
         private static T GetItem<T>(DataRow dr)
         {
-            var temp = typeof(T);
-            var obj = Activator.CreateInstance<T>();
+            Type temp = typeof(T);
+            T    obj  = Activator.CreateInstance<T>();
 
             foreach ( DataColumn column in dr.Table.Columns )
             {
-                foreach ( var pro in temp.GetProperties() )
+                foreach ( PropertyInfo pro in temp.GetProperties() )
                 {
                     if ( pro.Name == column.ColumnName )
+                    {
                         pro.SetValue(obj, dr[column.ColumnName], null);
+                    }
                     else
+                    {
                         continue;
+                    }
                 }
             }
 
@@ -50,20 +54,20 @@ namespace HafezLibrary.DataAccess.Connector
         /// <returns></returns>
         public static DataTable ToDataTable<T>(this IEnumerable<T> items)
         {
-            var dataTable = new DataTable(typeof(T).Name);
+            DataTable dataTable = new DataTable(typeof(T).Name);
             //Get all the properties by using reflection   
-            var props = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            PropertyInfo[] props = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
-            foreach ( var prop in props )
+            foreach ( PropertyInfo prop in props )
             {
                 //Setting column names as Property names  
                 dataTable.Columns.Add(prop.Name);
             }
 
-            foreach ( var item in items )
+            foreach ( T item in items )
             {
-                var values = new object[props.Length];
-                for ( var i = 0; i < props.Length; i++ )
+                object[] values = new object[props.Length];
+                for ( int i = 0; i < props.Length; i++ )
                 {
                     values[i] = props[i].GetValue(item, null);
                 }
@@ -76,9 +80,10 @@ namespace HafezLibrary.DataAccess.Connector
 
         public static string GetConnectionString(string name = "DebugDB")
         {
-            var path = Directory.GetCurrentDirectory();
-            var output = @$"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename='{path}\Data\DB.mdf';Integrated Security=True;";
-            
+            string path = Directory.GetCurrentDirectory();
+            string output =
+                @$"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename='{path}\Data\DB.mdf';Integrated Security=True;";
+
             return output;
 
             // TODO move connection string to appsetting.json and do it with |DataDirectory|

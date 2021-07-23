@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FluentValidation.Results;
+using System;
 using System.Windows;
 using HafezLibrary.Models;
 using HafezLibrary.Validators;
@@ -35,7 +36,7 @@ namespace HafezWPFUI.Views.NotificationGroup
                     TxtNotificationGroupName.Text = DateTime.Now.ToString("yyyy-MM-dd");
                     //TxtNotificationGroupId.Visibility = Visibility.Collapsed;
                     TxtNotificationGroupId.Text = "";
-                    BtnSubmit.Content = "ثبت گروه";
+                    BtnSubmit.Content           = "ثبت گروه";
                 }
             }
         }
@@ -45,16 +46,18 @@ namespace HafezWPFUI.Views.NotificationGroup
             try
             {
                 //Create Model
-                var notificationGroup = new NotificationGroupModel
+                NotificationGroupModel notificationGroup = new NotificationGroupModel
                 {
                     Name = TxtNotificationGroupName.Text
                 };
 
                 if ( !string.IsNullOrWhiteSpace(TxtNotificationGroupId.Text) )
+                {
                     notificationGroup.Id = Convert.ToInt32(TxtNotificationGroupId.Text);
+                }
 
                 //Validate Model
-                var result = new NotificationGroupValidator().Validate(notificationGroup);
+                ValidationResult result = new NotificationGroupValidator().Validate(notificationGroup);
                 if ( result.IsValid == false )
                 {
                     MessageBox.Show(result.Errors[0].ErrorMessage);
@@ -77,14 +80,14 @@ namespace HafezWPFUI.Views.NotificationGroup
 
 
                 //UPDATE BINDING
-                Visibility = Visibility.Collapsed;
+                Visibility                            = Visibility.Collapsed;
                 Main.NotificationGroupList.Visibility = Visibility.Visible;
                 Main.AddNotification.FillGroupNameComboBox();
                 Main.NotificationGroupList.FillListView(GetAllNotificationGroup_Obsolete());
 
                 //DELETE Fields
                 TxtNotificationGroupName.Text = "";
-                TxtNotificationGroupId.Text = "";
+                TxtNotificationGroupId.Text   = "";
             }
             catch ( Exception exception )
             {
@@ -94,7 +97,7 @@ namespace HafezWPFUI.Views.NotificationGroup
 
         public void FillControls(NotificationGroupModel notificationGroup)
         {
-            TxtNotificationGroupId.Text = notificationGroup.Id.ToString();
+            TxtNotificationGroupId.Text   = notificationGroup.Id.ToString();
             TxtNotificationGroupName.Text = notificationGroup.Name;
         }
     }

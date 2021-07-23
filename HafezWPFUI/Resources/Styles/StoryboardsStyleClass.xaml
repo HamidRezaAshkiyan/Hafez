@@ -1,14 +1,17 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Storyboard x:Key="sideMenu_Open">
-        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="SideMenu" Storyboard.TargetProperty="(FrameworkElement.Width)">
+        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="SideMenu"
+                                       Storyboard.TargetProperty="(FrameworkElement.Width)">
             <EasingDoubleKeyFrame KeyTime="0" Value="55" />
             <EasingDoubleKeyFrame KeyTime="0:0:.50" Value="200" />
         </DoubleAnimationUsingKeyFrames>
     </Storyboard>
 
     <Storyboard x:Key="sideMenu_Close">
-        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="SideMenu" Storyboard.TargetProperty="(FrameworkElement.Width)">
+        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="SideMenu"
+                                       Storyboard.TargetProperty="(FrameworkElement.Width)">
             <EasingDoubleKeyFrame KeyTime="0" Value="200" />
             <EasingDoubleKeyFrame KeyTime="0:0:.50" Value="55" />
         </DoubleAnimationUsingKeyFrames>

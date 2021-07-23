@@ -12,20 +12,20 @@ namespace HafezLibrary.Controllers
 {
     public static class PersonalDuaController
     {
-
         public static List<PersonalDuaModel> GetAllPersonalDuas()
         {
             const string query = "SELECT * FROM PersonalDua";
 
-            using IDbConnection connection = new SqlConnection(SqlConnector.GetConnectionString());
-            var output = connection.Query<PersonalDuaModel>(query).ToList();
+            using IDbConnection    connection = new SqlConnection(SqlConnector.GetConnectionString());
+            List<PersonalDuaModel> output     = connection.Query<PersonalDuaModel>(query).ToList();
 
             return output;
         }
 
         public static async Task ImportNotificationListDataAsync(IEnumerable<PersonalDuaModel> models)
         {
-            const string query = "INSERT INTO PersonalDua (DuaId, FarazId, ArabicText, PersianText) VALUES ( @DuaId, @FarazId, @ArabicText, @PersianText );";
+            const string query =
+                "INSERT INTO PersonalDua (DuaId, FarazId, ArabicText, PersianText) VALUES ( @DuaId, @FarazId, @ArabicText, @PersianText );";
 
             using IDbConnection connection = new SqlConnection(SqlConnector.GetConnectionString());
             await connection.ExecuteAsync(query, models);
@@ -44,8 +44,9 @@ namespace HafezLibrary.Controllers
             //
             // return outputList.ToDataTable();
 
-            var query = $"SELECT * FROM PersonalDua AS M, PersonalDuaList AS ML WHERE M.DuaId = {duaId} AND ML.DuaId = M.DuaId";
-            var dataTable = DataAccess.Connector.DataAccess.Select(query);
+            string query =
+                $"SELECT * FROM PersonalDua AS M, PersonalDuaList AS ML WHERE M.DuaId = {duaId} AND ML.DuaId = M.DuaId";
+            DataTable dataTable = DataAccess.Connector.DataAccess.Select(query);
 
             return dataTable;
         }

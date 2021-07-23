@@ -49,9 +49,9 @@ namespace HafezWPFUI.Properties
     /// </code>
     /// </example>
     [AttributeUsage(
-        AttributeTargets.Method | AttributeTargets.Parameter | AttributeTargets.Property |
-        AttributeTargets.Delegate | AttributeTargets.Field | AttributeTargets.Event |
-        AttributeTargets.Class | AttributeTargets.Interface | AttributeTargets.GenericParameter)]
+                       AttributeTargets.Method   | AttributeTargets.Parameter | AttributeTargets.Property |
+                       AttributeTargets.Delegate | AttributeTargets.Field     | AttributeTargets.Event    |
+                       AttributeTargets.Class    | AttributeTargets.Interface | AttributeTargets.GenericParameter)]
     public sealed class CanBeNullAttribute : Attribute
     {
     }
@@ -67,9 +67,9 @@ namespace HafezWPFUI.Properties
     /// </code>
     /// </example>
     [AttributeUsage(
-        AttributeTargets.Method | AttributeTargets.Parameter | AttributeTargets.Property |
-        AttributeTargets.Delegate | AttributeTargets.Field | AttributeTargets.Event |
-        AttributeTargets.Class | AttributeTargets.Interface | AttributeTargets.GenericParameter)]
+                       AttributeTargets.Method   | AttributeTargets.Parameter | AttributeTargets.Property |
+                       AttributeTargets.Delegate | AttributeTargets.Field     | AttributeTargets.Event    |
+                       AttributeTargets.Class    | AttributeTargets.Interface | AttributeTargets.GenericParameter)]
     public sealed class NotNullAttribute : Attribute
     {
     }
@@ -91,8 +91,8 @@ namespace HafezWPFUI.Properties
     /// </code>
     /// </example>
     [AttributeUsage(
-        AttributeTargets.Method | AttributeTargets.Parameter | AttributeTargets.Property |
-        AttributeTargets.Delegate | AttributeTargets.Field)]
+                       AttributeTargets.Method   | AttributeTargets.Parameter | AttributeTargets.Property |
+                       AttributeTargets.Delegate | AttributeTargets.Field)]
     public sealed class ItemNotNullAttribute : Attribute
     {
     }
@@ -115,8 +115,8 @@ namespace HafezWPFUI.Properties
     /// </code>
     /// </example>
     [AttributeUsage(
-        AttributeTargets.Method | AttributeTargets.Parameter | AttributeTargets.Property |
-        AttributeTargets.Delegate | AttributeTargets.Field)]
+                       AttributeTargets.Method   | AttributeTargets.Parameter | AttributeTargets.Property |
+                       AttributeTargets.Delegate | AttributeTargets.Field)]
     public sealed class ItemCanBeNullAttribute : Attribute
     {
     }
@@ -137,8 +137,8 @@ namespace HafezWPFUI.Properties
     /// </code>
     /// </example>
     [AttributeUsage(
-        AttributeTargets.Constructor | AttributeTargets.Method |
-        AttributeTargets.Property | AttributeTargets.Delegate)]
+                       AttributeTargets.Constructor | AttributeTargets.Method |
+                       AttributeTargets.Property    | AttributeTargets.Delegate)]
     public sealed class StringFormatMethodAttribute : Attribute
     {
         /// <param name="formatParameterName">
@@ -182,8 +182,8 @@ namespace HafezWPFUI.Properties
     /// </code>
     /// </example>
     [AttributeUsage(
-        AttributeTargets.Parameter | AttributeTargets.Property | AttributeTargets.Field,
-        AllowMultiple = true)]
+                       AttributeTargets.Parameter | AttributeTargets.Property | AttributeTargets.Field,
+                       AllowMultiple = true)]
     public sealed class ValueProviderAttribute : Attribute
     {
         public ValueProviderAttribute([NotNull] string name)
@@ -350,7 +350,7 @@ namespace HafezWPFUI.Properties
 
         public ContractAnnotationAttribute([NotNull] string contract, bool forceFullStates)
         {
-            Contract = contract;
+            Contract        = contract;
             ForceFullStates = forceFullStates;
         }
 
@@ -462,7 +462,7 @@ namespace HafezWPFUI.Properties
         public UsedImplicitlyAttribute(ImplicitUseKindFlags useKindFlags, ImplicitUseTargetFlags targetFlags)
         {
             UseKindFlags = useKindFlags;
-            TargetFlags = targetFlags;
+            TargetFlags  = targetFlags;
         }
 
         public ImplicitUseKindFlags UseKindFlags { get; }
@@ -499,7 +499,7 @@ namespace HafezWPFUI.Properties
         public MeansImplicitUseAttribute(ImplicitUseKindFlags useKindFlags, ImplicitUseTargetFlags targetFlags)
         {
             UseKindFlags = useKindFlags;
-            TargetFlags = targetFlags;
+            TargetFlags  = targetFlags;
         }
 
         [UsedImplicitly] public ImplicitUseKindFlags UseKindFlags { get; }
@@ -540,7 +540,7 @@ namespace HafezWPFUI.Properties
     public enum ImplicitUseTargetFlags
     {
         Default = Itself,
-        Itself = 1,
+        Itself  = 1,
 
         /// <summary>Members of entity marked with attribute are considered used.</summary>
         Members = 2,
@@ -640,9 +640,10 @@ namespace HafezWPFUI.Properties
     /// </code>
     /// </example>
     [AttributeUsage(
-        AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Parameter | AttributeTargets.Method |
-        AttributeTargets.Class | AttributeTargets.Interface | AttributeTargets.Struct |
-        AttributeTargets.GenericParameter)]
+                       AttributeTargets.Field  | AttributeTargets.Property | AttributeTargets.Parameter |
+                       AttributeTargets.Method |
+                       AttributeTargets.Class  | AttributeTargets.Interface | AttributeTargets.Struct |
+                       AttributeTargets.GenericParameter)]
     public sealed class ProvidesContextAttribute : Attribute
     {
     }
@@ -751,7 +752,7 @@ namespace HafezWPFUI.Properties
     }
 
     [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Field | AttributeTargets.Property, AllowMultiple =
-        true)]
+                        true)]
     public sealed class AspMvcAreaMasterLocationFormatAttribute : Attribute
     {
         public AspMvcAreaMasterLocationFormatAttribute([NotNull] string format)
@@ -763,7 +764,7 @@ namespace HafezWPFUI.Properties
     }
 
     [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Field | AttributeTargets.Property, AllowMultiple =
-        true)]
+                        true)]
     public sealed class AspMvcAreaPartialViewLocationFormatAttribute : Attribute
     {
         public AspMvcAreaPartialViewLocationFormatAttribute([NotNull] string format)
@@ -775,7 +776,7 @@ namespace HafezWPFUI.Properties
     }
 
     [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Field | AttributeTargets.Property, AllowMultiple =
-        true)]
+                        true)]
     public sealed class AspMvcAreaViewLocationFormatAttribute : Attribute
     {
         public AspMvcAreaViewLocationFormatAttribute([NotNull] string format)
@@ -787,7 +788,7 @@ namespace HafezWPFUI.Properties
     }
 
     [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Field | AttributeTargets.Property, AllowMultiple =
-        true)]
+                        true)]
     public sealed class AspMvcMasterLocationFormatAttribute : Attribute
     {
         public AspMvcMasterLocationFormatAttribute([NotNull] string format)
@@ -799,7 +800,7 @@ namespace HafezWPFUI.Properties
     }
 
     [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Field | AttributeTargets.Property, AllowMultiple =
-        true)]
+                        true)]
     public sealed class AspMvcPartialViewLocationFormatAttribute : Attribute
     {
         public AspMvcPartialViewLocationFormatAttribute([NotNull] string format)
@@ -811,7 +812,7 @@ namespace HafezWPFUI.Properties
     }
 
     [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Field | AttributeTargets.Property, AllowMultiple =
-        true)]
+                        true)]
     public sealed class AspMvcViewLocationFormatAttribute : Attribute
     {
         public AspMvcViewLocationFormatAttribute([NotNull] string format)
@@ -1202,7 +1203,8 @@ namespace HafezWPFUI.Properties
     ///     The attribute must be mentioned in your member reordering patterns.
     /// </remarks>
     [AttributeUsage(
-        AttributeTargets.Class | AttributeTargets.Interface | AttributeTargets.Struct | AttributeTargets.Enum)]
+                       AttributeTargets.Class | AttributeTargets.Interface | AttributeTargets.Struct |
+                       AttributeTargets.Enum)]
     public sealed class NoReorderAttribute : Attribute
     {
     }
@@ -1235,7 +1237,7 @@ namespace HafezWPFUI.Properties
     {
         public AspChildControlTypeAttribute([NotNull] string tagName, [NotNull] Type controlType)
         {
-            TagName = tagName;
+            TagName     = tagName;
             ControlType = controlType;
         }
 
@@ -1297,7 +1299,7 @@ namespace HafezWPFUI.Properties
     {
         public RazorInjectionAttribute([NotNull] string type, [NotNull] string fieldName)
         {
-            Type = type;
+            Type      = type;
             FieldName = fieldName;
         }
 
@@ -1331,7 +1333,7 @@ namespace HafezWPFUI.Properties
             PageName = pageName;
         }
 
-        [NotNull] public string BaseType { get; }
+        [NotNull]   public string BaseType { get; }
         [CanBeNull] public string PageName { get; }
     }
 

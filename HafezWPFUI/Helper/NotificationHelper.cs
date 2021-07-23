@@ -14,21 +14,25 @@ namespace HafezWPFUI.Helper
         public static void ExportListToExcel(List<NotificationModel> input)
         {
             if ( input.Count == 0 )
-                throw new Exception("گروه خالی میباشد.");
-
-            var groupName = GlobalConfig.Main.NotificationGroupList.NotificationGroupListView.Items
-                .Cast<NotificationGroupModel>().First(x => x.Id == input.First().GroupId);
-            var fileName = $"{groupName.Name} - {DateTime.Now.ToShortDateString().Replace('/', '-')}";
-
-            using var sfd = new SaveFileDialog
             {
-                Filter = Resources.Excel_Document_Avalabale_Format,
-                FileName = fileName
+                throw new Exception("گروه خالی میباشد.");
+            }
+
+            NotificationGroupModel groupName = GlobalConfig.Main.NotificationGroupList.NotificationGroupListView.Items
+                                                           .Cast<NotificationGroupModel>()
+                                                           .First(x => x.Id == input.First().GroupId);
+            string fileName = $"{groupName.Name} - {DateTime.Now.ToShortDateString().Replace('/', '-')}";
+
+            using SaveFileDialog sfd = new SaveFileDialog
+            {
+                Filter = Resources.Excel_Document_Avalabale_Format, FileName = fileName
             };
             try
             {
                 if ( sfd.ShowDialog() == DialogResult.OK )
+                {
                     Task.Run(() => ExcelConnector.ExportFromListToExcel(input, sfd.FileName));
+                }
             }
             catch ( Exception e )
             {

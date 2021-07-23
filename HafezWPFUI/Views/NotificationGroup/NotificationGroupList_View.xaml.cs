@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BespokeFusion;
+using System;
 using System.Data;
 using System.Linq;
 using System.Windows;
@@ -6,6 +7,8 @@ using System.Windows.Forms;
 using System.Windows.Input;
 using HafezLibrary.Models;
 using HafezWPFUI.Helper;
+using System.Collections;
+using System.Collections.Generic;
 using static HafezLibrary.Controllers.NotificationController;
 using static HafezLibrary.Controllers.NotificationGroupController;
 using static HafezWPFUI.GlobalConfig;
@@ -30,7 +33,7 @@ namespace HafezWPFUI.Views.NotificationGroup
             {
                 Main.AddNotificationGroup.IsEditMode = false;
                 Main.AddNotificationGroup.Visibility = Visibility.Visible;
-                Visibility = Visibility.Collapsed;
+                Visibility                           = Visibility.Collapsed;
             }
             catch ( Exception exception )
             {
@@ -42,12 +45,13 @@ namespace HafezWPFUI.Views.NotificationGroup
         {
             try
             {
-                var notificationGroup = NotificationGroupListView.SelectedItem as NotificationGroupModel;
+                NotificationGroupModel notificationGroup =
+                    NotificationGroupListView.SelectedItem as NotificationGroupModel;
 
                 Main.AddNotificationGroup.IsEditMode = true;
                 Main.AddNotificationGroup.FillControls(notificationGroup);
                 Main.AddNotificationGroup.Visibility = Visibility.Visible;
-                Visibility = Visibility.Collapsed;
+                Visibility                           = Visibility.Collapsed;
             }
             catch ( Exception exception )
             {
@@ -58,19 +62,21 @@ namespace HafezWPFUI.Views.NotificationGroup
         private void CreateRightClickMenu(object sender, MouseButtonEventArgs e)
         {
             if ( !(FindResource("RightClickMenu") is ContextMenu cm) )
+            {
                 return;
+            }
+
             cm.PlacementTarget = sender as Button;
-            cm.IsOpen = true;
+            cm.IsOpen          = true;
         }
 
         private void ButtonRemoveNotificationGroup_OnClick(object sender, RoutedEventArgs e)
         {
             try
             {
-
-                using var messageBox = GetMaterialMessageBox("هشدار",
+                using CustomMaterialMessageBox messageBox = GetMaterialMessageBox("هشدار",
                     "تمامی اعلانات این گروه حذف خواهند شد. ایا مطمئنید؟");
-                messageBox.BtnOk.Uid = ((Button) sender).Uid;
+                messageBox.BtnOk.Uid   =  ((Button) sender).Uid;
                 messageBox.BtnOk.Click += BtnOkOnClick;
                 messageBox.Show();
             }
@@ -82,8 +88,9 @@ namespace HafezWPFUI.Views.NotificationGroup
 
         private void BtnOkOnClick(object sender, RoutedEventArgs e)
         {
-            var button = sender as Button;
-            var selectedNotificationGroup = new NotificationGroupModel { Id = Convert.ToInt32(button.Uid) };
+            Button button = sender as Button;
+            NotificationGroupModel selectedNotificationGroup =
+                new NotificationGroupModel {Id = Convert.ToInt32(button.Uid)};
 
             RemoveNotificationGroup(selectedNotificationGroup);
 
@@ -98,15 +105,16 @@ namespace HafezWPFUI.Views.NotificationGroup
         public void FillListView(DataTable notificationTable)
         {
             if ( notificationTable == null )
+            {
                 throw new ArgumentNullException();
+            }
 
             NotificationGroupListView.Items.Clear();
             foreach ( DataRow dtListRow in notificationTable.Rows )
             {
-                var newItem = new NotificationGroupModel
+                NotificationGroupModel newItem = new NotificationGroupModel
                 {
-                    Id = int.Parse($"{dtListRow["Id"]}"),
-                    Name = $"{dtListRow["Name"]}"
+                    Id = int.Parse($"{dtListRow["Id"]}"), Name = $"{dtListRow["Name"]}"
                 };
 
                 NotificationGroupListView.Items.Add(newItem);
@@ -119,17 +127,17 @@ namespace HafezWPFUI.Views.NotificationGroup
         {
             try
             {
-                var itemCollection = Main.NotificationList.NotificationListView.ItemsSource;
-                var selectedItem = NotificationGroupListView.SelectedItem as NotificationGroupModel;
+                IEnumerable            itemCollection = Main.NotificationList.NotificationListView.ItemsSource;
+                NotificationGroupModel selectedItem = NotificationGroupListView.SelectedItem as NotificationGroupModel;
 
-                var selectedGroupNotification = itemCollection.Cast<NotificationModel>()
+                List<NotificationModel> selectedGroupNotification = itemCollection.Cast<NotificationModel>()
                     .Where(item => item.GroupId == selectedItem.Id).ToList();
 
                 //parent.NotificationList.NotificationListView.Items.Clear();
                 Main.NotificationList.NotificationListView.ItemsSource = selectedGroupNotification;
-                Main.NotificationList.SelectedNotificationGroup = selectedItem;
-                Main.NotificationList.Visibility = Visibility.Visible;
-                Visibility = Visibility.Collapsed;
+                Main.NotificationList.SelectedNotificationGroup        = selectedItem;
+                Main.NotificationList.Visibility                       = Visibility.Visible;
+                Visibility                                             = Visibility.Collapsed;
             }
             catch ( Exception exception )
             {
@@ -141,17 +149,19 @@ namespace HafezWPFUI.Views.NotificationGroup
         {
             try
             {
-                var selectedNotificationGroup = NotificationGroupListView.SelectedItem as NotificationGroupModel;
+                NotificationGroupModel selectedNotificationGroup =
+                    NotificationGroupListView.SelectedItem as NotificationGroupModel;
 
-                using var fileDialog = new OpenFileDialog{ Filter = Properties.Resources.Excel_Document_Avalabale_Format};
-                var result = fileDialog.ShowDialog();
+                using OpenFileDialog fileDialog =
+                    new OpenFileDialog {Filter = Properties.Resources.Excel_Document_Avalabale_Format};
+                DialogResult result = fileDialog.ShowDialog();
 
                 if ( result == DialogResult.OK )
                 {
                     //var filePath = fileDialog.FileName;
 
                     await NotificationGroupHelper.ImportGroupNotificationData(selectedNotificationGroup,
-                        fileDialog.FileName);
+                                                                              fileDialog.FileName);
 
                     /*var notificationModels = ExcelConnector.ImportFromExcelToList(filePath);
 
@@ -179,9 +189,13 @@ namespace HafezWPFUI.Views.NotificationGroup
         {
             try
             {
-                var selectedNotificationGroup = NotificationGroupListView.SelectedItem as NotificationGroupModel;
-                var notificationList = Main.NotificationList.NotificationListView.Items.Cast<NotificationModel>()
-                    .Where(x => x.GroupId == selectedNotificationGroup.Id).ToList();
+                NotificationGroupModel selectedNotificationGroup =
+                    NotificationGroupListView.SelectedItem as NotificationGroupModel;
+                List<NotificationModel> notificationList = Main
+                                                           .NotificationList.NotificationListView.Items
+                                                           .Cast<NotificationModel>()
+                                                           .Where(x => x.GroupId == selectedNotificationGroup.Id)
+                                                           .ToList();
 
                 NotificationHelper.ExportListToExcel(notificationList);
 
@@ -201,12 +215,15 @@ namespace HafezWPFUI.Views.NotificationGroup
         {
             try
             {
-                var selectedNotificationGroup = NotificationGroupListView.SelectedItem as NotificationGroupModel;
+                NotificationGroupModel selectedNotificationGroup =
+                    NotificationGroupListView.SelectedItem as NotificationGroupModel;
 
                 RemoveNotificationGroupSortIds(selectedNotificationGroup);
 
-                Main.NotificationList.NotificationListView.ItemsSource = await Main.NotificationList.GetNotificationListByType();
-                Main.NotificationList.NetNotificationListView.ItemsSource = await Main.NotificationList.GetNotificationListByType('N');
+                Main.NotificationList.NotificationListView.ItemsSource =
+                    await Main.NotificationList.GetNotificationListByType();
+                Main.NotificationList.NetNotificationListView.ItemsSource =
+                    await Main.NotificationList.GetNotificationListByType('N');
             }
             catch ( Exception exception )
             {
@@ -218,8 +235,9 @@ namespace HafezWPFUI.Views.NotificationGroup
         {
             try
             {
-                var selectedNotificationGroup = NotificationGroupListView.SelectedItem as NotificationGroupModel;
-                var notificationsTable = GetNotificationsByGroupId_Obsolete(selectedNotificationGroup.Id);
+                NotificationGroupModel selectedNotificationGroup =
+                    NotificationGroupListView.SelectedItem as NotificationGroupModel;
+                DataTable notificationsTable = GetNotificationsByGroupId_Obsolete(selectedNotificationGroup.Id);
 
                 ChangeNotificationTableHeader(notificationsTable);
                 SendToOutput(selectedNotificationGroup, notificationsTable);
@@ -234,12 +252,13 @@ namespace HafezWPFUI.Views.NotificationGroup
         {
             try
             {
-                var selectedNotificationGroup = GetSelectedNotificationGroup(sender);
-                var notificationsTable = GetSortedNotificationsByGroupId_Obsolete(selectedNotificationGroup.Id);
+                NotificationGroupModel selectedNotificationGroup = GetSelectedNotificationGroup(sender);
+                DataTable notificationsTable = GetSortedNotificationsByGroupId_Obsolete(selectedNotificationGroup.Id);
 
                 if ( notificationsTable.Rows.Count == 0 )
                 {
-                    ShowMessage("خطا", "در این گروه هیچ اولویتی انتخاب نشده است بنابراین از اجرای بدون اولویت در راست کلیک استفاده کنید.");
+                    ShowMessage("خطا",
+                                "در این گروه هیچ اولویتی انتخاب نشده است بنابراین از اجرای بدون اولویت در راست کلیک استفاده کنید.");
                     return;
                 }
 
@@ -254,7 +273,7 @@ namespace HafezWPFUI.Views.NotificationGroup
 
         public static void SendToOutput(NotificationGroupModel selectedNotificationGroup, DataTable notificationsTable)
         {
-            var panelName = Enums.PanelTypes.Notification.ToString();
+            string panelName = Enums.PanelTypes.Notification.ToString();
             Output.ReplaceTitleText(panelName, selectedNotificationGroup.Name);
             Output.ShowTableInPanel(panelName, notificationsTable);
             // Output.Show();
@@ -265,10 +284,12 @@ namespace HafezWPFUI.Views.NotificationGroup
             NotificationGroupModel selectedNotificationGroup;
             if ( sender is Button button )
             {
-                selectedNotificationGroup = new NotificationGroupModel { Id = Convert.ToInt32(button.Uid) };
+                selectedNotificationGroup = new NotificationGroupModel {Id = Convert.ToInt32(button.Uid)};
 
                 selectedNotificationGroup = NotificationGroupListView.Items
-                    .Cast<NotificationGroupModel>().First(item => item.Id == selectedNotificationGroup.Id);
+                                                                     .Cast<NotificationGroupModel>()
+                                                                     .First(item => item.Id == selectedNotificationGroup
+                                                                                .Id);
             }
             else
             {

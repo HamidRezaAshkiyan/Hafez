@@ -11,23 +11,23 @@ namespace HafezWPFUI.Helper.Handlers
         {
             // todo replace iran sans with Estedad or sth ( for copy right )
             // var font = new FontFamily(new Uri("Resources/Fonts/"), "./#Vazir");
-            var font = new FontFamily("Vazir");
-            var brush = new SolidColorBrush(new PaletteHelper().GetTheme().PrimaryMid.Color);
+            FontFamily      font  = new FontFamily("Vazir");
+            SolidColorBrush brush = new SolidColorBrush(new PaletteHelper().GetTheme().PrimaryMid.Color);
 
-            using var msg = new CustomMaterialMessageBox
+            using CustomMaterialMessageBox msg = new CustomMaterialMessageBox
             {
-                FontFamily = font,
-                TxtMessage = { Text = message },
-                TxtTitle = { Text = title },
-                BtnOk = { Content = "تایید", Background = brush, BorderBrush = Brushes.Transparent },
-                BtnCancel = { Visibility = Visibility.Collapsed },
-                BtnCopyMessage = { Visibility = Visibility.Collapsed },
+                FontFamily     = font,
+                TxtMessage     = {Text       = message},
+                TxtTitle       = {Text       = title},
+                BtnOk          = {Content    = "تایید", Background = brush, BorderBrush = Brushes.Transparent},
+                BtnCancel      = {Visibility = Visibility.Collapsed},
+                BtnCopyMessage = {Visibility = Visibility.Collapsed},
                 //MainContentControl = { Background = backColor },
-                TitleBackgroundPanel = { Background = brush },
-                BorderBrush = brush,
-                FlowDirection = FlowDirection.RightToLeft,
-                Width = 300,
-                Height = 220
+                TitleBackgroundPanel = {Background = brush},
+                BorderBrush          = brush,
+                FlowDirection        = FlowDirection.RightToLeft,
+                Width                = 300,
+                Height               = 220
             };
 
             msg.Show();
@@ -36,33 +36,23 @@ namespace HafezWPFUI.Helper.Handlers
         public static CustomMaterialMessageBox GetMaterialMessageBox(string title, string message)
         {
             //var fontFamily = new FontFamily(new Uri("Resources/Fonts/"), "./#Vazir");
-            var font = new FontFamily("Vazir");
-            var brush = new SolidColorBrush(
-                new PaletteHelper().GetTheme().PrimaryMid.Color);
+            FontFamily font = new FontFamily("Vazir");
+            SolidColorBrush brush = new SolidColorBrush(
+                                                        new PaletteHelper().GetTheme().PrimaryMid.Color);
 
-            var msg = new CustomMaterialMessageBox
+            CustomMaterialMessageBox msg = new CustomMaterialMessageBox
             {
-                FontFamily = font,
-                TxtMessage = { Text = message },
-                TxtTitle = { Text = title },
-                BtnCancel =
-                {
-                    Content = "لغو",
-                    BorderBrush = Brushes.Transparent,
-                    Foreground = Brushes.White
-                },
-                BtnOk =
-                {
-                    Content = "تایید",
-                    Background = brush,
-                    BorderBrush = Brushes.Transparent,
-                },
-                BtnCopyMessage = { Visibility = Visibility.Hidden },
-                TitleBackgroundPanel = { Background = brush },
-                BorderBrush = brush,
-                FlowDirection = FlowDirection.RightToLeft,
-                Width = 300,
-                Height = 220
+                FontFamily           = font,
+                TxtMessage           = {Text = message},
+                TxtTitle             = {Text = title},
+                BtnCancel            = {Content = "لغو", BorderBrush = Brushes.Transparent, Foreground = Brushes.White},
+                BtnOk                = {Content = "تایید", Background = brush, BorderBrush = Brushes.Transparent},
+                BtnCopyMessage       = {Visibility = Visibility.Hidden},
+                TitleBackgroundPanel = {Background = brush},
+                BorderBrush          = brush,
+                FlowDirection        = FlowDirection.RightToLeft,
+                Width                = 300,
+                Height               = 220
             };
 
             return msg;

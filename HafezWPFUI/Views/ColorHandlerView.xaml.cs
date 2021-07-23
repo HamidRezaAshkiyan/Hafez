@@ -17,8 +17,8 @@ namespace HafezWPFUI.Views
 
         public static List<string> AvailableColors { get; }
             = typeof(Brushes)
-                .GetProperties(BindingFlags.Static | BindingFlags.Public)
-                .Select(x => x.Name).ToList();
+              .GetProperties(BindingFlags.Static | BindingFlags.Public)
+              .Select(x => x.Name).ToList();
 
         public ColorHandlerView()
         {
@@ -42,12 +42,12 @@ namespace HafezWPFUI.Views
         {
             try
             {
-                var senderComboBox = sender as ComboBox;
-                var foreground = senderComboBox.SelectedItem.ToString();
-                var propertyName = senderComboBox.GetPropertyName();
+                ComboBox senderComboBox = sender as ComboBox;
+                string?  foreground     = senderComboBox.SelectedItem.ToString();
+                string   propertyName   = senderComboBox.GetPropertyName();
 
                 //DB Update
-                UserConfigModel.Update(new Dictionary<string, string> { { propertyName, foreground } });
+                UserConfigModel.Update(new Dictionary<string, string> {{propertyName, foreground}});
 
                 //GlobalConfig update
                 propertyName.SetProperty(foreground);
@@ -65,12 +65,12 @@ namespace HafezWPFUI.Views
         {
             try
             {
-                var senderComboBox = sender as ComboBox;
-                var panelBackground = senderComboBox.SelectedItem.ToString();
-                var propertyName = senderComboBox.GetPropertyName();
+                ComboBox senderComboBox  = sender as ComboBox;
+                string?  panelBackground = senderComboBox.SelectedItem.ToString();
+                string   propertyName    = senderComboBox.GetPropertyName();
 
                 //DB update
-                UserConfigModel.Update(new Dictionary<string, string> { { propertyName, panelBackground } });
+                UserConfigModel.Update(new Dictionary<string, string> {{propertyName, panelBackground}});
 
                 //GlobalConfig update
                 propertyName.SetProperty(panelBackground);
@@ -88,12 +88,12 @@ namespace HafezWPFUI.Views
         {
             try
             {
-                var senderComboBox = sender as ComboBox;
-                var strokeColor = senderComboBox.SelectedItem.ToString();
-                var propertyName = senderComboBox.GetPropertyName();
+                ComboBox senderComboBox = sender as ComboBox;
+                string?  strokeColor    = senderComboBox.SelectedItem.ToString();
+                string   propertyName   = senderComboBox.GetPropertyName();
 
                 //DB update
-                UserConfigModel.Update(new Dictionary<string, string> { { propertyName, strokeColor } });
+                UserConfigModel.Update(new Dictionary<string, string> {{propertyName, strokeColor}});
 
                 //GlobalConfig update
                 propertyName.SetProperty(strokeColor);
@@ -111,12 +111,12 @@ namespace HafezWPFUI.Views
         {
             try
             {
-                var senderComboBox = sender as ComboBox;
-                var strokeSize = senderComboBox?.SelectedItem.ToString();
-                var propertyName = senderComboBox.GetPropertyName();
+                ComboBox senderComboBox = sender as ComboBox;
+                string?  strokeSize     = senderComboBox?.SelectedItem.ToString();
+                string   propertyName   = senderComboBox.GetPropertyName();
 
                 //DB update
-                UserConfigModel.Update(new Dictionary<string, string> { { propertyName, strokeSize } });
+                UserConfigModel.Update(new Dictionary<string, string> {{propertyName, strokeSize}});
 
                 //GlobalConfig update
                 propertyName.SetProperty(strokeSize);

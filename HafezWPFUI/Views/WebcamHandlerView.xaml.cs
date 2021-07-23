@@ -19,9 +19,9 @@ namespace HafezWPFUI.Views
 {
     public partial class WebcamHandlerView
     {
-        private bool DeviceExist { get; set; }
+        private bool                 DeviceExist  { get; set; }
         private FilterInfoCollection VideoDevices { get; set; }
-        public VideoCaptureDevice VideoSource { get; set; }
+        public  VideoCaptureDevice   VideoSource  { get; set; }
 
         public WebcamHandlerView()
         {
@@ -39,12 +39,12 @@ namespace HafezWPFUI.Views
                     StartVideoDevice(VideoSource);
                     //GlobalConfig.Output.RadWebCam.Start();
                     //GlobalConfig.Output.RadWebCam.Visibility = Visibility.Visible;
-                    Output.ImgInput.Visibility = Visibility.Visible;
+                    Output.ImgInput.Visibility             = Visibility.Visible;
                     ToggleButtonCameraShowStatus.IsChecked = true;
 
                     //Change packIcon
                     Main.CameraPackIcon.Foreground = MainWindowView.DisabledColor;
-                    Main.CameraPackIcon.Kind = PackIconKind.CameraOff;
+                    Main.CameraPackIcon.Kind       = PackIconKind.CameraOff;
 
 
                     EnabledServiceCount++;
@@ -57,12 +57,12 @@ namespace HafezWPFUI.Views
                     StopVideoSource(VideoSource);
                     /*GlobalConfig.Output.RadWebCam.Stop();
                     GlobalConfig.Output.RadWebCam.Visibility = Visibility.Hidden;*/
-                    Output.ImgInput.Visibility = Visibility.Hidden;
+                    Output.ImgInput.Visibility             = Visibility.Hidden;
                     ToggleButtonCameraShowStatus.IsChecked = false;
 
                     //Change packIcon
                     Main.CameraPackIcon.Foreground = MainWindowView.EnabledColor;
-                    Main.CameraPackIcon.Kind = PackIconKind.CameraAlt;
+                    Main.CameraPackIcon.Kind       = PackIconKind.CameraAlt;
 
 
                     EnabledServiceCount--;
@@ -77,11 +77,14 @@ namespace HafezWPFUI.Views
             try
             {
                 if ( ComboBoxDefaultCameraName.Items.Count == 0 )
+                {
                     return;
-                var cameraName = ComboBoxDefaultCameraName.SelectedItem.ToString();
+                }
+
+                string? cameraName = ComboBoxDefaultCameraName.SelectedItem.ToString();
 
                 //DB update
-                UserConfigModel.Update(new Dictionary<string, string> { { "DefaultCameraName", cameraName } });
+                UserConfigModel.Update(new Dictionary<string, string> {{"DefaultCameraName", cameraName}});
 
                 //GlobalConfig update
                 UserConfig.DefaultCameraName = cameraName;
@@ -92,11 +95,15 @@ namespace HafezWPFUI.Views
                 if ( DeviceExist )
                 {
                     if ( VideoSource != null )
+                    {
                         StopVideoSource(VideoSource);
+                    }
 
                     if ( ComboBoxDefaultCameraName.SelectedIndex != -1 )
+                    {
                         VideoSource =
                             new VideoCaptureDevice(VideoDevices[ComboBoxDefaultCameraName.SelectedIndex].MonikerString);
+                    }
 
                     //Thread.Sleep(500);
                     //if ((bool)ToggleButtonCameraShowStatus.IsChecked) StartVideoDevice(_videoSource);
@@ -117,11 +124,11 @@ namespace HafezWPFUI.Views
             try
             {
                 //var parent = this.TryFindParent<MainWindow>();
-                var isChecked = (bool)ToggleButtonCameraShowStatus.IsChecked;
-                var cameraShowStatus = isChecked ? "E" : "D";
+                bool   isChecked        = (bool) ToggleButtonCameraShowStatus.IsChecked;
+                string cameraShowStatus = isChecked ? "E" : "D";
 
                 //DB update
-                UserConfigModel.Update(new Dictionary<string, string> { { "CameraShowStatus", cameraShowStatus } });
+                UserConfigModel.Update(new Dictionary<string, string> {{"CameraShowStatus", cameraShowStatus}});
 
                 //GlobalConfig update
                 UserConfig.CameraShowStatus = cameraShowStatus;
@@ -131,7 +138,7 @@ namespace HafezWPFUI.Views
                 /*if ((bool) ToggleButtonCameraShowStatus.IsChecked)
             {
                 //CameraControllers("D");
-               */ /* StopVideoSource(_videoSource);
+               */                                        /* StopVideoSource(_videoSource);
 
                 parent.Output.ImgInput.Visibility = Visibility.Hidden;*/
                 /*parent.Output.ImgInput.Source = null;*/ /*
@@ -161,10 +168,15 @@ namespace HafezWPFUI.Views
                 VideoDevices = new FilterInfoCollection(FilterCategory.VideoInputDevice);
                 ComboBoxDefaultCameraName.Items.Clear();
                 if ( VideoDevices.Count == 0 )
+                {
                     throw new ApplicationException();
+                }
+
                 DeviceExist = true;
                 foreach ( FilterInfo device in VideoDevices )
+                {
                     ComboBoxDefaultCameraName.Items.Add(device.Name);
+                }
 
                 //ComboBoxDefaultCameraName.SelectedIndex = 0;
             }
@@ -178,7 +190,10 @@ namespace HafezWPFUI.Views
         public void StartVideoDevice(VideoCaptureDevice source)
         {
             if ( source == null )
+            {
                 return;
+            }
+
             // TODO use delegate to send this method
             source.NewFrame += Video_NewFrame;
             source.Start();
@@ -187,9 +202,14 @@ namespace HafezWPFUI.Views
         public static void StopVideoSource(VideoCaptureDevice source)
         {
             if ( source == null )
+            {
                 return;
+            }
+
             if ( source.IsRunning )
+            {
                 source.SignalToStop();
+            }
         }
 
         //close the device safely
@@ -198,12 +218,12 @@ namespace HafezWPFUI.Views
         {
             try
             {
-                Image img = (Bitmap)eventArgs.Frame.Clone();
+                Image img = (Bitmap) eventArgs.Frame.Clone();
 
-                var ms = new MemoryStream();
+                MemoryStream ms = new MemoryStream();
                 img.Save(ms, ImageFormat.Bmp);
                 ms.Seek(0, SeekOrigin.Begin);
-                var bitmapImage = new BitmapImage();
+                BitmapImage bitmapImage = new BitmapImage();
                 bitmapImage.BeginInit();
                 bitmapImage.StreamSource = ms;
                 bitmapImage.EndInit();

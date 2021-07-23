@@ -14,8 +14,8 @@ namespace HafezLibrary.Controllers
         {
             const string query = "SELECT * FROM UserConfig";
 
-            using IDbConnection connection = new SqlConnection(SqlConnector.GetConnectionString());
-            var output = connection.Query<UserConfigModel>(query).ToList();
+            using IDbConnection   connection = new SqlConnection(SqlConnector.GetConnectionString());
+            List<UserConfigModel> output     = connection.Query<UserConfigModel>(query).ToList();
 
             return output;
         }

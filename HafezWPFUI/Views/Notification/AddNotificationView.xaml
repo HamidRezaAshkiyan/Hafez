@@ -96,7 +96,6 @@
 
                 <TextBox
                     Name="TxtNotificationDescription"
-                    Grid.Row="0"
                     MinWidth="400"
                     MaxWidth="400"
                     VerticalAlignment="Center"

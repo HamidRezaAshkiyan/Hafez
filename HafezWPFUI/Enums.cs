@@ -4,11 +4,11 @@
     {
         public enum PanelTypes
         {
-            Notification = 1,
-            Quran = 2,
-            Mafatih = 3,
-            QuranTranslation = 4,
-            MafatihTranslation = 5,
+            Notification       = 1,
+            Quran              = 2,
+            Mafatih            = 3,
+            QuranTranslation   = 4,
+            MafatihTranslation = 5
         }
 
         public enum AnimationMode
@@ -28,7 +28,7 @@
         public enum NotificationType
         {
             Network = 'N',
-            Local = 'L'
+            Local   = 'L'
         }
     }
 }

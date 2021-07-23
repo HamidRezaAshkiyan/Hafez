@@ -16,7 +16,7 @@ namespace HafezLibrary.Controllers
             const string query = "SELECT * FROM Mafatih";
 
             using IDbConnection connection = new SqlConnection(SqlConnector.GetConnectionString());
-            var output = connection.Query<MafatihModel>(query).ToList();
+            List<MafatihModel>  output     = connection.Query<MafatihModel>(query).ToList();
 
             return output;
         }
@@ -34,8 +34,9 @@ namespace HafezLibrary.Controllers
             //
             // return outputList.ToDataTable();
 
-            var query = $"SELECT * FROM Mafatih AS M, MafatihList AS ML WHERE M.DuaId = {duaId} AND ML.DuaId = M.DuaId";
-            var dataTable = DataAccess.Connector.DataAccess.Select(query);
+            string query =
+                $"SELECT * FROM Mafatih AS M, MafatihList AS ML WHERE M.DuaId = {duaId} AND ML.DuaId = M.DuaId";
+            DataTable dataTable = DataAccess.Connector.DataAccess.Select(query);
 
             return dataTable;
         }

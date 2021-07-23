@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using HafezLibrary.DataAccess.Connector;
 using HafezLibrary.Models;
+using System.Collections.Generic;
 
 namespace HafezLibrary.Controllers
 {
@@ -37,7 +38,7 @@ namespace HafezLibrary.Controllers
         public static void RemoveNotificationGroupSortIds(NotificationGroupModel notificationGroup)
         {
             const string query = "UPDATE Notification SET SortId = 0 WHERE GroupId = @GroupId";
-            var p = new { GroupId = notificationGroup.Id };
+            var          p     = new {GroupId = notificationGroup.Id};
 
             using IDbConnection connection = new SqlConnection(SqlConnector.GetConnectionString());
             connection.Execute(query, p);
@@ -48,8 +49,8 @@ namespace HafezLibrary.Controllers
         {
             const string query = "SELECT * FROM NotificationGroup";
 
-            using IDbConnection connection = new SqlConnection(SqlConnector.GetConnectionString());
-            var outputList = connection.Query<NotificationGroupModel>(query).ToList();
+            using IDbConnection          connection = new SqlConnection(SqlConnector.GetConnectionString());
+            List<NotificationGroupModel> outputList = connection.Query<NotificationGroupModel>(query).ToList();
 
             return outputList.ToDataTable();
         }

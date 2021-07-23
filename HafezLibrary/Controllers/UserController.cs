@@ -21,7 +21,8 @@ namespace HafezLibrary.Controllers
 
         public static void UpdateUser(UserModel user)
         {
-            const string query = "UPDATE Users SET Password = @Password, Name = @Name, Statue = @Statue, UserType = @UserType WHERE Id = @Id";
+            const string query =
+                "UPDATE Users SET Password = @Password, Name = @Name, Statue = @Statue, UserType = @UserType WHERE Id = @Id";
 
             using IDbConnection connection = new SqlConnection(SqlConnector.GetConnectionString());
             connection.Execute(query, user);
@@ -40,7 +41,7 @@ namespace HafezLibrary.Controllers
             const string query = "SELECT * FROM Users WHERE id <> 1";
 
             using IDbConnection connection = new SqlConnection(SqlConnector.GetConnectionString());
-            var output = connection.Query<UserModel>(query).ToList();
+            List<UserModel>     output     = connection.Query<UserModel>(query).ToList();
 
             return output;
         }
@@ -52,9 +53,9 @@ namespace HafezLibrary.Controllers
             var p = new {portInputModel.UserId, portInputModel.Password};
 
             using IDbConnection connection = new SqlConnection(SqlConnector.GetConnectionString());
-            var output = connection.Query<UserModel>(query, p).ToList().FirstOrDefault();
+            UserModel           output     = connection.Query<UserModel>(query, p).ToList().FirstOrDefault();
 
-            return (output?.Statue == 'E') ? output : null;
+            return output?.Statue == 'E' ? output : null;
         }
     }
 }

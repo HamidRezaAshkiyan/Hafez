@@ -9,8 +9,12 @@ namespace HafezWPFUI.Helper.Handlers
     {
         public static BitmapImage GetImageByAddress(this string imagePath)
         {
-            if (!File.Exists(imagePath)) return null;
-            var output = new BitmapImage(new Uri(imagePath));
+            if ( !File.Exists(imagePath) )
+            {
+                return null;
+            }
+
+            BitmapImage output = new BitmapImage(new Uri(imagePath));
 
             return output;
         }

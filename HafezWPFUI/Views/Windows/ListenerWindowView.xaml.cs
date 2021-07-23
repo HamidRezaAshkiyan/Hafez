@@ -25,9 +25,11 @@ namespace HafezWPFUI.Views.Windows
         {
             InitializeComponent();
 
-            var host = Dns.GetHostEntry(Dns.GetHostName());
-            foreach ( var ip in host.AddressList )
+            IPHostEntry host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach ( IPAddress ip in host.AddressList )
+            {
                 ComboBoxAllIpAddresses.Items.Add(ip.ToString());
+            }
 
             //Server.Start();
         }
@@ -39,29 +41,29 @@ namespace HafezWPFUI.Views.Windows
                 if ( !IsServerStarted )
                 {
                     Server = TcpListener.GetServer(IPAddress.Parse(TcpListener.GetLocalIpAddress()),
-                        GlobalConfig.UserConfig.PortNumber);
+                                                   GlobalConfig.UserConfig.PortNumber);
 
                     StartServer();
                 }
 
                 while ( IsServerStarted )
                 {
-                    var portInput = await TcpListener.StartListening(Server);
-                    var portInputSplit = portInput.Split('/');
+                    string   portInput      = await TcpListener.StartListening(Server);
+                    string[] portInputSplit = portInput.Split('/');
 
-                    var networkUser = new UserModel
+                    UserModel networkUser = new UserModel
                     {
-                        Id = -1,
-                        UserId = portInputSplit[0],
-                        Password = portInputSplit[1],
+                        Id = -1, UserId = portInputSplit[0], Password = portInputSplit[1]
                         // Command = portInputSplit[2]
                     };
 
-                    var command = portInputSplit[2];
-                    for ( var i = 3; i < portInputSplit.Length; i++ )
+                    string command = portInputSplit[2];
+                    for ( int i = 3; i < portInputSplit.Length; i++ )
+                    {
                         command += $"/{portInputSplit[i]}";
+                    }
 
-                    networkUser = networkUser.IsUserValid();
+                    networkUser         = networkUser.IsUserValid();
                     networkUser.Command = command;
 
                     if ( networkUser != null && networkUser.Id != -1 )
@@ -89,9 +91,15 @@ namespace HafezWPFUI.Views.Windows
             IsServerStarted = true;
         }
 
-        private void MainGrid_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e) => DragMove();
+        private void MainGrid_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            DragMove();
+        }
 
-        private void ListenerWindow_OnActivated(object sender, EventArgs e) => TextBlockInternet.Text = GetIpPort();
+        private void ListenerWindow_OnActivated(object sender, EventArgs e)
+        {
+            TextBlockInternet.Text = GetIpPort();
+        }
 
         private void ButtonClearScreen_OnClick(object sender, RoutedEventArgs e)
         {
@@ -108,9 +116,11 @@ namespace HafezWPFUI.Views.Windows
         public static string GetIpPort(string ipAddress = "")
         {
             if ( string.IsNullOrWhiteSpace(ipAddress) )
+            {
                 ipAddress = TcpListener.GetLocalIpAddress();
+            }
 
-            var fullIpAddress = $"{ipAddress}:{GlobalConfig.UserConfig.PortNumber}";
+            string fullIpAddress = $"{ipAddress}:{GlobalConfig.UserConfig.PortNumber}";
 
             return fullIpAddress;
         }
@@ -119,10 +129,10 @@ namespace HafezWPFUI.Views.Windows
         {
             StopServer();
 
-            var ipAddress = ComboBoxAllIpAddresses.SelectedItem.ToString();
+            string? ipAddress = ComboBoxAllIpAddresses.SelectedItem.ToString();
             TextBlockInternet.Text = GetIpPort(ipAddress);
             Server = TcpListener.GetServer(IPAddress.Parse(ipAddress),
-                GlobalConfig.UserConfig.PortNumber);
+                                           GlobalConfig.UserConfig.PortNumber);
 
             StartServer();
 

@@ -40,11 +40,11 @@ namespace HafezWPFUI.Views.Windows
 {
     public partial class MainWindowView
     {
-        public const int LastQuranPageNumber = 604;
-        public static readonly SolidColorBrush EnabledColor = Brushes.White;
-        public static readonly SolidColorBrush DisabledColor = Brushes.DarkRed;
-        private const PackIconKind PlayIcon = PackIconKind.Play;
-        private const PackIconKind PauseIcon = PackIconKind.Pause;
+        public const           int             LastQuranPageNumber = 604;
+        public static readonly SolidColorBrush EnabledColor        = Brushes.White;
+        public static readonly SolidColorBrush DisabledColor       = Brushes.DarkRed;
+        private const          PackIconKind    PlayIcon            = PackIconKind.Play;
+        private const          PackIconKind    PauseIcon           = PackIconKind.Pause;
 
         public MainWindowView()
         {
@@ -53,32 +53,32 @@ namespace HafezWPFUI.Views.Windows
             //ApplicationCustomerName.Text = "HRA";// TinyxConnector.CustomerName;
 
             // Hook up the Elapsed event for the timer. 
-            SlideShowTimer.Interval = Convert.ToDouble(TxtSlideShowTime.Text) * 1000;
-            SlideShowTimer.Elapsed += OnTimedEvent;
-            SlideShowTimer.AutoReset = true;
-            SlideShowTimer.Enabled = false;
+            SlideShowTimer.Interval  =  Convert.ToDouble(TxtSlideShowTime.Text) * 1000;
+            SlideShowTimer.Elapsed   += OnTimedEvent;
+            SlideShowTimer.AutoReset =  true;
+            SlideShowTimer.Enabled   =  false;
 
             // Hook up the Elapsed event for the timer. 
-            LogoShowTimer.Interval = Convert.ToDouble(TxtLogoShowTime.Text) * 1000;
-            LogoShowTimer.Elapsed += LogoShowTimerOnElapsed;
-            LogoShowTimer.AutoReset = true;
-            LogoShowTimer.Enabled = false;
+            LogoShowTimer.Interval  =  Convert.ToDouble(TxtLogoShowTime.Text) * 1000;
+            LogoShowTimer.Elapsed   += LogoShowTimerOnElapsed;
+            LogoShowTimer.AutoReset =  true;
+            LogoShowTimer.Enabled   =  false;
         }
 
         private void LogoShowTimerOnElapsed(object sender, ElapsedEventArgs e)
         {
             Dispatcher.BeginInvoke(
-                new ThreadStart(() => ButtonNextLogo_OnClick(null, null)));
+                                   new ThreadStart(() => ButtonNextLogo_OnClick(null, null)));
             Dispatcher.BeginInvoke(
-                new ThreadStart(() => ButtonPlayLogo_OnClick(null, null)));
+                                   new ThreadStart(() => ButtonPlayLogo_OnClick(null, null)));
         }
 
         private void OnTimedEvent(object sender, ElapsedEventArgs e)
         {
             Dispatcher.BeginInvoke(
-                new ThreadStart(() => ButtonNextImage_OnClick(null, null)));
+                                   new ThreadStart(() => ButtonNextImage_OnClick(null, null)));
             Dispatcher.BeginInvoke(
-                new ThreadStart(() => ButtonPlayImage_OnClick(null, null)));
+                                   new ThreadStart(() => ButtonPlayImage_OnClick(null, null)));
         }
 
         private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
@@ -89,7 +89,7 @@ namespace HafezWPFUI.Views.Windows
 
                 UpdatePersonalDuaComboBoxes();
                 ComboBoxMafatihDuaNames.ItemsSource = MafatihLists;
-                ComboBoxQuranSure.ItemsSource = SureLists;
+                ComboBoxQuranSure.ItemsSource       = SureLists;
 
                 GetGlobalUserConfig();
                 //CameraButton_OnClick(null, null);
@@ -98,14 +98,16 @@ namespace HafezWPFUI.Views.Windows
 
                 if ( UserConfig.QuranPageNumber <= LastQuranPageNumber )
                 {
-                    var pageNumber = Quran.Where(x => x.PageNumber == UserConfig.QuranPageNumber)
-                        .OrderBy(x => x.SuraID).First();
+                    QuranModel pageNumber = Quran.Where(x => x.PageNumber == UserConfig.QuranPageNumber)
+                                                 .OrderBy(x => x.SuraID).First();
 
                     ComboBoxQuranSure.SelectedIndex = pageNumber.SuraID - 1;
                 }
 
                 if ( UserConfig.IsListenerAutoStart != "D" )
+                {
                     ListenerButton_OnClick(null, null);
+                }
 
                 /*if (GlobalConfig.IsListenerAutoStart == true)
                 {
@@ -121,7 +123,7 @@ namespace HafezWPFUI.Views.Windows
         public void UpdatePersonalDuaComboBoxes()
         {
             ComboBoxPersonalDuaNames.Items.Clear();
-            foreach ( var personalDuaList in PersonalDuaListsDisplay )
+            foreach ( PersonalDuaListDisplayModel personalDuaList in PersonalDuaListsDisplay )
             {
                 ComboBoxPersonalDuaNames.Items.Add(personalDuaList);
             }
@@ -150,11 +152,11 @@ namespace HafezWPFUI.Views.Windows
             {
                 // await Task.Run(ControlHandlers.PhysicalKeyValidation);
 
-                var panelName = Enums.PanelTypes.Notification.ToString();
+                string panelName = Enums.PanelTypes.Notification.ToString();
                 if ( PlayPackIcon.Kind == PackIconKind.MessageBulleted )
                 {
                     PlayPackIcon.Foreground = DisabledColor;
-                    PlayPackIcon.Kind = PackIconKind.MessageBulletedOff;
+                    PlayPackIcon.Kind       = PackIconKind.MessageBulletedOff;
 
                     // Output.NotificationMarquee.Visibility = Visibility.Visible;
 
@@ -163,7 +165,7 @@ namespace HafezWPFUI.Views.Windows
                     Output.LogoVisibilityToggle(UserConfig.LogoStart == "D" ? Visibility.Hidden : Visibility.Visible);
 
                     //Output.ShowLogo();  
-                    var sb = Output.Resources["LogoStoryBoard"] as Storyboard;
+                    Storyboard sb = Output.Resources["LogoStoryBoard"] as Storyboard;
                     sb.Begin(Output.Logo);
 
                     // Output.Show();
@@ -176,7 +178,7 @@ namespace HafezWPFUI.Views.Windows
                 else
                 {
                     PlayPackIcon.Foreground = EnabledColor;
-                    PlayPackIcon.Kind = PackIconKind.MessageBulleted;
+                    PlayPackIcon.Kind       = PackIconKind.MessageBulleted;
 
                     Output.NotificationContainer.Visibility = Visibility.Collapsed;
                     Output.StopAnimation(panelName);
@@ -209,7 +211,7 @@ namespace HafezWPFUI.Views.Windows
                 {
                     //if (RadWebCam.GetVideoCaptureDevices().Count >= 1)
                     //{
-                    var value = CameraPackIcon.Foreground == DisabledColor ? "D" : "E";
+                    string value = CameraPackIcon.Foreground == DisabledColor ? "D" : "E";
                     //Output.PictureInput.Visibility = Visibility.Hidden;
                     WebcamHandler.CameraControllers(value);
                     //}
@@ -234,15 +236,17 @@ namespace HafezWPFUI.Views.Windows
         public void SetMonitor(int monitorNumber = 1)
         {
             if ( Screen.AllScreens.Length < monitorNumber )
+            {
                 return;
+            }
 
-            var screen = Screen.AllScreens[monitorNumber - 1];
+            Screen screen = Screen.AllScreens[monitorNumber - 1];
 
-            Left = screen.Bounds.Left + (screen.Bounds.Width - Width) / 2;
-            Top = screen.Bounds.Top + (screen.Bounds.Height - Height) / 2;
+            Left = screen.Bounds.Left + ((screen.Bounds.Width  - Width)  / 2);
+            Top  = screen.Bounds.Top  + ((screen.Bounds.Height - Height) / 2);
 
             WindowStartupLocation = WindowStartupLocation.Manual;
-            WindowState = WindowState.Normal;
+            WindowState           = WindowState.Normal;
         }
 
         private void StackPanel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -252,9 +256,11 @@ namespace HafezWPFUI.Views.Windows
 
         public void ClearPage()
         {
-            var childObjects = Main.GetChildObjects();
-            foreach ( var dependencyObject in childObjects )
+            IEnumerable<DependencyObject> childObjects = Main.GetChildObjects();
+            foreach ( DependencyObject dependencyObject in childObjects )
+            {
                 ((UserControl) dependencyObject).Visibility = Visibility.Collapsed;
+            }
         }
 
         #region SubRegion
@@ -296,8 +302,8 @@ namespace HafezWPFUI.Views.Windows
         private async void Sub6_Click(object sender, RoutedEventArgs e)
         {
             ClearPage();
-            NotificationList.Visibility = Visibility.Visible;
-            NotificationList.SelectedNotificationGroup = null;
+            NotificationList.Visibility                       = Visibility.Visible;
+            NotificationList.SelectedNotificationGroup        = null;
             NotificationList.NotificationListView.ItemsSource = await NotificationList.GetNotificationListByType();
         }
 
@@ -330,7 +336,7 @@ namespace HafezWPFUI.Views.Windows
                     Listener.Show();
                     Listener.StartReceiving();
 
-                    ListenerPackIcon.Kind = PackIconKind.CastOff;
+                    ListenerPackIcon.Kind       = PackIconKind.CastOff;
                     ListenerPackIcon.Foreground = DisabledColor;
                 }
                 else
@@ -338,7 +344,7 @@ namespace HafezWPFUI.Views.Windows
                     Listener.Hide();
                     Listener.StopServer();
 
-                    ListenerPackIcon.Kind = PackIconKind.Cast;
+                    ListenerPackIcon.Kind       = PackIconKind.Cast;
                     ListenerPackIcon.Foreground = EnabledColor;
                 }
             }
@@ -357,19 +363,19 @@ namespace HafezWPFUI.Views.Windows
 
                 if ( PackIconBook.Kind == PackIconKind.BookOpenVariant )
                 {
-                    var sb = Resources["SideMenuOpenQuran"] as Storyboard;
+                    Storyboard sb = Resources["SideMenuOpenQuran"] as Storyboard;
                     sb.Begin(SideMenuQuran);
 
                     PackIconBook.Foreground = DisabledColor;
-                    PackIconBook.Kind = PackIconKind.BookOpenPageVariant;
+                    PackIconBook.Kind       = PackIconKind.BookOpenPageVariant;
                 }
                 else
                 {
-                    var sb = Resources["SideMenuCloseQuran"] as Storyboard;
+                    Storyboard sb = Resources["SideMenuCloseQuran"] as Storyboard;
                     sb.Begin(SideMenuQuran);
 
                     PackIconBook.Foreground = EnabledColor;
-                    PackIconBook.Kind = PackIconKind.BookOpenVariant;
+                    PackIconBook.Kind       = PackIconKind.BookOpenVariant;
                 }
             }
             catch ( Exception exception )
@@ -382,13 +388,13 @@ namespace HafezWPFUI.Views.Windows
 
         private void StackPanel_OnMouseEnter(object sender, MouseEventArgs e)
         {
-            var sb = Resources["SideMenuOpen"] as Storyboard;
+            Storyboard sb = Resources["SideMenuOpen"] as Storyboard;
             sb.Begin(SideMenu);
         }
 
         private void StackPanel_OnMouseLeave(object sender, MouseEventArgs e)
         {
-            var sb = Resources["SideMenuClose"] as Storyboard;
+            Storyboard sb = Resources["SideMenuClose"] as Storyboard;
             sb.Begin(SideMenu);
             //ClearSubMenu();
         }
@@ -430,7 +436,7 @@ namespace HafezWPFUI.Views.Windows
                     return;
                 }
 
-                var quranPageNumber = Convert.ToInt32(TxtQuranPageNumber.Text);
+                int quranPageNumber = Convert.ToInt32(TxtQuranPageNumber.Text);
                 if ( quranPageNumber > LastQuranPageNumber || quranPageNumber <= 0 )
                 {
                     e.Handled = true;
@@ -449,24 +455,26 @@ namespace HafezWPFUI.Views.Windows
                 /*var dataTablePageNumber = QuranController.GetSureIdByPageNumber(GlobalConfig.QuranPageNumber);
                 ComboBoxQuranSure.SelectedIndex = Convert.ToInt32(dataTablePageNumber.Rows[0]["SuraID"]) - 1;*/
 
-                var selectedQuran = Quran.Where(q => q.PageNumber == quranPageNumber).ToList();
+                List<QuranModel> selectedQuran = Quran.Where(q => q.PageNumber == quranPageNumber).ToList();
 
                 // Sure ComboBox
                 ComboBoxQuranSure.SelectedIndex = Convert.ToInt32(selectedQuran.First().SuraID) - 1;
 
                 // Ayah ComboBox
                 ComboBoxQuranAyah.Items.Clear();
-                foreach ( var q in selectedQuran )
+                foreach ( QuranModel q in selectedQuran )
+                {
                     ComboBoxQuranAyah.Items.Add(q);
+                }
 
                 // Ayah Count
                 TextBlockAyahCount.Text = $"{selectedQuran.Count} آیه";
 
                 // Set Output
-                var outputTable = selectedQuran.ToDataTable();
+                DataTable outputTable = selectedQuran.ToDataTable();
 
-                outputTable.Columns["SuraName"].ColumnName = "T1";
-                outputTable.Columns["AyahText"].ColumnName = "H1";
+                outputTable.Columns["SuraName"].ColumnName               = "T1";
+                outputTable.Columns["AyahText"].ColumnName               = "H1";
                 outputTable.Columns["AyahPersianTranslation"].ColumnName = "H2";
 
                 Output.ShowTableInPanel(Enums.PanelTypes.Quran.ToString(), outputTable);
@@ -489,25 +497,27 @@ namespace HafezWPFUI.Views.Windows
                     return;
                 }*/
 
-                var selectedSure = ComboBoxQuranSure.SelectedItem as SureListModel;
-                var selectedQuran = Quran.Where(q => q.SuraID == selectedSure.Id).ToList();
+                SureListModel    selectedSure  = ComboBoxQuranSure.SelectedItem as SureListModel;
+                List<QuranModel> selectedQuran = Quran.Where(q => q.SuraID == selectedSure.Id).ToList();
 
                 // PageNumber TextBox
                 //TxtQuranPageNumber.Text = selectedQuran.First().PageNumber.ToString();
 
                 // Ayah ComboBox
                 ComboBoxQuranAyah.Items.Clear();
-                foreach ( var q in selectedQuran )
+                foreach ( QuranModel q in selectedQuran )
+                {
                     ComboBoxQuranAyah.Items.Add(q);
+                }
 
                 // Ayah Count
                 TextBlockAyahCount.Text = $"{selectedQuran.Count} آیه";
 
                 // Set Output
-                var outputTable = selectedQuran.ToDataTable();
+                DataTable outputTable = selectedQuran.ToDataTable();
 
-                outputTable.Columns["SuraName"].ColumnName = "T1";
-                outputTable.Columns["AyahText"].ColumnName = "H1";
+                outputTable.Columns["SuraName"].ColumnName               = "T1";
+                outputTable.Columns["AyahText"].ColumnName               = "H1";
                 outputTable.Columns["AyahPersianTranslation"].ColumnName = "H2";
 
                 Output.ShowTableInPanel(Enums.PanelTypes.Quran.ToString(), outputTable);
@@ -531,7 +541,9 @@ namespace HafezWPFUI.Views.Windows
                 }*/
 
                 if ( !(ComboBoxQuranAyah.SelectedItem is QuranModel) )
+                {
                     return;
+                }
 
                 // PageNumber TextBox
                 //TxtQuranPageNumber.Text = selectedAyah.PageNumber.ToString();
@@ -552,11 +564,11 @@ namespace HafezWPFUI.Views.Windows
         {
             try
             {
-                var mafatihList = (MafatihListModel) ComboBoxMafatihDuaNames.SelectedItem;
-                var farazes = MafatihController.GetFarazTableByDuaId_Obsolete(mafatihList.DuaId);
+                MafatihListModel mafatihList = (MafatihListModel) ComboBoxMafatihDuaNames.SelectedItem;
+                DataTable        farazes     = MafatihController.GetFarazTableByDuaId_Obsolete(mafatihList.DuaId);
 
-                farazes.Columns["DuaName"].ColumnName = "T1";
-                farazes.Columns["ArabicText"].ColumnName = "H1";
+                farazes.Columns["DuaName"].ColumnName     = "T1";
+                farazes.Columns["ArabicText"].ColumnName  = "H1";
                 farazes.Columns["PersianText"].ColumnName = "H2";
 
                 Output.ShowTableInPanel(Enums.PanelTypes.Mafatih.ToString(), farazes);
@@ -566,7 +578,9 @@ namespace HafezWPFUI.Views.Windows
 
                 ComboBoxMafatihFarazId.Items.Clear();
                 foreach ( DataRow faraz in farazes.Rows )
+                {
                     ComboBoxMafatihFarazId.Items.Add(faraz["FarazId"]);
+                }
             }
             catch ( Exception exception )
             {
@@ -579,7 +593,9 @@ namespace HafezWPFUI.Views.Windows
             try
             {
                 if ( string.IsNullOrWhiteSpace(TxtQuranPageNumber.Text) )
+                {
                     return;
+                }
 
                 // const PackIconKind playIcon = PackIconKind.Play;
                 // const PackIconKind pauseIcon = PackIconKind.Pause;
@@ -594,9 +610,9 @@ namespace HafezWPFUI.Views.Windows
                     // if ( UserConfig.QuranAnimationMode == AnimationMode.Static.ToString() )
                     // {
                     Output.QuranMarquee.HorizontalAlignment = HorizontalAlignment.Center;
-                    Output.QuranMarquee.TextAlignment = TextAlignment.Center;
-                    Output.QuranMarquee.TextWrapping = TextWrapping.Wrap;
-                    Output.QuranMarquee.FlowDirection = FlowDirection.RightToLeft;
+                    Output.QuranMarquee.TextAlignment       = TextAlignment.Center;
+                    Output.QuranMarquee.TextWrapping        = TextWrapping.Wrap;
+                    Output.QuranMarquee.FlowDirection       = FlowDirection.RightToLeft;
 
                     Output.QuranTranslationMarquee.TextAlignment = TextAlignment.Center;
                     // }
@@ -613,7 +629,7 @@ namespace HafezWPFUI.Views.Windows
                     Output.ShowTableInPanel(PanelTypes.Quran.ToString(), ayahs);*/
 
                     // Output.Show();
-                    Output.QuranContainer.Visibility = Visibility.Visible;
+                    Output.QuranContainer.Visibility            = Visibility.Visible;
                     Output.QuranTranslationContainer.Visibility = Visibility.Visible;
 
 
@@ -624,7 +640,7 @@ namespace HafezWPFUI.Views.Windows
                 {
                     QuranPlayPackIcon.Kind = PlayIcon;
 
-                    Output.QuranContainer.Visibility = Visibility.Collapsed;
+                    Output.QuranContainer.Visibility            = Visibility.Collapsed;
                     Output.QuranTranslationContainer.Visibility = Visibility.Collapsed;
 
                     // Output.StopAnimation(PanelTypes.Quran.ToString());
@@ -681,7 +697,9 @@ namespace HafezWPFUI.Views.Windows
             try
             {
                 if ( ComboBoxMafatihFarazId.SelectedIndex == -1 )
+                {
                     return;
+                }
 
                 // Set Output
                 Output.ResetFaraz(ComboBoxMafatihFarazId.SelectedIndex);
@@ -697,24 +715,26 @@ namespace HafezWPFUI.Views.Windows
             try
             {
                 if ( ComboBoxMafatihDuaNames.SelectedIndex == -1 )
+                {
                     return;
+                }
 
-                var panelName = Enums.PanelTypes.Mafatih.ToString();
+                string panelName = Enums.PanelTypes.Mafatih.ToString();
 
                 if ( MafatihPlayPackIcon.Kind == PlayIcon )
                 {
                     MafatihPlayPackIcon.Kind = PauseIcon;
 
-                    var selectedMafatihList = (MafatihListModel) ComboBoxMafatihDuaNames.SelectedItem;
-                    var duaId = selectedMafatihList.DuaId;
-                    var farazes = MafatihController.GetFarazTableByDuaId_Obsolete(duaId);
+                    MafatihListModel selectedMafatihList = (MafatihListModel) ComboBoxMafatihDuaNames.SelectedItem;
+                    int              duaId               = selectedMafatihList.DuaId;
+                    DataTable        farazes             = MafatihController.GetFarazTableByDuaId_Obsolete(duaId);
 
                     // if ( UserConfig.MafatihAnimationMode == AnimationMode.Static.ToString() )
                     // {
                     Output.MafatihMarquee.HorizontalAlignment = HorizontalAlignment.Center;
-                    Output.MafatihMarquee.TextAlignment = TextAlignment.Center;
-                    Output.MafatihMarquee.TextWrapping = TextWrapping.Wrap;
-                    Output.MafatihMarquee.FlowDirection = FlowDirection.RightToLeft;
+                    Output.MafatihMarquee.TextAlignment       = TextAlignment.Center;
+                    Output.MafatihMarquee.TextWrapping        = TextWrapping.Wrap;
+                    Output.MafatihMarquee.FlowDirection       = FlowDirection.RightToLeft;
 
                     Output.MafatihTranslationMarquee.TextAlignment = TextAlignment.Center;
                     // }
@@ -726,16 +746,16 @@ namespace HafezWPFUI.Views.Windows
                     //     await Output.StartAnimation(panelName);
                     // }
 
-                    farazes.Columns["DuaName"].ColumnName = "T1";
-                    farazes.Columns["ArabicText"].ColumnName = "H1";
+                    farazes.Columns["DuaName"].ColumnName     = "T1";
+                    farazes.Columns["ArabicText"].ColumnName  = "H1";
                     farazes.Columns["PersianText"].ColumnName = "H2";
 
                     Output.ShowTableInPanel(panelName, farazes);
                     Output.ReplaceTitleText(panelName,
-                        $"{selectedMafatihList.DuaName} ({OutputWindowView.MafatihOutputTable.Rows[OutputWindowView.MafatihRowCounter]["FarazId"]})");
+                                            $"{selectedMafatihList.DuaName} ({OutputWindowView.MafatihOutputTable.Rows[OutputWindowView.MafatihRowCounter]["FarazId"]})");
 
                     // Output.Show();
-                    Output.MafatihContainer.Visibility = Visibility.Visible;
+                    Output.MafatihContainer.Visibility            = Visibility.Visible;
                     Output.MafatihTranslationContainer.Visibility = Visibility.Visible;
 
 
@@ -746,7 +766,7 @@ namespace HafezWPFUI.Views.Windows
                 {
                     MafatihPlayPackIcon.Kind = PlayIcon;
 
-                    Output.MafatihContainer.Visibility = Visibility.Collapsed;
+                    Output.MafatihContainer.Visibility            = Visibility.Collapsed;
                     Output.MafatihTranslationContainer.Visibility = Visibility.Collapsed;
 
                     // Output.StopAnimation(panelName);
@@ -781,13 +801,13 @@ namespace HafezWPFUI.Views.Windows
 
         #region Picture Drawer
 
-        private int CurrentImageIndex { get; set; }
-        private List<string> ImageNames { get; set; } = new List<string>();
-        private Timer SlideShowTimer { get; } = new Timer();
+        private int          CurrentImageIndex { get; set; }
+        private List<string> ImageNames        { get; set; } = new();
+        private Timer        SlideShowTimer    { get; }      = new();
 
-        private int CurrentLogoIndex { get; set; }
-        private List<string> LogoNames { get; set; } = new List<string>();
-        private Timer LogoShowTimer { get; } = new Timer();
+        private int          CurrentLogoIndex { get; set; }
+        private List<string> LogoNames        { get; set; } = new();
+        private Timer        LogoShowTimer    { get; }      = new();
 
         public void ImageSlide_OnClick(object sender, RoutedEventArgs e)
         {
@@ -798,24 +818,24 @@ namespace HafezWPFUI.Views.Windows
 
                 if ( PackIconSlide.Kind == PackIconKind.ImageSizeSelectActual )
                 {
-                    var sb = Resources["SideMenuOpenSlideImage"] as Storyboard;
+                    Storyboard sb = Resources["SideMenuOpenSlideImage"] as Storyboard;
                     sb?.Begin(SideMenuSlideImage);
 
                     FillComboboxPicture();
                     FillComboboxLogo();
-                    ImgPreview.Source = null;
+                    ImgPreview.Source   = null;
                     LblFileName.Content = null;
 
                     PackIconSlide.Foreground = DisabledColor;
-                    PackIconSlide.Kind = PackIconKind.ImageOutline;
+                    PackIconSlide.Kind       = PackIconKind.ImageOutline;
                 }
                 else
                 {
-                    var sb = Resources["SideMenuCloseSlideImage"] as Storyboard;
+                    Storyboard sb = Resources["SideMenuCloseSlideImage"] as Storyboard;
                     sb?.Begin(SideMenuSlideImage);
 
                     PackIconSlide.Foreground = EnabledColor;
-                    PackIconSlide.Kind = PackIconKind.ImageSizeSelectActual;
+                    PackIconSlide.Kind       = PackIconKind.ImageSizeSelectActual;
                 }
             }
             catch ( Exception exception )
@@ -826,11 +846,11 @@ namespace HafezWPFUI.Views.Windows
 
         public void FillComboboxPicture()
         {
-            var fileNames = new DirectoryInfo(ImageLocation).GetDirectories().Select(o => o.Name).ToList();
+            List<string> fileNames = new DirectoryInfo(ImageLocation).GetDirectories().Select(o => o.Name).ToList();
 
             //ComboBoxPicture.ItemsSource = filesName;
             ComboBoxImage.Items.Clear();
-            for ( var i = 0; i < fileNames.Count; i++ )
+            for ( int i = 0; i < fileNames.Count; i++ )
             {
                 //var folderName = new ImageFolderName
                 //{
@@ -857,10 +877,10 @@ namespace HafezWPFUI.Views.Windows
 
         public void FillComboboxLogo()
         {
-            var fileNames = new DirectoryInfo(LogoLocation).GetDirectories().Select(o => o.Name).ToList();
+            List<string> fileNames = new DirectoryInfo(LogoLocation).GetDirectories().Select(o => o.Name).ToList();
 
             ComboBoxLogo.Items.Clear();
-            for ( var i = 0; i < fileNames.Count; i++ )
+            for ( int i = 0; i < fileNames.Count; i++ )
             {
                 var folderName = new {Id = i + 1, FileName = fileNames[i]};
 
@@ -879,7 +899,10 @@ namespace HafezWPFUI.Views.Windows
             try
             {
                 if ( ComboBoxImage.SelectedItem == null )
+                {
                     return;
+                }
+
                 dynamic selectedItem = ComboBoxImage.SelectedItem;
 
                 CurrentImageIndex = 0;
@@ -889,7 +912,7 @@ namespace HafezWPFUI.Views.Windows
                 if ( ImageNames.Count == 0 )
                 {
                     LblFileName.Content = "";
-                    ImgPreview.Source = null;
+                    ImgPreview.Source   = null;
                     MessageBoxHandler.ShowMessage("هشدار", "تصویری در این پوشه موجود نیست");
                     return;
                 }
@@ -897,7 +920,7 @@ namespace HafezWPFUI.Views.Windows
                 /*if (fileCount != 0)
                 {*/
 
-                ImgPreview.Source = new BitmapImage(new Uri(ImageNames.First()));
+                ImgPreview.Source   = new BitmapImage(new Uri(ImageNames.First()));
                 LblFileName.Content = ImageNames.First().Split('\\').ToList().Last();
 
                 /*}
@@ -919,7 +942,10 @@ namespace HafezWPFUI.Views.Windows
             try
             {
                 if ( ComboBoxLogo.SelectedItem == null )
+                {
                     return;
+                }
+
                 dynamic selectedItem = ComboBoxLogo.SelectedItem;
 
                 CurrentLogoIndex = 0;
@@ -929,7 +955,7 @@ namespace HafezWPFUI.Views.Windows
                 if ( LogoNames.Count == 0 )
                 {
                     LblLogoName.Content = "";
-                    LogoPreview.Source = null;
+                    LogoPreview.Source  = null;
                     MessageBoxHandler.ShowMessage("هشدار", "تصویری در این پوشه موجود نیست");
                     return;
                 }
@@ -937,7 +963,7 @@ namespace HafezWPFUI.Views.Windows
                 /*if (fileCount != 0)
                 {*/
 
-                LogoPreview.Source = new BitmapImage(new Uri(LogoNames.First()));
+                LogoPreview.Source  = new BitmapImage(new Uri(LogoNames.First()));
                 LblLogoName.Content = LogoNames.First().Split('\\').ToList().Last();
 
                 /*}
@@ -959,10 +985,14 @@ namespace HafezWPFUI.Views.Windows
             try
             {
                 if ( ComboBoxImage.SelectedIndex == -1 )
+                {
                     return;
+                }
 
                 if ( TxtSlideShowTime.IsEnabled )
+                {
                     SlideShowTimer.Start();
+                }
 
                 //var selected = ComboBoxPicture.SelectedItem.ToString();
                 //var filePaths = GetGalleryFullPath(selected);
@@ -1014,18 +1044,24 @@ namespace HafezWPFUI.Views.Windows
             try
             {
                 //if (ComboBoxPicture.SelectedIndex == -1) return;
-                var fileCount = ImageNames.Count;
+                int fileCount = ImageNames.Count;
 
                 if ( fileCount != 0 )
                 {
                     if ( CurrentImageIndex >= fileCount - 1 )
+                    {
                         CurrentImageIndex = -1;
+                    }
 
                     ++CurrentImageIndex;
                     await Dispatcher?.BeginInvoke(new ThreadStart(() =>
-                        ImgPreview.Source = new BitmapImage(new Uri(ImageNames[CurrentImageIndex]))));
+                                                                      ImgPreview.Source =
+                                                                          new BitmapImage(new Uri(ImageNames
+                                                                              [CurrentImageIndex]))));
                     await Dispatcher?.BeginInvoke(new ThreadStart(() =>
-                        LblFileName.Content = ImageNames[CurrentImageIndex].Split('\\').ToList().Last()));
+                                                                      LblFileName.Content =
+                                                                          ImageNames[CurrentImageIndex].Split('\\')
+                                                                              .ToList().Last()));
 
                     //ImgPreview.Source = new BitmapImage(new Uri(ImageNames[CurrentImageIndex]));
                     //LblFileName.Content = Task.Run(() => ImageNames[CurrentImageIndex].Split('\\').ToList().Last());
@@ -1047,16 +1083,21 @@ namespace HafezWPFUI.Views.Windows
             try
             {
                 if ( ComboBoxImage.SelectedIndex == -1 )
+                {
                     return;
-                var fileCount = ImageNames.Count;
+                }
+
+                int fileCount = ImageNames.Count;
 
                 if ( fileCount != 0 )
                 {
                     if ( CurrentImageIndex < 1 )
+                    {
                         CurrentImageIndex = fileCount;
+                    }
 
                     --CurrentImageIndex;
-                    ImgPreview.Source = new BitmapImage(new Uri(ImageNames[CurrentImageIndex]));
+                    ImgPreview.Source   = new BitmapImage(new Uri(ImageNames[CurrentImageIndex]));
                     LblFileName.Content = ImageNames[CurrentImageIndex].Split('\\').ToList().Last();
                 }
                 else
@@ -1082,12 +1123,17 @@ namespace HafezWPFUI.Views.Windows
             try
             {
                 if ( ImageNames.Count == 0 )
+                {
                     return;
-                var folderPath = ImageNames[CurrentImageIndex];
+                }
+
+                string folderPath = ImageNames[CurrentImageIndex];
                 folderPath = folderPath.Remove(folderPath.LastIndexOf("\\", StringComparison.Ordinal));
 
                 if ( ImageNames.Count != 0 ) //&& File.Exists(folderPath))
+                {
                     Process.Start("explorer.exe ", folderPath);
+                }
             }
             catch ( Exception exception )
             {
@@ -1100,10 +1146,14 @@ namespace HafezWPFUI.Views.Windows
             try
             {
                 if ( ComboBoxLogo.SelectedIndex == -1 )
+                {
                     return;
+                }
 
                 if ( TxtLogoShowTime.IsEnabled )
+                {
                     LogoShowTimer.Start();
+                }
 
                 //var selected = ComboBoxPicture.SelectedItem.ToString();
                 //var filePaths = GetGalleryFullPath(selected);
@@ -1155,18 +1205,23 @@ namespace HafezWPFUI.Views.Windows
             try
             {
                 //if (ComboBoxPicture.SelectedIndex == -1) return;
-                var fileCount = LogoNames.Count;
+                int fileCount = LogoNames.Count;
 
                 if ( fileCount != 0 )
                 {
                     if ( CurrentLogoIndex >= fileCount - 1 )
+                    {
                         CurrentLogoIndex = -1;
+                    }
 
                     ++CurrentLogoIndex;
                     await Dispatcher?.BeginInvoke(new ThreadStart(() =>
-                        LogoPreview.Source = new BitmapImage(new Uri(LogoNames[CurrentLogoIndex]))));
+                                                                      LogoPreview.Source =
+                                                                          new BitmapImage(new Uri(LogoNames
+                                                                              [CurrentLogoIndex]))));
                     await Dispatcher?.BeginInvoke(new ThreadStart(() =>
-                        LblLogoName.Content = LogoNames[CurrentLogoIndex].Split('\\').ToList().Last()));
+                                                                      LblLogoName.Content = LogoNames[CurrentLogoIndex]
+                                                                          .Split('\\').ToList().Last()));
 
                     //ImgPreview.Source = new BitmapImage(new Uri(ImageNames[CurrentImageIndex]));
                     //LblFileName.Content = Task.Run(() => ImageNames[CurrentImageIndex].Split('\\').ToList().Last());
@@ -1188,16 +1243,21 @@ namespace HafezWPFUI.Views.Windows
             try
             {
                 if ( ComboBoxLogo.SelectedIndex == -1 )
+                {
                     return;
-                var fileCount = LogoNames.Count;
+                }
+
+                int fileCount = LogoNames.Count;
 
                 if ( fileCount != 0 )
                 {
                     if ( CurrentLogoIndex < 1 )
+                    {
                         CurrentLogoIndex = fileCount;
+                    }
 
                     --CurrentLogoIndex;
-                    LogoPreview.Source = new BitmapImage(new Uri(LogoNames[CurrentLogoIndex]));
+                    LogoPreview.Source  = new BitmapImage(new Uri(LogoNames[CurrentLogoIndex]));
                     LblLogoName.Content = LogoNames[CurrentLogoIndex].Split('\\').ToList().Last();
                 }
                 else
@@ -1221,12 +1281,17 @@ namespace HafezWPFUI.Views.Windows
             try
             {
                 if ( LogoNames.Count == 0 )
+                {
                     return;
-                var folderPath = LogoNames[CurrentLogoIndex];
+                }
+
+                string folderPath = LogoNames[CurrentLogoIndex];
                 folderPath = folderPath.Remove(folderPath.LastIndexOf("\\", StringComparison.Ordinal));
 
                 if ( LogoNames.Count != 0 ) //&& File.Exists(folderPath))
+                {
                     Process.Start("explorer.exe ", folderPath);
+                }
             }
             catch ( Exception exception )
             {
@@ -1241,7 +1306,7 @@ namespace HafezWPFUI.Views.Windows
                 SnackbarMessage.IsActive = false;
 
                 ClearPage();
-                NotificationList.Visibility = Visibility.Visible;
+                NotificationList.Visibility            = Visibility.Visible;
                 NotificationList.NetTabItem.IsSelected = true;
             }
             catch ( Exception exception )
@@ -1259,9 +1324,12 @@ namespace HafezWPFUI.Views.Windows
         {
             try
             {
-                using var ofd = new OpenFileDialog();
+                using OpenFileDialog ofd = new OpenFileDialog();
                 if ( ofd.ShowDialog() != System.Windows.Forms.DialogResult.OK )
+                {
                     return;
+                }
+
                 FilmName = ofd.FileName;
 
                 SelectedFilmPreview.Source = new Uri(FilmName);
@@ -1328,7 +1396,7 @@ namespace HafezWPFUI.Views.Windows
                 if ( FilmName != null )
                 {
                     Output.SelectedFilmPreview.Source = new Uri(FilmName);
-                    SelectedFilmPreview.Source = new Uri(FilmName);
+                    SelectedFilmPreview.Source        = new Uri(FilmName);
                 }
 
                 Output.SelectedFilmPreview.Play();
@@ -1384,7 +1452,9 @@ namespace HafezWPFUI.Views.Windows
                 LogInformation(exception);
             }*/
             if ( string.IsNullOrWhiteSpace(TxtSlideShowTime.Text) )
+            {
                 TxtSlideShowTime.Text = "0";
+            }
         }
 
         private void TxtSlideShowTime_OnTextChanged(object sender, TextChangedEventArgs e)
@@ -1431,7 +1501,9 @@ namespace HafezWPFUI.Views.Windows
                 LogInformation(exception);
             }*/
             if ( string.IsNullOrWhiteSpace(TxtLogoShowTime.Text) )
+            {
                 TxtLogoShowTime.Text = "0";
+            }
         }
 
         private void TxtLogoShowTime_OnTextChanged(object sender, TextChangedEventArgs e)
@@ -1463,12 +1535,12 @@ namespace HafezWPFUI.Views.Windows
         {
             if ( MaximizeIcon.Kind == PackIconKind.WindowMaximize )
             {
-                WindowState = WindowState.Maximized;
+                WindowState       = WindowState.Maximized;
                 MaximizeIcon.Kind = PackIconKind.WindowRestore;
             }
             else
             {
-                WindowState = WindowState.Normal;
+                WindowState       = WindowState.Normal;
                 MaximizeIcon.Kind = PackIconKind.WindowMaximize;
             }
         }
@@ -1477,11 +1549,12 @@ namespace HafezWPFUI.Views.Windows
         {
             try
             {
-                var personalDuaList = (PersonalDuaListDisplayModel) ComboBoxPersonalDuaNames.SelectedItem;
-                var farazes = PersonalDuaController.GetFarazTableByDuaId_Obsolete(personalDuaList.DuaId);
+                PersonalDuaListDisplayModel personalDuaList =
+                    (PersonalDuaListDisplayModel) ComboBoxPersonalDuaNames.SelectedItem;
+                DataTable farazes = PersonalDuaController.GetFarazTableByDuaId_Obsolete(personalDuaList.DuaId);
 
-                farazes.Columns["DuaName"].ColumnName = "T1";
-                farazes.Columns["ArabicText"].ColumnName = "H1";
+                farazes.Columns["DuaName"].ColumnName     = "T1";
+                farazes.Columns["ArabicText"].ColumnName  = "H1";
                 farazes.Columns["PersianText"].ColumnName = "H2";
 
                 Output.ShowTableInPanel(Enums.PanelTypes.Mafatih.ToString(), farazes);
@@ -1491,7 +1564,9 @@ namespace HafezWPFUI.Views.Windows
 
                 ComboBoxPersonalDuaFarazId.Items.Clear();
                 foreach ( DataRow faraz in farazes.Rows )
+                {
                     ComboBoxPersonalDuaFarazId.Items.Add(faraz["FarazId"]);
+                }
             }
             catch ( Exception exception )
             {
@@ -1504,7 +1579,9 @@ namespace HafezWPFUI.Views.Windows
             try
             {
                 if ( ComboBoxPersonalDuaFarazId.SelectedIndex == -1 )
+                {
                     return;
+                }
 
                 Output.ResetFaraz(ComboBoxPersonalDuaFarazId.SelectedIndex);
             }
@@ -1540,45 +1617,48 @@ namespace HafezWPFUI.Views.Windows
             try
             {
                 if ( ComboBoxPersonalDuaNames.SelectedIndex == -1 )
+                {
                     return;
+                }
 
-                var panelName = Enums.PanelTypes.Mafatih.ToString();
+                string panelName = Enums.PanelTypes.Mafatih.ToString();
 
                 if ( PersonalDuaPlayPackIcon.Kind == PlayIcon )
                 {
                     PersonalDuaPlayPackIcon.Kind = PauseIcon;
 
-                    var selectedPersonalDuaList = (PersonalDuaListDisplayModel) ComboBoxPersonalDuaNames.SelectedItem;
-                    var duaId = selectedPersonalDuaList.DuaId;
-                    var farazes = PersonalDuaController.GetFarazTableByDuaId_Obsolete(duaId);
+                    PersonalDuaListDisplayModel selectedPersonalDuaList =
+                        (PersonalDuaListDisplayModel) ComboBoxPersonalDuaNames.SelectedItem;
+                    int       duaId   = selectedPersonalDuaList.DuaId;
+                    DataTable farazes = PersonalDuaController.GetFarazTableByDuaId_Obsolete(duaId);
 
                     if ( UserConfig.MafatihAnimationMode == Enums.AnimationMode.Static.ToString() )
                     {
                         Output.MafatihMarquee.HorizontalAlignment = HorizontalAlignment.Center;
-                        Output.MafatihMarquee.TextAlignment = TextAlignment.Center;
-                        Output.MafatihMarquee.TextWrapping = TextWrapping.Wrap;
-                        Output.MafatihMarquee.FlowDirection = FlowDirection.RightToLeft;
+                        Output.MafatihMarquee.TextAlignment       = TextAlignment.Center;
+                        Output.MafatihMarquee.TextWrapping        = TextWrapping.Wrap;
+                        Output.MafatihMarquee.FlowDirection       = FlowDirection.RightToLeft;
 
                         Output.MafatihTranslationMarquee.TextAlignment = TextAlignment.Center;
                     }
                     else
                     {
                         Output.MafatihMarquee.HorizontalAlignment = HorizontalAlignment.Left;
-                        Output.MafatihMarquee.TextWrapping = TextWrapping.NoWrap;
-                        Output.MafatihMarquee.FlowDirection = FlowDirection.LeftToRight;
+                        Output.MafatihMarquee.TextWrapping        = TextWrapping.NoWrap;
+                        Output.MafatihMarquee.FlowDirection       = FlowDirection.LeftToRight;
                         await Output.StartAnimation(panelName);
                     }
 
-                    farazes.Columns["DuaName"].ColumnName = "T1";
-                    farazes.Columns["ArabicText"].ColumnName = "H1";
+                    farazes.Columns["DuaName"].ColumnName     = "T1";
+                    farazes.Columns["ArabicText"].ColumnName  = "H1";
                     farazes.Columns["PersianText"].ColumnName = "H2";
 
                     Output.ShowTableInPanel(panelName, farazes);
                     Output.ReplaceTitleText(panelName,
-                        $"{selectedPersonalDuaList.DuaName} ({OutputWindowView.MafatihOutputTable.Rows[OutputWindowView.MafatihRowCounter]["FarazId"]})");
+                                            $"{selectedPersonalDuaList.DuaName} ({OutputWindowView.MafatihOutputTable.Rows[OutputWindowView.MafatihRowCounter]["FarazId"]})");
 
                     // Output.Show();
-                    Output.MafatihContainer.Visibility = Visibility.Visible;
+                    Output.MafatihContainer.Visibility            = Visibility.Visible;
                     Output.MafatihTranslationContainer.Visibility = Visibility.Visible;
 
 
@@ -1589,7 +1669,7 @@ namespace HafezWPFUI.Views.Windows
                 {
                     PersonalDuaPlayPackIcon.Kind = PlayIcon;
 
-                    Output.MafatihContainer.Visibility = Visibility.Collapsed;
+                    Output.MafatihContainer.Visibility            = Visibility.Collapsed;
                     Output.MafatihTranslationContainer.Visibility = Visibility.Collapsed;
 
                     Output.StopAnimation(panelName);

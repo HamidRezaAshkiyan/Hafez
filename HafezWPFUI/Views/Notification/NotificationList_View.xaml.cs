@@ -1,4 +1,5 @@
-﻿using MahApps.Metro.Controls;
+﻿using BespokeFusion;
+using MahApps.Metro.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -26,7 +27,7 @@ namespace HafezWPFUI.Views.Notification
             set
             {
                 _selectedNotificationGroup = value;
-                _ = SetNotificationGroupNameAsync();
+                _                          = SetNotificationGroupNameAsync();
             }
         }
         /*public BindingList<NotificationModel> LocalNotifications { get; set; }
@@ -41,7 +42,7 @@ namespace HafezWPFUI.Views.Notification
         {
             if ( SelectedNotificationGroup != null )
             {
-                GroupBoxHeader.Text = "نام گروه انتخاب شده : " + SelectedNotificationGroup.Name;
+                GroupBoxHeader.Text              = "نام گروه انتخاب شده : " + SelectedNotificationGroup.Name;
                 NotificationListView.ItemsSource = await GetNotificationListByType();
             }
             else
@@ -67,7 +68,7 @@ namespace HafezWPFUI.Views.Notification
                 NotificationListView.ItemsSource = await GetNotificationListByType();
                 NetNotificationListView.ItemsSource =
                     new ObservableCollection<NotificationModel>(
-                        await GetAllNotificationByType('N'));
+                                                                await GetAllNotificationByType('N'));
             }
             catch ( Exception exception )
             {
@@ -87,12 +88,12 @@ namespace HafezWPFUI.Views.Notification
 
         public async Task<List<NotificationModel>> GetNotificationListByType(char notificationType = 'L')
         {
-            var notificationModels = await GetAllNotificationByType(notificationType);
+            List<NotificationModel> notificationModels = await GetAllNotificationByType(notificationType);
 
             if ( SelectedNotificationGroup != null )
             {
                 notificationModels = notificationModels
-                    .Where(item => item.GroupId == SelectedNotificationGroup.Id).ToList();
+                                     .Where(item => item.GroupId == SelectedNotificationGroup.Id).ToList();
             }
 
             return notificationModels;
@@ -128,11 +129,11 @@ namespace HafezWPFUI.Views.Notification
         {
             try
             {
-                var parent = this.TryFindParent<MainWindowView>();
+                MainWindowView parent = this.TryFindParent<MainWindowView>();
 
                 parent.ClearPage();
-                parent.AddNotification.IsEditMode = false;
-                parent.AddNotification.Visibility = Visibility.Visible;
+                parent.AddNotification.IsEditMode              = false;
+                parent.AddNotification.Visibility              = Visibility.Visible;
                 Main.AddNotification.SelectedNotificationGroup = SelectedNotificationGroup;
             }
             catch ( Exception exception )
@@ -149,17 +150,17 @@ namespace HafezWPFUI.Views.Notification
 
                 if ( Equals(((MenuItem) sender).Name, "NetEdit") )
                 {
-                    selectedNotification = NetNotificationListView.SelectedItem as NotificationModel;
+                    selectedNotification                    = NetNotificationListView.SelectedItem as NotificationModel;
                     Main.AddNotification.TypeOfNotification = 'N';
                 }
                 else
                 {
-                    selectedNotification = NotificationListView.SelectedItem as NotificationModel;
+                    selectedNotification                    = NotificationListView.SelectedItem as NotificationModel;
                     Main.AddNotification.TypeOfNotification = 'L';
                 }
 
                 Main.AddNotification.SelectedNotificationGroup = SelectedNotificationGroup;
-                Main.AddNotification.IsEditMode = true;
+                Main.AddNotification.IsEditMode                = true;
                 Main.AddNotification.FillControlsByNotificationModel(selectedNotification);
 
                 Main.ClearPage();
@@ -175,13 +176,13 @@ namespace HafezWPFUI.Views.Notification
         {
             try
             {
-                var id = Equals(((MenuItem)sender).Name, "NetDelete")
-                    ? ((NotificationModel)NetNotificationListView.SelectedItem).Id
-                    : ((NotificationModel)NotificationListView.SelectedItem).Id;
+                int id = Equals(((MenuItem) sender).Name, "NetDelete")
+                             ? ((NotificationModel) NetNotificationListView.SelectedItem).Id
+                             : ((NotificationModel) NotificationListView.SelectedItem).Id;
 
-                using var messageBox = GetMaterialMessageBox("هشدار",
+                using CustomMaterialMessageBox messageBox = GetMaterialMessageBox("هشدار",
                     "تمامی اعلانات این گروه حذف خواهند شد. ایا مطمئنید؟");
-                messageBox.BtnOk.Uid = id.ToString();
+                messageBox.BtnOk.Uid   =  id.ToString();
                 messageBox.BtnOk.Click += BtnOkOnClick;
                 messageBox.Show();
             }
@@ -193,8 +194,8 @@ namespace HafezWPFUI.Views.Notification
 
         private async void BtnOkOnClick(object sender, RoutedEventArgs e)
         {
-            var button = sender as Button;
-            var selectedNotification = new NotificationModel { Id = Convert.ToInt32(button.Uid) };
+            Button            button               = sender as Button;
+            NotificationModel selectedNotification = new NotificationModel {Id = Convert.ToInt32(button.Uid)};
 
             selectedNotification = RemoveNotification(selectedNotification);
 
@@ -212,28 +213,33 @@ namespace HafezWPFUI.Views.Notification
 
         private void CreateRightClickMenu(object sender, RoutedEventArgs e)
         {
-            var key = "RightClickMenu";
+            string key = "RightClickMenu";
             if ( Equals(sender, NetNotificationListView) )
             {
                 key = $"Net{key}";
             }
 
             if ( !(FindResource(key) is ContextMenu cm) )
+            {
                 return;
+            }
+
             cm.PlacementTarget = sender as Button;
-            cm.IsOpen = true;
+            cm.IsOpen          = true;
         }
 
         private void TxtSortId_OnLostFocus(object sender, RoutedEventArgs e)
         {
             try
             {
-                var textBox = (TextBox)sender;
-                var id = Convert.ToInt32(textBox.Uid);
-                var model = FindNotification(NotificationListView, id);
+                TextBox           textBox = (TextBox) sender;
+                int               id      = Convert.ToInt32(textBox.Uid);
+                NotificationModel model   = FindNotification(NotificationListView, id);
 
                 if ( string.IsNullOrWhiteSpace(textBox.Text) )
+                {
                     textBox.Text = "0";
+                }
 
                 model.SortId = Convert.ToInt32(textBox.Text);
 
@@ -249,12 +255,14 @@ namespace HafezWPFUI.Views.Notification
         {
             try
             {
-                var textBox = (TextBox)sender;
-                var id = Convert.ToInt32(textBox.Uid);
-                var model = FindNotification(NetNotificationListView, id);
+                TextBox           textBox = (TextBox) sender;
+                int               id      = Convert.ToInt32(textBox.Uid);
+                NotificationModel model   = FindNotification(NetNotificationListView, id);
 
                 if ( string.IsNullOrWhiteSpace(textBox.Text) )
+                {
                     textBox.Text = "0";
+                }
 
                 model.SortId = Convert.ToInt32(textBox.Text);
 
@@ -268,8 +276,8 @@ namespace HafezWPFUI.Views.Notification
 
         public static NotificationModel FindNotification(ListView list, int id)
         {
-            var output = list.ItemsSource.Cast<NotificationModel>()
-                .First(x => x.Id == id);
+            NotificationModel output = list.ItemsSource.Cast<NotificationModel>()
+                                           .First(x => x.Id == id);
 
             return output;
         }

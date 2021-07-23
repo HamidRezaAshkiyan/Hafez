@@ -6,6 +6,8 @@ using HafezLibrary.Controllers;
 using HafezLibrary.Models;
 using HafezWPFUI.Views.NotificationGroup;
 using HafezWPFUI.Views.Windows;
+using System.Collections.Generic;
+using System.Data;
 using static HafezLibrary.Controllers.NotificationController;
 using static HafezWPFUI.GlobalConfig;
 
@@ -15,13 +17,13 @@ namespace HafezWPFUI.Helper
     {
         public static UserModel ParseInput(string input)
         {
-            var output = new UserModel();
-            var splitCommands = input.Split('/');
+            UserModel output        = new();
+            string[]  splitCommands = input.Split('/');
 
-            output.Id = -1;
-            output.UserId = splitCommands[0];
+            output.Id       = -1;
+            output.UserId   = splitCommands[0];
             output.Password = splitCommands[1];
-            output.Command = splitCommands[2] + splitCommands[3];
+            output.Command  = splitCommands[2] + splitCommands[3];
 
             output = output.IsUserValid();
 
@@ -31,10 +33,13 @@ namespace HafezWPFUI.Helper
         public static async System.Threading.Tasks.Task DoCommandAsync(UserModel userCommand)
         {
             if ( Listener.Visibility != Visibility.Visible )
+            {
                 return;
+            }
+
             try
             {
-                var commands = userCommand.Command.ToLower().Split('/').ToList();
+                List<string> commands = userCommand.Command.ToLower().Split('/').ToList();
                 switch ( userCommand.UserType )
                 {
                     case 'S':
@@ -48,14 +53,17 @@ namespace HafezWPFUI.Helper
                                         {
                                             if ( commands.Count > 1 && !string.IsNullOrWhiteSpace(commands[2]) )
                                             {
-                                                var id = Convert.ToInt32(commands[2]);
-                                                var notificationGroup =
+                                                int id = Convert.ToInt32(commands[2]);
+                                                NotificationGroupModel notificationGroup =
                                                     Main.NotificationGroupList.NotificationGroupListView
-                                                    .Items.Cast<NotificationGroupModel>().First(x => x.Id == id);
+                                                        .Items.Cast<NotificationGroupModel>().First(x => x.Id == id);
 
                                                 if ( notificationGroup == null )
+                                                {
                                                     return;
-                                                var notificationsTable =
+                                                }
+
+                                                DataTable notificationsTable =
                                                     GetSortedNotificationsByGroupId_Obsolete(notificationGroup.Id);
                                                 //NotificationController.GetNotificationsByGroupId(notificationGroup.Id);
 
@@ -65,25 +73,29 @@ namespace HafezWPFUI.Helper
                                             }
 
                                             if ( Main.PlayPackIcon.Foreground == MainWindowView.EnabledColor )
+                                            {
                                                 Main.NotificationPlayButton_OnClick(null, null);
+                                            }
                                         }
                                         break;
                                     case "stop":
                                         {
                                             if ( Main.PlayPackIcon.Foreground == MainWindowView.DisabledColor )
+                                            {
                                                 Main.NotificationPlayButton_OnClick(null, null);
+                                            }
                                         }
                                         break;
                                     case "send":
                                         {
                                             // send/title/description
-                                            var notification = new NotificationModel
+                                            NotificationModel notification = new()
                                             {
-                                                GroupId = 2,
-                                                Name = commands[2],
-                                                Description = commands[3],
+                                                GroupId          = 2,
+                                                Name             = commands[2],
+                                                Description      = commands[3],
                                                 NotificationType = 'N',
-                                                CreatedBy = userCommand.Id
+                                                CreatedBy        = userCommand.Id
                                             };
 
                                             CreateNotification(notification);
@@ -96,9 +108,10 @@ namespace HafezWPFUI.Helper
                                             //NotificationController.CreateNotification(notification);
 
                                             Main.NotificationList.NetNotificationListView.ItemsSource =
-                                                new ObservableCollection<NotificationModel>(await GetAllNotificationByType('N'));
+                                                new ObservableCollection<
+                                                    NotificationModel>(await GetAllNotificationByType('N'));
 
-                                            Main.SnackbarUserName.Text = userCommand.Name;
+                                            Main.SnackbarUserName.Text    = userCommand.Name;
                                             Main.SnackbarMessage.IsActive = true;
                                         }
                                         break;
@@ -113,12 +126,17 @@ namespace HafezWPFUI.Helper
                                         {
                                             if ( commands.Count > 1 )
                                             {
-                                                var hasValue = int.TryParse(commands[2], out var value);
+                                                bool hasValue = int.TryParse(commands[2], out int value);
 
                                                 if ( Main.PackIconSlide.Foreground == MainWindowView.EnabledColor )
+                                                {
                                                     Main.ImageSlide_OnClick(null, null);
+                                                }
+
                                                 if ( hasValue && value > 0 )
+                                                {
                                                     Main.ComboBoxImage.SelectedIndex = value - 1;
+                                                }
                                             }
 
                                             Main.ButtonPlayImage_OnClick(null, null);
@@ -178,18 +196,22 @@ namespace HafezWPFUI.Helper
                                         {
                                             if ( commands.Count > 1 )
                                             {
-                                                var hasValue = int.TryParse(commands[2], out var value);
+                                                bool hasValue = int.TryParse(commands[2], out int value);
 
                                                 if ( hasValue && value > 0 )
+                                                {
                                                     Main.ComboBoxQuranSure.SelectedIndex = value - 1;
+                                                }
                                             }
 
                                             if ( commands.Count > 2 )
                                             {
-                                                var hasValue = int.TryParse(commands[3], out var value);
+                                                bool hasValue = int.TryParse(commands[3], out int value);
 
                                                 if ( hasValue && value > 0 )
+                                                {
                                                     Main.TxtQuranPageNumber.Text = commands[3];
+                                                }
                                             }
                                             /*if (commands.Count > 2 && !string.IsNullOrWhiteSpace(commands[3]))
                                             {
@@ -197,13 +219,17 @@ namespace HafezWPFUI.Helper
                                             }*/
 
                                             if ( Output.QuranContainer.Visibility == Visibility.Collapsed )
+                                            {
                                                 Main.QuranPlayButton_OnClick(null, null);
+                                            }
                                         }
                                         break;
                                     case "pause":
                                         {
                                             if ( Output.QuranContainer.Visibility == Visibility.Visible )
+                                            {
                                                 Main.QuranPlayButton_OnClick(null, null);
+                                            }
                                         }
                                         break;
                                     case "stop":
@@ -231,20 +257,24 @@ namespace HafezWPFUI.Helper
                                     case "play":
                                         {
                                             if ( commands.Count > 1 && !string.IsNullOrWhiteSpace(commands[2]) &&
-                                                commands[2] != "0" )
+                                                 commands[2]    != "0" )
                                             {
                                                 Main.ComboBoxMafatihDuaNames.SelectedIndex =
                                                     Convert.ToInt32(commands[2]) - 1;
                                             }
 
                                             if ( Output.MafatihContainer.Visibility == Visibility.Collapsed )
+                                            {
                                                 Main.MafatihPlayButton_OnClick(null, null);
+                                            }
                                         }
                                         break;
                                     case "pause":
                                         {
                                             if ( Output.MafatihContainer.Visibility == Visibility.Visible )
+                                            {
                                                 Main.MafatihPlayButton_OnClick(null, null);
+                                            }
                                         }
                                         break;
                                     case "stop":
@@ -271,20 +301,24 @@ namespace HafezWPFUI.Helper
                                     case "play":
                                         {
                                             if ( commands.Count > 1 && !string.IsNullOrWhiteSpace(commands[2]) &&
-                                                commands[2] != "0" )
+                                                 commands[2]    != "0" )
                                             {
                                                 Main.ComboBoxPersonalDuaNames.SelectedIndex =
                                                     Convert.ToInt32(commands[2]) - 1;
                                             }
 
                                             if ( Output.MafatihContainer.Visibility == Visibility.Collapsed )
+                                            {
                                                 Main.PersonalDuaPlayButton_OnClick(null, null);
+                                            }
                                         }
                                         break;
                                     case "pause":
                                         {
                                             if ( Output.MafatihContainer.Visibility == Visibility.Visible )
+                                            {
                                                 Main.PersonalDuaPlayButton_OnClick(null, null);
+                                            }
                                         }
                                         break;
                                     case "stop":
@@ -318,24 +352,25 @@ namespace HafezWPFUI.Helper
                                     case "send":
                                         {
                                             // send/title/description
-                                            var notification = new NotificationModel
+                                            NotificationModel notification = new()
                                             {
                                                 //GroupId = 1,
-                                                GroupId = 2,
-                                                Name = commands[2],
-                                                Description = commands[3],
+                                                GroupId          = 2,
+                                                Name             = commands[2],
+                                                Description      = commands[3],
                                                 NotificationType = 'N',
-                                                CreatedBy = userCommand.Id
+                                                CreatedBy        = userCommand.Id
                                             };
 
                                             notification =
                                                 CreateNotification(
-                                                    notification);
+                                                                   notification);
 
                                             Main.NotificationList.NetNotificationListView.ItemsSource =
-                                                new ObservableCollection<NotificationModel>(await GetAllNotificationByType('N'));
+                                                new ObservableCollection<
+                                                    NotificationModel>(await GetAllNotificationByType('N'));
 
-                                            Main.SnackbarUserName.Text = userCommand.Name;
+                                            Main.SnackbarUserName.Text    = userCommand.Name;
                                             Main.SnackbarMessage.IsActive = true;
                                         }
                                         break;

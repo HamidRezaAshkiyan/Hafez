@@ -28,14 +28,14 @@ namespace HafezWPFUI.Views
 
         private void SettingHandlerUserControl_OnLoaded(object sender, RoutedEventArgs e)
         {
-            var propertyName = "QuranAnimationMode";
-            var value = propertyName.GetProperty();
-            var radioButtonName = $"RadioButton{propertyName}{value}";
+            string propertyName    = "QuranAnimationMode";
+            object value           = propertyName.GetProperty();
+            string radioButtonName = $"RadioButton{propertyName}{value}";
 
             ((RadioButton) FindName(radioButtonName)).IsChecked = true;
 
-            propertyName = "MafatihAnimationMode";
-            value = propertyName.GetProperty();
+            propertyName    = "MafatihAnimationMode";
+            value           = propertyName.GetProperty();
             radioButtonName = $"RadioButton{propertyName}{value}";
 
             ((RadioButton) FindName(radioButtonName)).IsChecked = true;
@@ -47,11 +47,11 @@ namespace HafezWPFUI.Views
         {
             try
             {
-                var isChecked = (bool)ToggleButtonScreenSaver.IsChecked;
-                var screenSaverStatue = isChecked ? "E" : "D";
+                bool   isChecked         = (bool) ToggleButtonScreenSaver.IsChecked;
+                string screenSaverStatue = isChecked ? "E" : "D";
 
                 // Update DB
-                UserConfigModel.Update(new Dictionary<string, string> { { "ScreenSaver", screenSaverStatue } });
+                UserConfigModel.Update(new Dictionary<string, string> {{"ScreenSaver", screenSaverStatue}});
 
                 // Update GlobalConfig
                 UserConfig.ScreenSaver = screenSaverStatue;
@@ -68,20 +68,20 @@ namespace HafezWPFUI.Views
         {
             try
             {
-                var senderToggleButton = sender as ToggleButton;
-                var panelName = GetPanelName(Convert.ToInt32(senderToggleButton.Uid));
-                var isChecked = (bool)senderToggleButton.IsChecked;
-                var titleUpdate = isChecked ? "E" : "D";
-                var propertyName = senderToggleButton.GetPropertyName();
+                ToggleButton senderToggleButton = sender as ToggleButton;
+                string       panelName          = GetPanelName(Convert.ToInt32(senderToggleButton.Uid));
+                bool         isChecked          = (bool) senderToggleButton.IsChecked;
+                string       titleUpdate        = isChecked ? "E" : "D";
+                string       propertyName       = senderToggleButton.GetPropertyName();
 
                 //DB update
-                UserConfigModel.Update(new Dictionary<string, string> { { propertyName, titleUpdate } });
+                UserConfigModel.Update(new Dictionary<string, string> {{propertyName, titleUpdate}});
 
                 //GlobalConfig update
                 propertyName.SetProperty(titleUpdate);
 
                 Output.TitleBoxVisibilityToggle(panelName,
-                    isChecked ? Visibility.Visible : Visibility.Collapsed);
+                                                isChecked ? Visibility.Visible : Visibility.Collapsed);
             }
             catch ( Exception exception )
             {
@@ -93,10 +93,10 @@ namespace HafezWPFUI.Views
         {
             try
             {
-                var isChecked = (bool)ToggleButtonLogoStart.IsChecked;
-                var logoPictureUpdate = isChecked ? "E" : "D";
+                bool   isChecked         = (bool) ToggleButtonLogoStart.IsChecked;
+                string logoPictureUpdate = isChecked ? "E" : "D";
 
-                UserConfigModel.Update(new Dictionary<string, string> { { "LogoStart", logoPictureUpdate } });
+                UserConfigModel.Update(new Dictionary<string, string> {{"LogoStart", logoPictureUpdate}});
 
                 UserConfig.LogoStart = logoPictureUpdate;
 
@@ -115,12 +115,14 @@ namespace HafezWPFUI.Views
         {
             try
             {
-                var isChecked = (bool)ToggleButtonNotificationAnimationMode.IsChecked;
-                var continuousNotificationUpdate = isChecked ? "E" : "D";
+                bool   isChecked                    = (bool) ToggleButtonNotificationAnimationMode.IsChecked;
+                string continuousNotificationUpdate = isChecked ? "E" : "D";
 
                 //DB update
                 UserConfigModel.Update(new Dictionary<string, string>
-                    {{"NotificationAnimationMode", continuousNotificationUpdate}});
+                {
+                    {"NotificationAnimationMode", continuousNotificationUpdate}
+                });
 
                 //GlobalConfig update
                 UserConfig.NotificationAnimationMode = continuousNotificationUpdate;
@@ -135,11 +137,11 @@ namespace HafezWPFUI.Views
         {
             try
             {
-                var senderRadioButton = sender as RadioButton;
-                var value = senderRadioButton.Name.Substring(11).Substring(18);
+                RadioButton senderRadioButton = sender as RadioButton;
+                string      value             = senderRadioButton.Name.Substring(11).Substring(18);
 
                 //DB update
-                UserConfigModel.Update(new Dictionary<string, string> { { "QuranAnimationMode", value } });
+                UserConfigModel.Update(new Dictionary<string, string> {{"QuranAnimationMode", value}});
 
                 //GlobalConfig update
                 UserConfig.QuranAnimationMode = value;
@@ -155,13 +157,15 @@ namespace HafezWPFUI.Views
             try
             {
                 if ( string.IsNullOrEmpty(TxtPortNumber.Text) )
+                {
                     return;
+                }
 
-                var propertyName = TxtPortNumber.GetPropertyName();
-                var value = Convert.ToInt32(TxtPortNumber.Text);
+                string propertyName = TxtPortNumber.GetPropertyName();
+                int    value        = Convert.ToInt32(TxtPortNumber.Text);
 
                 //DB Update
-                UserConfigModel.Update(new Dictionary<string, string> { { propertyName, value.ToString() } });
+                UserConfigModel.Update(new Dictionary<string, string> {{propertyName, value.ToString()}});
 
                 //GlobalConfig update
                 propertyName.SetProperty(value);
@@ -180,13 +184,15 @@ namespace HafezWPFUI.Views
             try
             {
                 //var userConfigTable = UserConfigController.GetAllUserConfig();
-                var configList = UserConfigController.GetAllUserConfigList();
+                List<UserConfigModel> configList = UserConfigController.GetAllUserConfigList();
 
-                using ( var sfd = new SaveFileDialog { FileName = "خروجی اطلاعات.csv" } )
+                using ( SaveFileDialog sfd = new SaveFileDialog {FileName = "خروجی اطلاعات.csv"} )
                 {
                     if ( sfd.ShowDialog() == DialogResult.OK )
                         //userConfigTable.SaveToUserConfigFile(sfd.FileName);
+                    {
                         TextConnectorProcessor.SaveToTextFile(configList, sfd.FileName);
+                    }
                 }
 
                 MessageBoxHandler.ShowMessage("ثبت", "خروجی از اطلاعات با موفقیت انجام شد.");
@@ -201,16 +207,20 @@ namespace HafezWPFUI.Views
         {
             try
             {
-                using ( var ofd = new OpenFileDialog() )
+                using ( OpenFileDialog ofd = new OpenFileDialog() )
                 {
                     if ( ofd.ShowDialog() != DialogResult.OK )
+                    {
                         return;
+                    }
 
-                    var userConfigModels = TextConnectorProcessor.LoadFromTextFile<UserConfigModel>(ofd.FileName);
+                    List<UserConfigModel> userConfigModels =
+                        TextConnectorProcessor.LoadFromTextFile<UserConfigModel>(ofd.FileName);
                     UserConfigController.ImportUserConfig(userConfigModels.First());
                 }
 
-                MessageBoxHandler.ShowMessage("ثبت", "اطلاعات با موفقیت وارد شد.\nبرای دیدن تغییرات برنامه را ری استارت کنید.");
+                MessageBoxHandler.ShowMessage("ثبت",
+                                              "اطلاعات با موفقیت وارد شد.\nبرای دیدن تغییرات برنامه را ری استارت کنید.");
             }
             catch ( Exception exception )
             {
@@ -222,12 +232,11 @@ namespace HafezWPFUI.Views
         {
             try
             {
-                var isChecked = (bool)ToggleButtonIsListenerAutoStart.IsChecked;
-                var value = isChecked ? "E" : "D";
+                bool   isChecked = (bool) ToggleButtonIsListenerAutoStart.IsChecked;
+                string value     = isChecked ? "E" : "D";
 
                 //DB update
-                UserConfigModel.Update(new Dictionary<string, string>
-                    {{"IsListenerAutoStart", value}});
+                UserConfigModel.Update(new Dictionary<string, string> {{"IsListenerAutoStart", value}});
 
                 //GlobalConfig update
                 UserConfig.IsListenerAutoStart = value;

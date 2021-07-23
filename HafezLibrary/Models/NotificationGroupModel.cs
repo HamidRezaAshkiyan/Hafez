@@ -6,7 +6,7 @@ namespace HafezLibrary.Models
     public class NotificationGroupModel : INotifyPropertyChanged
     {
         private string _name;
-        public int Id { get; set; }
+        public  int    Id { get; set; }
 
         public string Name
         {

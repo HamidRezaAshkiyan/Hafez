@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FluentValidation.Results;
+using System;
 using System.Windows;
 using HafezLibrary.Controllers;
 using HafezLibrary.Models;
@@ -35,7 +36,7 @@ namespace HafezWPFUI.Views.User
                     TxtName.Clear();
                     TxtPassword.Clear();
                     TxtUserId.Clear();
-                    ToggleButtonStatue.IsChecked = false;
+                    ToggleButtonStatue.IsChecked    = false;
                     ToggleButtonAdminType.IsChecked = false;
                     //TxtId.Visibility = Visibility.Hidden;
                     BtnSubmit.Content = "ثبت";
@@ -46,14 +47,16 @@ namespace HafezWPFUI.Views.User
         public void FillControllers(UserModel user)
         {
             if ( user == null )
+            {
                 throw new ArgumentNullException();
+            }
 
-            TxtId.Text = user.Id.ToString();
-            TxtUserId.Text = user.UserId;
-            TxtName.Text = user.Name;
+            TxtId.Text           = user.Id.ToString();
+            TxtUserId.Text       = user.UserId;
+            TxtName.Text         = user.Name;
             TxtPassword.Password = user.Password;
 
-            ToggleButtonStatue.IsChecked = Convert.ToBoolean(user.Statue == 'E');
+            ToggleButtonStatue.IsChecked    = Convert.ToBoolean(user.Statue   == 'E');
             ToggleButtonAdminType.IsChecked = Convert.ToBoolean(user.UserType == 'A');
         }
 
@@ -62,24 +65,26 @@ namespace HafezWPFUI.Views.User
             try
             {
                 //define Model
-                var statueToggle = (bool)ToggleButtonStatue.IsChecked ? 'E' : 'D';
-                var userTypeToggle = (bool)ToggleButtonAdminType.IsChecked ? 'A' : 'U';
+                char statueToggle   = (bool) ToggleButtonStatue.IsChecked ? 'E' : 'D';
+                char userTypeToggle = (bool) ToggleButtonAdminType.IsChecked ? 'A' : 'U';
 
-                var user = new UserModel
+                UserModel user = new UserModel
                 {
-                    UserId = TxtUserId.Text,
-                    Name = TxtName.Text,
+                    UserId   = TxtUserId.Text,
+                    Name     = TxtName.Text,
                     Password = TxtPassword.Password,
-                    Statue = Convert.ToChar(statueToggle),
+                    Statue   = Convert.ToChar(statueToggle),
                     UserType = Convert.ToChar(userTypeToggle)
                 };
 
                 if ( IsEditMode )
+                {
                     user.Id = Convert.ToInt32(TxtId.Text);
+                }
 
                 //Validation Model
-                var addUserValidator = new AddUserValidator();
-                var result = addUserValidator.Validate(user);
+                AddUserValidator addUserValidator = new AddUserValidator();
+                ValidationResult result           = addUserValidator.Validate(user);
                 if ( result.IsValid == false )
                 {
                     MessageBox.Show(result.Errors[0].ErrorMessage);
@@ -102,7 +107,7 @@ namespace HafezWPFUI.Views.User
                 Main.UserList.UserListView.ItemsSource = UserController.GetAllUserList();
 
                 // show list
-                Visibility = Visibility.Collapsed;
+                Visibility               = Visibility.Collapsed;
                 Main.UserList.Visibility = Visibility.Visible;
 
                 // clear textboxes

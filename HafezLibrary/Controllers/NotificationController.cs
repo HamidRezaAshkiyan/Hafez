@@ -18,8 +18,8 @@ namespace HafezLibrary.Controllers
         /// <returns>list notification model</returns>
         public static List<NotificationModel> GetAllNotifications()
         {
-            using IDbConnection connection = new SqlConnection(GetConnectionString());
-            var output = connection.Query<NotificationModel>("dbo.spNotification_GetAll").ToList();
+            using IDbConnection     connection = new SqlConnection(GetConnectionString());
+            List<NotificationModel> output = connection.Query<NotificationModel>("dbo.spNotification_GetAll").ToList();
 
             return output;
         }
@@ -33,8 +33,8 @@ namespace HafezLibrary.Controllers
 
             var p = new {NotificationType = notificationType};
 
-            using IDbConnection connection = new SqlConnection(GetConnectionString());
-            var output = (await connection.QueryAsync<NotificationModel>(query, p)).ToList();
+            using IDbConnection     connection = new SqlConnection(GetConnectionString());
+            List<NotificationModel> output     = (await connection.QueryAsync<NotificationModel>(query, p)).ToList();
 
             return output;
         }
@@ -42,13 +42,13 @@ namespace HafezLibrary.Controllers
         public static NotificationModel CreateNotification(NotificationModel model)
         {
             using IDbConnection connection = new SqlConnection(GetConnectionString());
-            var p = new DynamicParameters();
-            p.Add("@GroupId", model.GroupId);
-            p.Add("@Description", model.Description);
-            p.Add("@Name", model.Name);
+            DynamicParameters   p          = new DynamicParameters();
+            p.Add("@GroupId",          model.GroupId);
+            p.Add("@Description",      model.Description);
+            p.Add("@Name",             model.Name);
             p.Add("@NotificationType", model.NotificationType);
-            p.Add("@CreatedBy", model.CreatedBy);
-            p.Add("@Id", 0, DbType.Int32, ParameterDirection.Output);
+            p.Add("@CreatedBy",        model.CreatedBy);
+            p.Add("@Id",               0, DbType.Int32, ParameterDirection.Output);
 
             connection.Execute("spNotification_Insert", p, commandType: CommandType.StoredProcedure);
 
@@ -65,7 +65,7 @@ namespace HafezLibrary.Controllers
             var p = new {model.Id};
 
             using IDbConnection connection = new SqlConnection(GetConnectionString());
-            var output = connection.Query<NotificationModel>(query, p).First();
+            NotificationModel   output     = connection.Query<NotificationModel>(query, p).First();
 
             return output;
         }
@@ -86,7 +86,7 @@ namespace HafezLibrary.Controllers
 
         public static void ChangeNotificationTableHeader(DataTable notificationsTable)
         {
-            notificationsTable.Columns["Name"].ColumnName = "T1";
+            notificationsTable.Columns["Name"].ColumnName        = "T1";
             notificationsTable.Columns["Description"].ColumnName = "H1";
         }
 
@@ -133,10 +133,10 @@ namespace HafezLibrary.Controllers
                                     ON N.GroupId = NG.Id
                                     WHERE N.GroupId = @GroupId;";
 
-            var p = new { GroupId = groupId };
+            var p = new {GroupId = groupId};
 
-            using IDbConnection connection = new SqlConnection(GetConnectionString());
-            var outputList = connection.Query<NotificationModel>(query, p).ToList();
+            using IDbConnection     connection = new SqlConnection(GetConnectionString());
+            List<NotificationModel> outputList = connection.Query<NotificationModel>(query, p).ToList();
 
             return outputList.ToDataTable();
         }
@@ -153,8 +153,8 @@ namespace HafezLibrary.Controllers
 
             var p = new {GroupId = groupId};
 
-            using IDbConnection connection = new SqlConnection(GetConnectionString());
-            var outputList = connection.Query<NotificationModel>(query, p).ToList();
+            using IDbConnection     connection = new SqlConnection(GetConnectionString());
+            List<NotificationModel> outputList = connection.Query<NotificationModel>(query, p).ToList();
 
             return outputList.ToDataTable();
         }

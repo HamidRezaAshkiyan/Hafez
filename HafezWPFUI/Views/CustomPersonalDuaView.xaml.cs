@@ -7,6 +7,7 @@ using HafezLibrary.Controllers;
 using HafezLibrary.Models;
 using HafezWPFUI.Helper.Handlers;
 using HafezWPFUI.Models;
+using System.Collections.Generic;
 using static HafezLibrary.Controllers.DbCache;
 using static HafezLibrary.Controllers.PersonalDuaController;
 using static HafezLibrary.DataAccess.Connector.ExcelConnector;
@@ -25,7 +26,7 @@ namespace HafezWPFUI.Views
             get => _personalDuaFilePath;
             set
             {
-                _personalDuaFilePath = value;
+                _personalDuaFilePath        = value;
                 TxtPersonalDuaFilePath.Text = _personalDuaFilePath;
             }
         } //= DefaultPathString;
@@ -41,7 +42,7 @@ namespace HafezWPFUI.Views
         public void UpdatePersonalDuaComboBoxes()
         {
             ComboBoxPersonalDuaLists.Items.Clear();
-            foreach ( var personalDuaList in GlobalConfig.PersonalDuaListsDisplay )
+            foreach ( PersonalDuaListDisplayModel personalDuaList in GlobalConfig.PersonalDuaListsDisplay )
             {
                 ComboBoxPersonalDuaLists.Items.Add(personalDuaList);
             }
@@ -53,7 +54,7 @@ namespace HafezWPFUI.Views
         {
             try
             {
-                var ofd = new OpenFileDialog {Filter = Properties.Resources.Excel_Document_Avalabale_Format};
+                OpenFileDialog ofd = new OpenFileDialog {Filter = Properties.Resources.Excel_Document_Avalabale_Format};
                 if ( ofd.ShowDialog() == true )
                 {
                     PersonalDuaFilePath = ofd.FileName;
@@ -82,18 +83,18 @@ namespace HafezWPFUI.Views
                     return;
                 }
 
-                var personalDuaList = new PersonalDuaListModel {DuaName = PersonalDuaName.Text};
+                PersonalDuaListModel personalDuaList = new PersonalDuaListModel {DuaName = PersonalDuaName.Text};
 
                 personalDuaList =
                     PersonalDuaListController.CreatePersonalDuaList(personalDuaList);
 
-                var personalDuas =
+                List<PersonalDuaModel> personalDuas =
                     await Task.Run(() => ImportPersonalDuaFromExcelToList(PersonalDuaFilePath));
 
-                for ( var i = 0; i < personalDuas.Count; i++ )
+                for ( int i = 0; i < personalDuas.Count; i++ )
                 {
-                    var personalDua = personalDuas[i];
-                    personalDua.DuaId = personalDuaList.DuaId;
+                    PersonalDuaModel personalDua = personalDuas[i];
+                    personalDua.DuaId   = personalDuaList.DuaId;
                     personalDua.FarazId = i + 1;
                 }
 
@@ -104,13 +105,13 @@ namespace HafezWPFUI.Views
                 UpdatePersonalDuas();
                 GlobalConfig.UpdatePersonalDuaListsDisplay();
 
-                var personalDuaListDisplay = GlobalConfig.PersonalDuaListsDisplay.Last();
+                PersonalDuaListDisplayModel personalDuaListDisplay = GlobalConfig.PersonalDuaListsDisplay.Last();
                 // Bootstrapper.ConfigureAutoMapper().Map<PersonalDuaListDisplayModel>(personalDuaList);
 
                 GlobalConfig.Main.ComboBoxPersonalDuaNames.Items.Add(personalDuaListDisplay);
                 ComboBoxPersonalDuaLists.Items.Add(personalDuaListDisplay);
 
-                PersonalDuaFilePath = DefaultPathString;
+                PersonalDuaFilePath  = DefaultPathString;
                 PersonalDuaName.Text = string.Empty;
             }
             catch ( Exception ex )
@@ -129,9 +130,10 @@ namespace HafezWPFUI.Views
                     return;
                 }
 
-                var personalDuaListDisplay = ComboBoxPersonalDuaLists.SelectedItem as PersonalDuaListDisplayModel;
-                var personalDuaList = Bootstrapper.ConfigureAutoMapper()
-                    .Map<PersonalDuaListModel>(personalDuaListDisplay);
+                PersonalDuaListDisplayModel personalDuaListDisplay =
+                    ComboBoxPersonalDuaLists.SelectedItem as PersonalDuaListDisplayModel;
+                PersonalDuaListModel personalDuaList = Bootstrapper.ConfigureAutoMapper()
+                                                                   .Map<PersonalDuaListModel>(personalDuaListDisplay);
 
                 PersonalDuaListController.RemovePersonalDua(personalDuaList);
 

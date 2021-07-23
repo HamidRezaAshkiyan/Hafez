@@ -17,13 +17,14 @@ namespace HafezWPFUI
     {
         public static string ImageLocation { get; } =
             AppDomain.CurrentDomain.BaseDirectory + @"Gallery\Album\";
+
         public static string LogoLocation { get; } =
             AppDomain.CurrentDomain.BaseDirectory + @"Gallery\Logo\";
 
-        public static MainWindowView Main { get; set; }
-        public static OutputWindowView Output { get; } = new OutputWindowView();
-        public static ListenerWindowView Listener { get; } = new ListenerWindowView();
-        public static UserConfigModel UserConfig { get; private set; }
+        public static MainWindowView     Main       { get; set; }
+        public static OutputWindowView   Output     { get; } = new();
+        public static ListenerWindowView Listener   { get; } = new();
+        public static UserConfigModel    UserConfig { get; private set; }
 
         public static List<PersonalDuaListDisplayModel> PersonalDuaListsDisplay { get; private set; } =
             UpdatePersonalDuaListsDisplay();
@@ -33,10 +34,10 @@ namespace HafezWPFUI
             DbCache.UpdatePersonalDuaLists();
 
             PersonalDuaListsDisplay = Bootstrapper
-                .ConfigureAutoMapper()
-                .Map<List<PersonalDuaListDisplayModel>>(DbCache.PersonalDuaLists);
+                                      .ConfigureAutoMapper()
+                                      .Map<List<PersonalDuaListDisplayModel>>(DbCache.PersonalDuaLists);
 
-            var count = PersonalDuaListsDisplay.Count();
+            int count = PersonalDuaListsDisplay.Count();
             for ( int i = 0; i < count; i++ )
             {
                 PersonalDuaListsDisplay[i].ListIndex = i + 1;
@@ -56,7 +57,7 @@ namespace HafezWPFUI
             set
             {
                 _portInput = value;
-                _ = NetCommandProcessor.DoCommandAsync(NetCommandProcessor.ParseInput(value));
+                _          = NetCommandProcessor.DoCommandAsync(NetCommandProcessor.ParseInput(value));
             }
         }
 
@@ -77,26 +78,26 @@ namespace HafezWPFUI
 
         public static void LoadComboBox(object sender)
         {
-            var senderCombobox = (ComboBox) sender;
-            var value = GetProperty(senderCombobox.GetPropertyName());
+            ComboBox senderCombobox = (ComboBox) sender;
+            object   value          = GetProperty(senderCombobox.GetPropertyName());
 
             senderCombobox.Text = value.ToString();
         }
 
         public static void LoadTextBox(object sender)
         {
-            var senderTextBox = (TextBox) sender;
-            var value = GetProperty(senderTextBox.GetPropertyName());
+            TextBox senderTextBox = (TextBox) sender;
+            object  value         = GetProperty(senderTextBox.GetPropertyName());
 
             senderTextBox.Text = value.ToString();
         }
 
         public static void LoadToggleButton(object sender)
         {
-            var senderToggleButton = (ToggleButton) sender;
-            var value = GetProperty(senderToggleButton.GetPropertyName());
+            ToggleButton senderToggleButton = (ToggleButton) sender;
+            object       value              = GetProperty(senderToggleButton.GetPropertyName());
 
-            var isChecked = value.ToString() != "D";
+            bool isChecked = value.ToString() != "D";
             senderToggleButton.IsChecked = isChecked;
         }
 
@@ -142,34 +143,44 @@ namespace HafezWPFUI
             //var filesList = Directory.GetFiles(ImageLocation + folderName, "*",
             //    SearchOption.AllDirectories).ToList();
 
-            var filters = new List<string> { "jpg", "jpeg", "png", "tiff", "bmp", "svg" };
-            var output = GetFilesFrom(ImageLocation + folderName, filters, false);
+            List<string> filters = new List<string>
+            {
+                "jpg",
+                "jpeg",
+                "png",
+                "tiff",
+                "bmp",
+                "svg"
+            };
+            List<string> output = GetFilesFrom(ImageLocation + folderName, filters, false);
 
             return output;
         }
 
         public static List<string> GetLogoFullPath(this string folderName)
         {
-            var filters = new List<string> { "png" };
-            var output = GetFilesFrom(LogoLocation + folderName, filters, false);
+            List<string> filters = new List<string> {"png"};
+            List<string> output  = GetFilesFrom(LogoLocation + folderName, filters, false);
 
             return output;
         }
 
         public static List<string> GetFilesFrom(string searchFolder, IEnumerable<string> filters, bool isRecursive)
         {
-            var filesFound = new List<string>();
-            var searchOption = isRecursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
+            List<string> filesFound   = new List<string>();
+            SearchOption searchOption = isRecursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
 
-            foreach ( var filter in filters )
+            foreach ( string filter in filters )
+            {
                 filesFound.AddRange(Directory.GetFiles(searchFolder, $"*.{filter}", searchOption));
+            }
 
             return filesFound.ToList();
         }
 
         public static void LogInformation(Exception exception)
         {
-            var logInformation = $"Error Message: {exception.Message}\n Error Location: {exception.StackTrace}";
+            string logInformation = $"Error Message: {exception.Message}\n Error Location: {exception.StackTrace}";
 
             //Console.WriteLine(logInformation); 
             Log.Warning(logInformation);

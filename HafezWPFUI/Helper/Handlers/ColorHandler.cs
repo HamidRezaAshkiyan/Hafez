@@ -9,9 +9,9 @@ namespace HafezWPFUI.Helper.Handlers
     {
         public static void SetColor(string propertyName, string colorValue)
         {
-            var color = Color.FromName(colorValue);
-            var mColor = FromArgb(color.A, color.R, color.G, color.B);
-            var brush = new SolidColorBrush(mColor);
+            Color                      color  = Color.FromName(colorValue);
+            System.Windows.Media.Color mColor = FromArgb(color.A, color.R, color.G, color.B);
+            SolidColorBrush            brush  = new SolidColorBrush(mColor);
 
             Application.Current.Resources[propertyName] = brush;
         }

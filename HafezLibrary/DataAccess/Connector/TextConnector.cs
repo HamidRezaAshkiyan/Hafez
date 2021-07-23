@@ -1,5 +1,7 @@
 ﻿using HafezLibrary.Controllers;
 using HafezLibrary.DataAccess.Processor;
+using HafezLibrary.Models;
+using System.Collections.Generic;
 
 namespace HafezLibrary.DataAccess.Connector
 {
@@ -9,7 +11,7 @@ namespace HafezLibrary.DataAccess.Connector
 
         public static void BackupNotification()
         {
-            var notifications = NotificationController.GetAllNotifications();
+            List<NotificationModel> notifications = NotificationController.GetAllNotifications();
 
             notifications.SaveToNotificationGroupFile(NotificationFile);
         }

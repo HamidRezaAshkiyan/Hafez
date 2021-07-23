@@ -32,11 +32,11 @@ namespace HafezWPFUI.Views
 
         private void MonitorHandlerUserControl_OnLoaded(object sender, RoutedEventArgs e)
         {
-            foreach ( var panelType in (Enums.PanelTypes[]) Enum.GetValues(typeof(Enums.PanelTypes)) )
+            foreach ( Enums.PanelTypes panelType in (Enums.PanelTypes[]) Enum.GetValues(typeof(Enums.PanelTypes)) )
             {
-                var comboBoxItemName =
+                string comboBoxItemName =
                     $"{panelType.ToString()[0]}S{$"{panelType.ToString()}AnimationSpeed".GetProperty()}";
-                var comboBoxItem = FindName(comboBoxItemName) as ComboBoxItem;
+                ComboBoxItem comboBoxItem = FindName(comboBoxItemName) as ComboBoxItem;
                 ((ComboBox) FindName($"ComboBox{panelType}AnimationSpeed")).SelectedItem =
                     comboBoxItem;
             }
@@ -44,13 +44,13 @@ namespace HafezWPFUI.Views
 
         public void FillMonitorComboBox()
         {
-            var allScreensLength = Screen.AllScreens.Length;
+            int allScreensLength = Screen.AllScreens.Length;
 
             ComboBoxControllerMonitorIndex.Items.Clear();
             ComboBoxOutputMonitorIndex.Items.Clear();
-            for ( var i = 0; i < allScreensLength; i++ )
+            for ( int i = 0; i < allScreensLength; i++ )
             {
-                ComboBoxOutputMonitorIndex.Items.Add($"{i + 1}");
+                ComboBoxOutputMonitorIndex.Items.Add($"{i     + 1}");
                 ComboBoxControllerMonitorIndex.Items.Add($"{i + 1}");
             }
         }
@@ -59,15 +59,15 @@ namespace HafezWPFUI.Views
         {
             try
             {
-                var senderToggleButton = sender as ToggleButton;
-                var isChecked = (bool)senderToggleButton.IsChecked;
-                var panelName = GetPanelName(Convert.ToInt32(senderToggleButton.Uid));
-                var panelVerticalAlignment = isChecked ? "U" : "D";
-                var alignment = isChecked ? VerticalAlignment.Top : VerticalAlignment.Bottom;
-                var propertyName = senderToggleButton.GetPropertyName();
+                ToggleButton      senderToggleButton     = sender as ToggleButton;
+                bool              isChecked              = (bool) senderToggleButton.IsChecked;
+                string            panelName              = GetPanelName(Convert.ToInt32(senderToggleButton.Uid));
+                string            panelVerticalAlignment = isChecked ? "U" : "D";
+                VerticalAlignment alignment              = isChecked ? VerticalAlignment.Top : VerticalAlignment.Bottom;
+                string            propertyName           = senderToggleButton.GetPropertyName();
 
                 //DB update
-                UserConfigModel.Update(new Dictionary<string, string> { { propertyName, panelVerticalAlignment } });
+                UserConfigModel.Update(new Dictionary<string, string> {{propertyName, panelVerticalAlignment}});
 
                 //GlobalConfig update
                 propertyName.SetProperty(panelVerticalAlignment);
@@ -87,13 +87,13 @@ namespace HafezWPFUI.Views
             try
             {
                 //todo change time to speed REAL SPEED.
-                var senderComboBox = sender as ComboBox;
-                var panelName = GetPanelName(Convert.ToInt32(senderComboBox.Uid));
-                var speed = ((ComboBoxItem)senderComboBox.SelectedItem).Name.Substring(3);
-                var propertyName = senderComboBox.GetPropertyName();
+                ComboBox senderComboBox = sender as ComboBox;
+                string   panelName      = GetPanelName(Convert.ToInt32(senderComboBox.Uid));
+                string   speed          = ((ComboBoxItem) senderComboBox.SelectedItem).Name.Substring(3);
+                string   propertyName   = senderComboBox.GetPropertyName();
 
                 //DB update
-                UserConfigModel.Update(new Dictionary<string, string> { { propertyName, speed } });
+                UserConfigModel.Update(new Dictionary<string, string> {{propertyName, speed}});
 
                 //GlobalConfig update
                 propertyName.SetProperty(speed);
@@ -111,13 +111,13 @@ namespace HafezWPFUI.Views
         {
             try
             {
-                var senderComboBox = sender as ComboBox;
-                var panelName = GetPanelName(Convert.ToInt32(senderComboBox.Uid));
-                var panelMargin = ((ComboBoxItem)senderComboBox.SelectedItem).Content.ToString();
-                var propertyName = senderComboBox.GetPropertyName();
+                ComboBox senderComboBox = sender as ComboBox;
+                string   panelName      = GetPanelName(Convert.ToInt32(senderComboBox.Uid));
+                string?  panelMargin    = ((ComboBoxItem) senderComboBox.SelectedItem).Content.ToString();
+                string   propertyName   = senderComboBox.GetPropertyName();
 
                 //DB update
-                UserConfigModel.Update(new Dictionary<string, string> { { propertyName, panelMargin } });
+                UserConfigModel.Update(new Dictionary<string, string> {{propertyName, panelMargin}});
 
                 //GlobalConfig update
                 propertyName.SetProperty(panelMargin);
@@ -125,7 +125,7 @@ namespace HafezWPFUI.Views
                 //Set value
                 //Controllers.Program.PanelHandler.SetPanelMargin(panelName);
                 Output.SetPanelMargin(panelName,
-                    Convert.ToInt32(((ComboBoxItem) senderComboBox.SelectedItem).Name.Substring(2)));
+                                      Convert.ToInt32(((ComboBoxItem) senderComboBox.SelectedItem).Name.Substring(2)));
             }
             catch ( Exception exception )
             {
@@ -137,13 +137,16 @@ namespace HafezWPFUI.Views
         {
             try
             {
-                var parent = this.TryFindParent<MainWindowView>();
+                MainWindowView parent = this.TryFindParent<MainWindowView>();
                 if ( ComboBoxControllerMonitorIndex.SelectedItem == null )
+                {
                     return;
-                var monitor = ComboBoxControllerMonitorIndex.SelectedItem.ToString();
+                }
+
+                string? monitor = ComboBoxControllerMonitorIndex.SelectedItem.ToString();
 
                 //DB update
-                UserConfigModel.Update(new Dictionary<string, string> { { "ControllerMonitorIndex", monitor } });
+                UserConfigModel.Update(new Dictionary<string, string> {{"ControllerMonitorIndex", monitor}});
 
                 //GlobalConfig update
                 UserConfig.ControllerMonitorIndex = monitor;
@@ -162,11 +165,14 @@ namespace HafezWPFUI.Views
             try
             {
                 if ( ComboBoxOutputMonitorIndex.SelectedItem == null )
+                {
                     return;
-                var monitorNumber = ComboBoxOutputMonitorIndex.SelectedItem.ToString();
+                }
+
+                string? monitorNumber = ComboBoxOutputMonitorIndex.SelectedItem.ToString();
 
                 //DB update
-                UserConfigModel.Update(new Dictionary<string, string> { { "OutputMonitorIndex", monitorNumber } });
+                UserConfigModel.Update(new Dictionary<string, string> {{"OutputMonitorIndex", monitorNumber}});
 
                 //GlobalConfig update
                 UserConfig.OutputMonitorIndex = monitorNumber;

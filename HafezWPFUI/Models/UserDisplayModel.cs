@@ -8,10 +8,10 @@ namespace HafezWPFUI.Models
         private char _statue;
         private char _userType;
 
-        public int Id { get; set; }
-        public string UserId { get; set; }
+        public int    Id       { get; set; }
+        public string UserId   { get; set; }
         public string Password { get; set; }
-        public string Name { get; set; }
+        public string Name     { get; set; }
 
         public char Statue
         {
@@ -26,16 +26,17 @@ namespace HafezWPFUI.Models
                 {
                     'E' => "فعال",
                     'D' => "غیرفعال",
-                    _ => StatusName
+                    _   => StatusName
                 };
             }
         }
+
         public char UserType
         {
             get => _userType;
             set
             {
-                _userType = value;
+                _userType     = value;
                 UserTypeColor = UserTypeColDict[Convert.ToChar(value)];
 
                 UserTypeName = value switch
@@ -43,38 +44,34 @@ namespace HafezWPFUI.Models
                     'S' => "",
                     'A' => "ادمین",
                     'U' => "کاربر عادی",
-                    _ => UserTypeName
+                    _   => UserTypeName
                 };
             }
         }
 
-        public string StatusColor { get; private set; }
-        public string StatusName { get; private set; }
+        public string StatusColor   { get; private set; }
+        public string StatusName    { get; private set; }
         public string UserTypeColor { get; private set; }
-        public string UserTypeName { get; private set; }
-        public string Command { get; set; }
+        public string UserTypeName  { get; private set; }
+        public string Command       { get; set; }
 
         public string ReceiveTime { get; set; } = DateTime.Now.ToLongTimeString();
         //public bool IsUserValid { get; private set; }
 
 
-        private Dictionary<char, string> StatueColDict { get; } = new Dictionary<char, string>
+        private Dictionary<char, string> StatueColDict { get; } = new()
         {
             /*{'E', "#006400"},
             {'D', "#FF0000"}*/
-            {'E', "LimeGreen"},
-            {'D', "Red"}
+            {'E', "LimeGreen"}, {'D', "Red"}
         };
 
-        private Dictionary<char, string> UserTypeColDict { get; } = new Dictionary<char, string>
+        private Dictionary<char, string> UserTypeColDict { get; } = new()
         {
             /*{'S', "#000000"},
             {'A', "#000000"},
-            {'U', "#FFFF00"}*/ 
-            {'S', "Black"},
-            {'A', "Black"},
-            {'U', "Yellow"}
+            {'U', "#FFFF00"}*/
+            {'S', "Black"}, {'A', "Black"}, {'U', "Yellow"}
         };
-
     }
 }

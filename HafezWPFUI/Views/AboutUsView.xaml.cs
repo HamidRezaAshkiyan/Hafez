@@ -12,7 +12,7 @@ namespace HafezWPFUI.Views
 
             //var customerName = "تست"; //TinyxConnector.CustomerName;
 
-            TxtVersion.Text = $"شماره نسخه: { Assembly.GetExecutingAssembly().GetName().Version }";
+            TxtVersion.Text = $"شماره نسخه: {Assembly.GetExecutingAssembly().GetName().Version}";
             //TxtLicense.Text =
             //    $"این محصول توسط \"{customerName}\" خریداری شده است. تنها خریدار مجاز به استفاده از آن میباشد و پشتیبانی از این محصول تنها برای خریدار ارائه میگردد.\n";
         }

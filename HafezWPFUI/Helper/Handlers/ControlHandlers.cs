@@ -8,7 +8,7 @@ namespace HafezWPFUI.Helper.Handlers
     {
         public static bool IsKeyNumber(KeyEventArgs e)
         {
-            var isKeyNumber = e.Key >= Key.D0 && e.Key <= Key.D9 || e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9;
+            bool isKeyNumber = (e.Key >= Key.D0 && e.Key <= Key.D9) || (e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9);
 
             return isKeyNumber;
         }
@@ -17,13 +17,14 @@ namespace HafezWPFUI.Helper.Handlers
         {
             //todo change to enterPressed() and check before here
             if ( e.Key != Key.Enter )
+            {
                 return false;
+            }
 
-            var tRequest = new TraversalRequest(FocusNavigationDirection.Next);
-            var keyboardFocus = Keyboard.FocusedElement as UIElement;
+            TraversalRequest tRequest      = new TraversalRequest(FocusNavigationDirection.Next);
+            UIElement        keyboardFocus = Keyboard.FocusedElement as UIElement;
             keyboardFocus.MoveFocus(tRequest);
             return true;
-
         }
 
         public static void CheckChar(bool charMode, KeyEventArgs e)
@@ -31,18 +32,26 @@ namespace HafezWPFUI.Helper.Handlers
             //true for number
             if ( charMode )
             {
-                if ( e.Key >= Key.D0 && e.Key <= Key.D9 || e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9 )
+                if ( (e.Key >= Key.D0 && e.Key <= Key.D9) || (e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9) )
+                {
                     e.Handled = false;
+                }
                 else
+                {
                     e.Handled = true;
+                }
             }
             //false for char
             else
             {
-                if ( e.Key >= Key.D0 && e.Key <= Key.D9 || e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9 )
+                if ( (e.Key >= Key.D0 && e.Key <= Key.D9) || (e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9) )
+                {
                     e.Handled = true;
+                }
                 else
+                {
                     e.Handled = false;
+                }
             }
         }
 
@@ -51,7 +60,6 @@ namespace HafezWPFUI.Helper.Handlers
         /// </summary>
         public static void PhysicalKeyValidation()
         {
-
 #if !DEBUG
             // return;
             if ( TinyxConnector.CheckConnection() )
@@ -61,8 +69,7 @@ namespace HafezWPFUI.Helper.Handlers
                                       "لطفا صحت اتصال را بررسی نمایید.\n" +
                                       "برنامه بسته میشود.");
             Application.Current.Shutdown();
-#endif  
-
+#endif
         }
     }
 }

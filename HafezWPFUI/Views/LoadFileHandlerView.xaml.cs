@@ -27,7 +27,7 @@ namespace HafezWPFUI.Views
 
         private static string GetDestinationPath(string filename, string folderName)
         {
-            var appStartPath = Path.GetDirectoryName(Process.GetCurrentProcess().MainModule?.FileName);
+            string? appStartPath = Path.GetDirectoryName(Process.GetCurrentProcess().MainModule?.FileName);
 
             appStartPath = string.Format(appStartPath + "\\{0}\\" + filename, folderName);
             return appStartPath;
@@ -37,10 +37,10 @@ namespace HafezWPFUI.Views
         {
             try
             {
-                var ofd = new OpenFileDialog();
+                OpenFileDialog ofd = new OpenFileDialog();
                 if ( ofd.ShowDialog() == true )
                 {
-                    TxtPathSmallLogo.Text = ofd.FileName;
+                    TxtPathSmallLogo.Text    = ofd.FileName;
                     ImgInputSmallLogo.Source = new BitmapImage(new Uri(ofd.FileName));
                 }
             }
@@ -52,10 +52,10 @@ namespace HafezWPFUI.Views
 
         private void BrowseFullLogo_Click(object sender, RoutedEventArgs e)
         {
-            var ofd = new OpenFileDialog();
+            OpenFileDialog ofd = new OpenFileDialog();
             if ( ofd.ShowDialog() == true )
             {
-                TxtPathFullLogo.Text = ofd.FileName;
+                TxtPathFullLogo.Text    = ofd.FileName;
                 ImgInputFullLogo.Source = new BitmapImage(new Uri(ofd.FileName));
 
                 //var parent = this.TryFindParent<MainWindow>();
@@ -69,11 +69,13 @@ namespace HafezWPFUI.Views
         {
             try
             {
-                var imageName = Path.GetFileName(sourceFileName);
-                var destinationPath = GetDestinationPath(imageName, AppLogoFolderName);
+                string? imageName       = Path.GetFileName(sourceFileName);
+                string  destinationPath = GetDestinationPath(imageName, AppLogoFolderName);
 
                 if ( !File.Exists(destinationPath) )
+                {
                     File.Copy(sourceFileName, destinationPath, true);
+                }
             }
             catch ( Exception e )
             {
@@ -85,12 +87,12 @@ namespace HafezWPFUI.Views
         {
             try
             {
-                var updateDictionary = new Dictionary<string, string>();
+                Dictionary<string, string> updateDictionary = new Dictionary<string, string>();
 
                 if ( !string.IsNullOrEmpty(TxtPathSmallLogo.Text) )
                 {
                     SaveImage(TxtPathSmallLogo.Text);
-                    var panelImageName = Path.GetFileName(TxtPathSmallLogo.Text);
+                    string? panelImageName = Path.GetFileName(TxtPathSmallLogo.Text);
 
                     updateDictionary.Add("PanelImageLocation", panelImageName);
                 }
@@ -98,7 +100,7 @@ namespace HafezWPFUI.Views
                 if ( !string.IsNullOrEmpty(TxtPathFullLogo.Text) )
                 {
                     SaveImage(TxtPathFullLogo.Text);
-                    var screenSaverImageLocationName = Path.GetFileName(TxtPathFullLogo.Text);
+                    string? screenSaverImageLocationName = Path.GetFileName(TxtPathFullLogo.Text);
 
                     updateDictionary.Add("ScreenSaverImageLocation", screenSaverImageLocationName);
                 }
@@ -111,7 +113,8 @@ namespace HafezWPFUI.Views
                 }
 
                 UserConfigModel.Update(updateDictionary);
-                MessageBoxHandler.ShowMessage("تایید", "ذخیره انجام شد\n برای دیدن تغییرات برنامه را دوباره راه اندازی کنید.");
+                MessageBoxHandler.ShowMessage("تایید",
+                                              "ذخیره انجام شد\n برای دیدن تغییرات برنامه را دوباره راه اندازی کنید.");
             }
             catch ( Exception exception )
             {

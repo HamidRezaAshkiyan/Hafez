@@ -15,7 +15,7 @@ namespace HafezLibrary.Controllers
             const string query = "SELECT * FROM SureList";
 
             using IDbConnection connection = new SqlConnection(SqlConnector.GetConnectionString());
-            var output = connection.Query<SureListModel>(query).ToList();
+            List<SureListModel> output     = connection.Query<SureListModel>(query).ToList();
 
             return output;
         }

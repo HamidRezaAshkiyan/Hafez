@@ -21,7 +21,8 @@
                         <Style BasedOn="{StaticResource {x:Type ComboBox}}" TargetType="ComboBox">
                             <Setter Property="materialDesign:ComboBoxAssist.ClassicMode" Value="True" />
                             <Setter Property="FontSize" Value="18" />
-                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.InactiveCaptionTextBrushKey}}" />
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource {x:Static SystemColors.InactiveCaptionTextBrushKey}}" />
                         </Style>
                         <Style BasedOn="{StaticResource {x:Type ToggleButton}}" TargetType="ToggleButton">
                             <Setter Property="IsChecked" Value="False" />
@@ -52,7 +53,8 @@
                         Grid.Column="0"
                         MaxWidth="200"
                         Header="لیست ورودی آنالوگ">
-                        <ComboBox Name="ComboBoxDefaultCameraName" SelectionChanged="ComboBoxDefaultCameraName_OnSelectionChanged" />
+                        <ComboBox Name="ComboBoxDefaultCameraName"
+                                  SelectionChanged="ComboBoxDefaultCameraName_OnSelectionChanged" />
                     </GroupBox>
 
                     <GroupBox
@@ -80,7 +82,8 @@
                                 <Label Content="فعال" />
                                 <Label Content="غیر فعال" />
                             </StackPanel>
-                            <ToggleButton x:Name="ToggleButtonCameraShowStatus" Click="ToggleButtonCameraShowStatus_OnClick" />
+                            <ToggleButton x:Name="ToggleButtonCameraShowStatus"
+                                          Click="ToggleButtonCameraShowStatus_OnClick" />
                         </StackPanel>
                     </GroupBox>
 
