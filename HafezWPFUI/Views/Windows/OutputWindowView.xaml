@@ -2,10 +2,10 @@
     x:Class="HafezWPFUI.Views.Windows.OutputWindowView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:HafezWpfui="clr-namespace:HafezWPFUI"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:HafezWpfui="clr-namespace:HafezWPFUI"
     Title="حافظ _ خروجی"
     Width="auto"
     Height="auto"
@@ -126,7 +126,7 @@
                     Visibility="Collapsed">
                     <Label
                         Name="NotificationTitle"
-                        Padding="10 0"
+                        Padding="10,0"
                         VerticalAlignment="Center"
                         FontWeight="Bold" />
                 </Grid>
@@ -137,7 +137,7 @@
 
                     <Image
                         Name="NotificationPanelLogo"
-                        Margin="0 0 16 0"
+                        Margin="0,0,16,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Stretch" />
                 </Grid>
@@ -150,7 +150,7 @@
                     Style="{DynamicResource QuranTitleStyle}">
                     <Label
                         Name="QuranTitle"
-                        Padding="10 0"
+                        Padding="10,0"
                         VerticalAlignment="Center"
                         FontWeight="Bold" />
                 </Grid>
@@ -165,7 +165,7 @@
 
                     <Image
                         Name="QuranPanelLogo"
-                        Margin="0 0 16 0"
+                        Margin="0,0,16,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Stretch" />
                 </Grid>
@@ -178,7 +178,7 @@
                     Style="{DynamicResource MafatihTitleStyle}">
                     <Label
                         Name="MafatihTitle"
-                        Padding="10 0"
+                        Padding="10,0"
                         VerticalAlignment="Center"
                         FontWeight="Bold" />
                 </Grid>
@@ -193,7 +193,7 @@
 
                     <Image
                         Name="MafatihPanelLogo"
-                        Margin="0 0 16 0"
+                        Margin="0,0,16,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Stretch" />
                 </Grid>
@@ -210,7 +210,7 @@
 
                     <Image
                         Name="QuranTranslationPanelLogo"
-                        Margin="0 0 16 0"
+                        Margin="0,0,16,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Stretch" />
                 </Grid>
@@ -227,7 +227,7 @@
 
                     <Image
                         Name="MafatihTranslationPanelLogo"
-                        Margin="0 0 16 0"
+                        Margin="0,0,16,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Stretch" />
                 </Grid>
@@ -235,7 +235,7 @@
 
         </StackPanel>
 
-         <!-- checkout  -->
+        <!--  checkout  -->
         <Image
             Name="LogoLayer"
             Grid.Row="0"

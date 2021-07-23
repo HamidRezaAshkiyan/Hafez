@@ -1,7 +1,7 @@
 Now
 [] user setting in json
-[] change DB data
 [] Flutter app
+[x] change DB data
 [x] upgrade library to .net core or .net standard => upgraded to .net core 3.1 
 [x] add microsoft app analysis
 [x] remove extra stuff (look at DB)

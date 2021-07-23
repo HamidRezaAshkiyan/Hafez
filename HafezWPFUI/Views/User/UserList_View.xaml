@@ -53,7 +53,7 @@
                                     <DataTemplate DataType="models:UserModel">
                                         <Button
                                             Uid="{Binding Id}"
-                                            Margin="0 -5"
+                                            Margin="0,-5"
                                             Padding="0"
                                             Click="ButtonRemoveUser_OnClick"
                                             Style="{StaticResource MaterialDesignFlatButton}"

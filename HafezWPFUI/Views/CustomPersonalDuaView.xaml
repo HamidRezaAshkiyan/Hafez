@@ -50,7 +50,7 @@
                     Orientation="Horizontal">
                     <TextBlock
                         Name="TxtPersonalDuaFilePath"
-                        Margin="10 0"
+                        Margin="10,0"
                         VerticalAlignment="Center" />
                     <Button
                         Width="30"

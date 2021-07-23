@@ -17,12 +17,12 @@
                 </TextBlock>
                 <TextBox
                     x:Name="TxtGroupName"
-                    Margin="0 8 0 0"
+                    Margin="0,8,0,0"
                     HorizontalAlignment="Stretch"
                     FontFamily="{DynamicResource BaseFontFamily}" />
                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
                     <Button
-                        Margin="0 8 8 0"
+                        Margin="0,8,8,0"
                         Click="ButtonSubmitGroupName_OnClick"
                         Command="md:DialogHost.CloseDialogCommand"
                         FontFamily="{DynamicResource BaseFontFamily}"
@@ -36,7 +36,7 @@
                         تایید
                     </Button>
                     <Button
-                        Margin="0 8 8 0"
+                        Margin="0,8,8,0"
                         Command="md:DialogHost.CloseDialogCommand"
                         FontFamily="{DynamicResource BaseFontFamily}"
                         IsCancel="True"
@@ -71,7 +71,7 @@
                 <TextBox
                     Name="TxtNotificationId"
                     MinWidth="150"
-                    Margin="10 0"
+                    Margin="10,0"
                     VerticalAlignment="Center"
                     md:HintAssist.Hint="شماره اعلان"
                     md:HintAssist.IsFloating="True"

@@ -30,7 +30,7 @@
                             <DataTemplate>
                                 <TextBlock
                                     Height="40"
-                                    Padding="0 5 30 0"
+                                    Padding="0,5,30,0"
                                     Background="{Binding IsAsync=True}"
                                     Text="{Binding IsAsync=True}" />
                             </DataTemplate>

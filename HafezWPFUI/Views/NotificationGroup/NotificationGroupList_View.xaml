@@ -56,7 +56,7 @@
                                     <DataTemplate>
                                         <Button
                                             Uid="{Binding Id}"
-                                            Margin="0 -5"
+                                            Margin="0,-5"
                                             Padding="0"
                                             Click="MenuItemShowGroupSortedNotifications_OnClick"
                                             Style="{StaticResource MaterialDesignFlatButton}"
@@ -76,7 +76,7 @@
                                     <DataTemplate>
                                         <Button
                                             Uid="{Binding Id}"
-                                            Margin="0 -5"
+                                            Margin="0,-5"
                                             Padding="0"
                                             Click="ButtonRemoveNotificationGroup_OnClick"
                                             Style="{StaticResource MaterialDesignFlatButton}"

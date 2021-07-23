@@ -13,11 +13,11 @@
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
-            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
-        
+
         <Image Source="../Resources/Images/Hafez.png" />
 
         <TextBlock
@@ -26,22 +26,16 @@
             FontSize="20"
             LineHeight="40"
             LineStackingStrategy="BlockLineHeight"
-            Text="نرم افزار حافظ به صورت رایگان و برای استفاده عموم طراحی شده است. این نرم افزار برای استفاده در مساجد سالن های همایش و غیره طراحی شده است.
-برای کمک به تیم توسعه این نرم افزار و حمایت از تلاشی که در راستای ساخت این برنامه شده است شما میتوایند از طریق لینک زیر اقدام کنید:
-
-            
-            
-            
-https://idpay.ir/hafez-software
-            
-            
-"
+            Text="نرم افزار حافظ به صورت رایگان و برای استفاده عموم طراحی شده است. این نرم افزار برای استفاده در مساجد سالن های همایش و غیره طراحی شده است. برای کمک به تیم توسعه این نرم افزار و حمایت از تلاشی که در راستای ساخت این برنامه شده است شما میتوایند از طریق لینک زیر اقدام کنید:                                         https://idpay.ir/hafez-software                           "
             TextAlignment="Justify"
             TextWrapping="Wrap" />
 
 
-        <Image Source="../Resources/Images/index.png"
-               Cursor="Hand" MouseLeftButtonDown="Image_MouseLeftButtonDown" Grid.Row="2" />
+        <Image
+            Grid.Row="2"
+            Cursor="Hand"
+            MouseLeftButtonDown="Image_MouseLeftButtonDown"
+            Source="../Resources/Images/index.png" />
 
         <!--<TextBlock
             Name="TxtLicense"
@@ -59,9 +53,9 @@ https://idpay.ir/hafez-software
         </StackPanel>-->
 
         <TextBlock
-            Margin="10"
             Name="TxtVersion"
             Grid.Row="3"
+            Margin="10"
             HorizontalAlignment="Right">
             شماره نسخه:
             <TextBlock Text="{Binding Version, Mode=OneWay}" />
