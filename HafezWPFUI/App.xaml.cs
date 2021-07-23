@@ -2,11 +2,11 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using HafezLibrary.Annotations;
 using HafezWPFUI.Helper.Handlers;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
+using HafezWPFUI.Properties;
 
 namespace HafezWPFUI
 {
