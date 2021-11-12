@@ -55,8 +55,7 @@
 
                 <materialDesign:ColorZone HorizontalAlignment="Right" VerticalAlignment="Bottom">
                     <StackPanel Orientation="Horizontal">
-                        <ComboBox Name="ComboBoxAllIpAddresses"
-                                  SelectionChanged="ComboBoxAllIpAddresses_OnSelectionChanged" />
+                        <ComboBox Name="ComboBoxAllIpAddresses" SelectionChanged="ComboBoxAllIpAddresses_OnSelectionChanged" />
                         <Button
                             Width="20"
                             Height="20"

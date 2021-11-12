@@ -11,6 +11,8 @@ Now
 [x] upgrade to .net core 3.1
 
 Future
+[] Dark mode
+[] Round corners
 [] upgrade to .net 5? (or mabye wait for 6)
 [] sqllite?
 [] add twitter integration

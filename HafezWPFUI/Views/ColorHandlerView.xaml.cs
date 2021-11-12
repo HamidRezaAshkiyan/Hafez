@@ -43,7 +43,7 @@ namespace HafezWPFUI.Views
             try
             {
                 ComboBox senderComboBox = sender as ComboBox;
-                string?  foreground     = senderComboBox.SelectedItem.ToString();
+                string?  foreground     = senderComboBox?.SelectedItem.ToString();
                 string   propertyName   = senderComboBox.GetPropertyName();
 
                 //DB Update

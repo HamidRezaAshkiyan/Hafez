@@ -116,8 +116,7 @@ namespace HafezWPFUI.Views.Windows
                                               : VerticalAlignment.Bottom);
 
                 // Translation Dose not have title
-                if ( panelType == Enums.PanelTypes.QuranTranslation ||
-                     panelType == Enums.PanelTypes.MafatihTranslation )
+                if ( panelType is Enums.PanelTypes.QuranTranslation or Enums.PanelTypes.MafatihTranslation )
                 {
                     return;
                 }
@@ -194,14 +193,13 @@ namespace HafezWPFUI.Views.Windows
             foreach ( Enums.PanelTypes panelType in (Enums.PanelTypes[]) Enum.GetValues(typeof(Enums.PanelTypes)) )
             {
                 // Translation Dose not have title
-                if ( panelType == Enums.PanelTypes.QuranTranslation ||
-                     panelType == Enums.PanelTypes.MafatihTranslation )
+                if ( panelType is Enums.PanelTypes.QuranTranslation or Enums.PanelTypes.MafatihTranslation )
                 {
                     return;
                 }
 
                 TitleBoxVisibilityToggle(panelType.ToString(),
-                                         $"{panelType.ToString()}PanelTitleVisibility".GetProperty().ToString() == "D"
+                                         $"{panelType}PanelTitleVisibility".GetProperty().ToString() == "D"
                                              ? Visibility.Collapsed
                                              : Visibility.Visible);
             }
@@ -562,13 +560,13 @@ namespace HafezWPFUI.Views.Windows
             }
 
             //set table
-            this[$"{panelType.ToString()}OutputTable"] = dataTable;
+            this[$"{panelType}OutputTable"] = dataTable;
         }
 
         public void ReplaceOutputTable(Enums.PanelTypes panelType, string text)
         {
             string          panelName = panelType.ToString();
-            using DataTable tempTable = new DataTable();
+            using DataTable tempTable = new();
 
             tempTable.Columns.Add("H1");
             tempTable.Columns.Add("H2");
