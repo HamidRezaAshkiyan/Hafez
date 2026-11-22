@@ -7,7 +7,9 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Threading;
 using HafezLibrary.DataAccess;
+using HafezLibrary.Remote;
 using HafezLibrary.Services;
+using HafezLibrary.Settings;
 using HafezWPFUI.Properties;
 using HafezWPFUI.Services;
 using HafezWPFUI.ViewModels;
@@ -52,6 +54,20 @@ namespace HafezWPFUI
             var cacheService = Services.GetRequiredService<IContentCacheService>();
             await cacheService.WarmUpAsync();
 
+            AppSettings settings = AppSettingsService.Load();
+            if (settings.AutoStartApiServer)
+            {
+                try
+                {
+                    var remoteServer = Services.GetRequiredService<HafezRemoteServer>();
+                    await remoteServer.StartAsync(settings.ApiPort);
+                }
+                catch (Exception ex)
+                {
+                    Log.Warning(ex, "Could not auto-start Hafez Remote API server");
+                }
+            }
+
             var mainWindow = Services.GetRequiredService<MainWindowView>();
             MainWindow = mainWindow;
             mainWindow.Show();
@@ -62,6 +78,8 @@ namespace HafezWPFUI
         private static void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IContentCacheService, ContentCacheService>();
+            services.AddSingleton<RemoteSessionTokenService>();
+            services.AddSingleton<HafezRemoteServer>();
             services.AddSingleton<ModernCameraService>();
             services.AddSingleton<OutputWindowViewModel>();
             services.AddSingleton<MainWindowViewModel>();
