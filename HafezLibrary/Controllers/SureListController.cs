@@ -1,7 +1,6 @@
 ﻿using Dapper;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using HafezLibrary.DataAccess.Connector;
 using HafezLibrary.Models;
@@ -14,10 +13,8 @@ namespace HafezLibrary.Controllers
         {
             const string query = "SELECT * FROM SureList";
 
-            using IDbConnection connection = new SqlConnection(SqlConnector.GetConnectionString());
-            List<SureListModel> output     = connection.Query<SureListModel>(query).ToList();
-
-            return output;
+            using IDbConnection connection = SqlConnector.CreateConnection();
+            return connection.Query<SureListModel>(query).ToList();
         }
     }
 }

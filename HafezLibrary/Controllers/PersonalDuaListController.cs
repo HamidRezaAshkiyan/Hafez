@@ -1,7 +1,6 @@
 ﻿using Dapper;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using HafezLibrary.DataAccess.Connector;
 using HafezLibrary.Models;
@@ -12,16 +11,10 @@ namespace HafezLibrary.Controllers
     {
         public static PersonalDuaListModel CreatePersonalDuaList(PersonalDuaListModel model)
         {
-            using IDbConnection connection = new SqlConnection(SqlConnector.GetConnectionString());
+            const string query = "INSERT INTO PersonalDuaList (DuaName) VALUES (@DuaName); SELECT last_insert_rowid();";
 
-            DynamicParameters p = new DynamicParameters();
-            p.Add("@DuaName", model.DuaName);
-            p.Add("@Id",      0, DbType.Int32, ParameterDirection.Output);
-
-            connection.Execute("spPersonalDua_Insert", p, commandType: CommandType.StoredProcedure);
-
-            model.DuaId = p.Get<int>("@Id");
-
+            using IDbConnection connection = SqlConnector.CreateConnection();
+            model.DuaId = connection.ExecuteScalar<int>(query, new { model.DuaName });
             return model;
         }
 
@@ -29,18 +22,16 @@ namespace HafezLibrary.Controllers
         {
             const string query = "SELECT * FROM PersonalDuaList";
 
-            using IDbConnection        connection = new SqlConnection(SqlConnector.GetConnectionString());
-            List<PersonalDuaListModel> output     = connection.Query<PersonalDuaListModel>(query).ToList();
-
-            return output;
+            using IDbConnection connection = SqlConnector.CreateConnection();
+            return connection.Query<PersonalDuaListModel>(query).ToList();
         }
 
         public static void RemovePersonalDua(PersonalDuaListModel personalDuaList)
         {
-            const string query = "DELETE FROM PersonalDua     WHERE DuaId = @DuaId; " +
-                                 "DELETE FROM PersonalDuaList WHERE DuaId = @DuaId; ";
+            const string query = "DELETE FROM PersonalDua WHERE DuaId = @DuaId; " +
+                                 "DELETE FROM PersonalDuaList WHERE DuaId = @DuaId;";
 
-            using IDbConnection connection = new SqlConnection(SqlConnector.GetConnectionString());
+            using IDbConnection connection = SqlConnector.CreateConnection();
             connection.Execute(query, personalDuaList);
         }
     }

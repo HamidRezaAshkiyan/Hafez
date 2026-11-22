@@ -1,7 +1,6 @@
 ﻿using Dapper;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using HafezLibrary.DataAccess.Connector;
 using HafezLibrary.Models;
@@ -20,14 +19,14 @@ namespace HafezLibrary.Controllers
                 ? user.Password
                 : PasswordHasher.Hash(user.Password);
 
-            using IDbConnection connection = new SqlConnection(SqlConnector.GetConnectionString());
+            using IDbConnection connection = SqlConnector.CreateConnection();
             connection.Execute(query, new
             {
                 user.UserId,
                 Password = passwordToStore,
                 user.Name,
-                user.Statue,
-                user.UserType
+                Statue = user.Statue.ToString(),
+                UserType = user.UserType.ToString()
             });
         }
 
@@ -40,14 +39,14 @@ namespace HafezLibrary.Controllers
                 ? user.Password
                 : PasswordHasher.Hash(user.Password);
 
-            using IDbConnection connection = new SqlConnection(SqlConnector.GetConnectionString());
+            using IDbConnection connection = SqlConnector.CreateConnection();
             connection.Execute(query, new
             {
                 user.Id,
                 Password = passwordToStore,
                 user.Name,
-                user.Statue,
-                user.UserType
+                Statue = user.Statue.ToString(),
+                UserType = user.UserType.ToString()
             });
         }
 
@@ -55,18 +54,16 @@ namespace HafezLibrary.Controllers
         {
             const string query = "DELETE FROM Users WHERE Id = @Id;";
 
-            using IDbConnection connection = new SqlConnection(SqlConnector.GetConnectionString());
+            using IDbConnection connection = SqlConnector.CreateConnection();
             connection.Execute(query, user);
         }
 
         public static IEnumerable<UserModel> GetAllUserList()
         {
-            const string query = "SELECT * FROM Users WHERE id <> 1";
+            const string query = "SELECT * FROM Users WHERE Id <> 1";
 
-            using IDbConnection connection = new SqlConnection(SqlConnector.GetConnectionString());
-            List<UserModel> output = connection.Query<UserModel>(query).ToList();
-
-            return output;
+            using IDbConnection connection = SqlConnector.CreateConnection();
+            return connection.Query<UserModel>(query).ToList();
         }
 
         public static UserModel IsUserValid(this UserModel portInputModel)
@@ -76,9 +73,9 @@ namespace HafezLibrary.Controllers
                 return null;
             }
 
-            const string query = @"SELECT * FROM Users WHERE UserId = @UserId";
+            const string query = "SELECT * FROM Users WHERE UserId = @UserId";
 
-            using IDbConnection connection = new SqlConnection(SqlConnector.GetConnectionString());
+            using IDbConnection connection = SqlConnector.CreateConnection();
             UserModel output = connection.Query<UserModel>(query, new { portInputModel.UserId }).FirstOrDefault();
 
             if (output == null || output.Statue != 'E')
@@ -91,7 +88,6 @@ namespace HafezLibrary.Controllers
                 return null;
             }
 
-            // Seamlessly upgrade legacy plaintext passwords to PBKDF2 hashes on successful login.
             if (!PasswordHasher.IsHashed(output.Password))
             {
                 output.Password = PasswordHasher.Hash(portInputModel.Password);
