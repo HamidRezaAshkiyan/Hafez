@@ -10,6 +10,7 @@ using HafezLibrary.DataAccess;
 using HafezLibrary.Remote;
 using HafezLibrary.Services;
 using HafezLibrary.Settings;
+using HafezWPFUI.Helper.Handlers;
 using HafezWPFUI.Properties;
 using HafezWPFUI.Services;
 using HafezWPFUI.ViewModels;
@@ -68,7 +69,10 @@ namespace HafezWPFUI
                 }
             }
 
+            ThemeService.ApplySavedTheme();
+
             var mainWindow = Services.GetRequiredService<MainWindowView>();
+            OperatorHotkeys.Attach(mainWindow);
             MainWindow = mainWindow;
             mainWindow.Show();
 
