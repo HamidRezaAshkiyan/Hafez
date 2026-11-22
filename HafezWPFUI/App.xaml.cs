@@ -1,19 +1,28 @@
-﻿using Serilog;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Serilog;
 using System;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Threading;
+using HafezLibrary.DataAccess;
+using HafezLibrary.Services;
 using HafezWPFUI.Properties;
+using HafezWPFUI.Services;
+using HafezWPFUI.ViewModels;
+using HafezWPFUI.ViewModels.Windows;
+using HafezWPFUI.Views.Windows;
 
 namespace HafezWPFUI
 {
     public partial class App
     {
+        public static IServiceProvider Services { get; private set; }
+
         public Volume Volume { get; set; } = new() { Value = 10 };
 
-        private void Application_Startup(object sender, StartupEventArgs e)
+        private async void Application_Startup(object sender, StartupEventArgs e)
         {
             string logDir = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
@@ -34,7 +43,31 @@ namespace HafezWPFUI
             DispatcherUnhandledException += OnDispatcherUnhandledException;
             AppDomain.CurrentDomain.UnhandledException += OnDomainUnhandledException;
 
+            DatabaseInitializer.EnsureInitialized();
+
+            var services = new ServiceCollection();
+            ConfigureServices(services);
+            Services = services.BuildServiceProvider();
+
+            var cacheService = Services.GetRequiredService<IContentCacheService>();
+            await cacheService.WarmUpAsync();
+
+            var mainWindow = Services.GetRequiredService<MainWindowView>();
+            MainWindow = mainWindow;
+            mainWindow.Show();
+
             Log.Information("Hafez application started.");
+        }
+
+        private static void ConfigureServices(IServiceCollection services)
+        {
+            services.AddSingleton<IContentCacheService, ContentCacheService>();
+            services.AddSingleton<ModernCameraService>();
+            services.AddSingleton<OutputWindowViewModel>();
+            services.AddSingleton<MainWindowViewModel>();
+            services.AddSingleton<WebcamHandlerViewModel>();
+            services.AddSingleton<ListenerWindowViewModel>();
+            services.AddSingleton<MainWindowView>();
         }
 
         private void OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
@@ -52,6 +85,11 @@ namespace HafezWPFUI
 
         private void Application_Exit(object sender, ExitEventArgs e)
         {
+            if (Services is IDisposable disposable)
+            {
+                disposable.Dispose();
+            }
+
             Log.Information("Hafez application closed.");
             Log.CloseAndFlush();
         }
