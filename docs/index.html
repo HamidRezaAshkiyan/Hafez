@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>حافظ (Hafez) — سامانه جامع نمایشگر مساجد و مراسم مذهبی</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0f172a;
+      --surface: #1e293b;
+      --surface-2: #273449;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --accent: #f97316;
+      --accent-2: #fb923c;
+      --border: rgba(148, 163, 184, 0.18);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Vazirmatn', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at top right, #1e293b 0%, #0f172a 55%);
+      color: var(--text);
+      line-height: 1.8;
+    }
+    a { color: inherit; text-decoration: none; }
+    .container { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+    header {
+      position: sticky; top: 0; z-index: 20;
+      backdrop-filter: blur(12px);
+      background: rgba(15, 23, 42, 0.85);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 70px;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 1.25rem; }
+    .badge {
+      background: rgba(249, 115, 22, 0.15); color: var(--accent-2);
+      border: 1px solid rgba(249, 115, 22, 0.4);
+      padding: 2px 10px; border-radius: 999px; font-size: 0.78rem; font-weight: 700;
+    }
+    .nav-links { display: flex; gap: 20px; align-items: center; font-size: 0.95rem; color: var(--muted); }
+    .nav-links a:hover { color: var(--text); }
+    .hero { padding: 88px 0 64px; text-align: center; }
+    .hero h1 { font-size: clamp(2rem, 5vw, 3.4rem); font-weight: 800; margin: 18px 0 16px; line-height: 1.3; }
+    .hero h1 span { color: var(--accent-2); }
+    .hero p { max-width: 720px; margin: 0 auto 32px; color: var(--muted); font-size: 1.1rem; }
+    .cta-group { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 13px 24px; border-radius: 12px; font-weight: 700; font-size: 0.98rem;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary { background: linear-gradient(135deg, var(--accent), #ea580c); color: white; }
+    .btn-secondary { background: var(--surface); border: 1px solid var(--border); color: var(--text); }
+    section { padding: 56px 0; }
+    .section-title { font-size: 1.8rem; font-weight: 800; text-align: center; margin-bottom: 10px; }
+    .section-sub { text-align: center; color: var(--muted); margin-bottom: 36px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+    .card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 16px; padding: 24px;
+    }
+    .card h3 { font-size: 1.15rem; margin-bottom: 8px; color: var(--accent-2); }
+    .card p { color: var(--muted); font-size: 0.94rem; }
+    .shortcuts {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px;
+      background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 24px;
+    }
+    .kbd {
+      display: inline-block; background: var(--surface-2); border: 1px solid var(--border);
+      padding: 2px 10px; border-radius: 8px; font-family: monospace; font-size: 0.9rem; color: var(--accent-2);
+      margin-left: 8px;
+    }
+    footer {
+      border-top: 1px solid var(--border); padding: 36px 0; margin-top: 40px;
+      text-align: center; color: var(--muted); font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <span>🕌 حافظ</span>
+        <span class="badge">v2.0 — .NET 10</span>
+      </div>
+      <nav class="nav-links">
+        <a href="#features">ویژگی‌ها</a>
+        <a href="#controller">اپلیکیشن کنترلر</a>
+        <a href="#shortcuts">کلیدهای میانبر</a>
+        <a href="https://github.com/HamidRezaAshkiyan/Hafez" target="_blank" rel="noopener">گیت‌هاب</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <span class="badge">متن‌باز • مجوز MIT • بدون نیاز به نصب SQL Server</span>
+      <h1>مدیریت هوشمند <span>نمایشگرهای مساجد</span> و مراسم مذهبی</h1>
+      <p>
+        نرم‌افزار حافظ (نسخه ۲) با <strong>.NET 10</strong>، پایگاه‌داده پرتابل <strong>SQLite</strong>،
+        سرور داخلی <strong>SignalR</strong> و اپلیکیشن اندروید <strong>کنترل حافظ</strong> بازطراحی شده تا
+        پخش قرآن، مفاتیح، زیرنویس متحرک، اوقات شرعی و دوربین زنده را به‌سادگی و بدون قطعی مدیریت کنید.
+      </p>
+      <div class="cta-group">
+        <a class="btn btn-primary" href="https://github.com/HamidRezaAshkiyan/Hafez/releases/latest" target="_blank" rel="noopener">
+          ⬇️ دانلود نسخه ویندوز (.NET 10)
+        </a>
+        <a class="btn btn-secondary" href="https://github.com/HamidRezaAshkiyan/hafez_controller/releases/latest" target="_blank" rel="noopener">
+          📱 دانلود اپلیکیشن اندروید (APK)
+        </a>
+        <a class="btn btn-secondary" href="https://github.com/HamidRezaAshkiyan/Hafez" target="_blank" rel="noopener">
+          ⭐ مشاهده کد منبع در گیت‌هاب
+        </a>
+      </div>
+    </section>
+
+    <section id="features">
+      <h2 class="section-title">امکانات کلیدی نسخه ۲.۰</h2>
+      <p class="section-sub">طراحی‌شده برای پایداری بالا در مراسم زنده، نمایشگرهای LED و ویدئوپروژکتورها</p>
+      <div class="grid">
+        <div class="card">
+          <h3>🚀 پرتابل با SQLite و .NET 10</h3>
+          <p>حذف کامل پیش‌نیاز SQL Server LocalDB و Office COM؛ ذخیره امن داده‌ها و تنظیمات JSON در AppData با قابلیت پشتیبان‌گیری سریع.</p>
+        </div>
+        <div class="card">
+          <h3>📡 کنترل بی‌سیم با SignalR و QR</h3>
+          <p>اسکن کد QR از داخل برنامه برای اتصال فوری گوشی اپراتور در شبکه محلی Wi-Fi با همگام‌سازی لحظه‌ای وضعیت پخش.</p>
+        </div>
+        <div class="card">
+          <h3>🕌 اوقات شرعی و تقویم هجری/شمسی</h3>
+          <p>محاسبه دقیق اوقات شرعی، شمارش معکوس تا اذان بعدی و نمایش خودکار مناسبت‌های مذهبی در نوار اطلاع‌رسانی.</p>
+        </div>
+        <div class="card">
+          <h3>🎥 پخش زنده دوربین با OpenCvSharp4</h3>
+          <p>جایگزینی موتور قدیمی AForge با OpenCvSharp4 برای پخش روان، کم‌مصرف و پایدار دوربین‌ها و کارت‌های کپچر مدرن.</p>
+        </div>
+        <div class="card">
+          <h3>✨ زیرنویس سخت‌افزاری روان (GPU)</h3>
+          <p>حرکت نرم زیرنویس با TranslateTransform، پیش‌نمایش زنده خروجی و انتقال خودکار صفحه نمایش به مانیتور دوم.</p>
+        </div>
+        <div class="card">
+          <h3>🌙 حالت شب و جستجوی هوشمند</h3>
+          <p>حالت تاریک مناسب اتاق فرمان مساجد، همراه با جستجوی سریع بدون حساسیت به اعراب در آیات قرآن و ادعیه.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="controller">
+      <h2 class="section-title">اپلیکیشن موبایل «کنترل حافظ»</h2>
+      <p class="section-sub">کنترل کامل قرآن، مفاتیح، اعلانات فوری، دوربین و گالری از هر نقطه سالن</p>
+      <div class="grid">
+        <div class="card">
+          <h3>📷 اتصال با اسکن QR</h3>
+          <p>بدون نیاز به وارد کردن دستی IP؛ کافیست کد QR داخل نرم‌افزار ویندوز را اسکن کنید.</p>
+        </div>
+        <div class="card">
+          <h3>⚡ اعلان اضطراری تک‌لمسی</h3>
+          <p>ارسال سریع اعلانات فوری (مانند جابه‌جایی خودرو یا اشیای پیداشده) روی نمایشگر مسجد.</p>
+        </div>
+        <div class="card">
+          <h3>🔄 همگام‌سازی زنده وضعیت</h3>
+          <p>نمایش وضعیت فعلی پخش و دریافت خودکار فهرست سوره‌ها، ادعیه و گروه‌های اعلان از سرور حافظ.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="shortcuts">
+      <h2 class="section-title">کلیدهای میانبر اپراتور</h2>
+      <p class="section-sub">دسترسی فوری حین اجرای مراسم زنده</p>
+      <div class="shortcuts">
+        <div><span class="kbd">Ctrl + Q</span> پنجره اتصال موبایل (QR)</div>
+        <div><span class="kbd">Ctrl + P</span> پیش‌نمایش زنده و اوقات شرعی</div>
+        <div><span class="kbd">Ctrl + D</span> تغییر حالت شب / روز</div>
+        <div><span class="kbd">F11</span> انتقال خروجی به مانیتور دوم</div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      ساخته‌شده با ❤️ برای مساجد و هیئات مذهبی • منتشرشده تحت مجوز MIT •
+      <a href="https://github.com/HamidRezaAshkiyan/Hafez" target="_blank" rel="noopener">HamidRezaAshkiyan/Hafez</a>
+    </div>
+  </footer>
+</body>
+</html>
