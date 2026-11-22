@@ -31,5 +31,13 @@ namespace HafezWPFUI.Helper.Handlers
             bool isNumber = IsKeyNumber(e);
             e.Handled = charMode ? !isNumber : isNumber;
         }
+
+        /// <summary>
+        /// Hardware dongle check removed for MIT open-source builds.
+        /// Retained as a no-op for compatibility with existing callers.
+        /// </summary>
+        public static void PhysicalKeyValidation()
+        {
+        }
     }
 }

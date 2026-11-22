@@ -33,15 +33,14 @@ namespace HafezWPFUI
         {
             DbCache.UpdatePersonalDuaLists();
 
-            PersonalDuaListsDisplay = Bootstrapper
-                                      .ConfigureAutoMapper()
-                                      .Map<List<PersonalDuaListDisplayModel>>(DbCache.PersonalDuaLists);
-
-            int count = PersonalDuaListsDisplay.Count();
-            for ( int i = 0; i < count; i++ )
-            {
-                PersonalDuaListsDisplay[i].ListIndex = i + 1;
-            }
+            PersonalDuaListsDisplay = DbCache.PersonalDuaLists
+                .Select((item, index) => new PersonalDuaListDisplayModel
+                {
+                    DuaId = item.DuaId,
+                    DuaName = item.DuaName,
+                    ListIndex = index + 1
+                })
+                .ToList();
 
             return PersonalDuaListsDisplay;
         }
