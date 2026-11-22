@@ -8,7 +8,7 @@ namespace HafezLibrary.Validators
         public NotificationGroupValidator()
         {
             RuleFor(n => n.Name)
-                .Cascade(CascadeMode.StopOnFirstFailure)
+                .Cascade(CascadeMode.Stop)
                 .NotEmpty().WithMessage("نام گروه نباید خالی باشد")
                 .Length(2, 250).WithMessage("لطفا مقدار مناسبی برای نام گروه وارد کنید");
         }

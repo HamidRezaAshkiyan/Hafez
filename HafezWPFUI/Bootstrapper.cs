@@ -1,52 +1,28 @@
-﻿using AutoMapper;
-using Caliburn.Micro;
+﻿using Caliburn.Micro;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
-using HafezLibrary.Models;
-using HafezWPFUI.Models;
 using HafezWPFUI.ViewModels.Windows;
 
 namespace HafezWPFUI
 {
     public class Bootstrapper : BootstrapperBase
     {
-        private SimpleContainer _container = new();
+        private readonly SimpleContainer _container = new();
 
         public Bootstrapper()
         {
             Initialize();
         }
 
-        public static IMapper ConfigureAutoMapper()
-        {
-            MapperConfiguration config = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<PersonalDuaListModel, PersonalDuaListDisplayModel>();
-                cfg.CreateMap<PersonalDuaListDisplayModel, PersonalDuaListModel>();
-            });
-
-            IMapper output = config.CreateMapper();
-
-            return output;
-        }
-
         protected override void Configure()
         {
-            _container.Instance(ConfigureAutoMapper());
-
             _container.Instance(_container);
-            // .PerRequest<IProductEndpoint, ProductEndpoint>()
-            // .PerRequest<IUserEndpoint, UserEndpoint>()
-            // .PerRequest<ISaleEndpoint, SaleEndpoint>();
 
             _container
                 .Singleton<IWindowManager, WindowManager>()
                 .Singleton<IEventAggregator, EventAggregator>();
-            // .Singleton<MainWindowView>()
-            // .Singleton<OutputWindowView>()
-            // .Singleton<ListenerWindowView>();
 
             GetType().Assembly.GetTypes()
                      .Where(type => type.IsClass)
@@ -57,9 +33,9 @@ namespace HafezWPFUI
                                                                              viewModelType));
         }
 
-        protected override void OnStartup(object sender, StartupEventArgs e)
+        protected override async void OnStartup(object sender, StartupEventArgs e)
         {
-            DisplayRootViewFor<MainWindowViewModel>();
+            await DisplayRootViewForAsync<MainWindowViewModel>();
         }
 
         protected override object GetInstance(Type service, string key)

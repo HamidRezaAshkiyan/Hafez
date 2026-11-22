@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -12,33 +13,28 @@ namespace HafezWPFUI.Views.Windows
 {
     public partial class ListenerWindowView
     {
-        public System.Net.Sockets.TcpListener
-            Server
-        {
-            get;
-            set;
-        } // = TcpListener.GetServer(IPAddress.Parse(TcpListener.GetLocalIpAddress()), GlobalConfig.PortNumber);
+        private CancellationTokenSource _cts;
 
-        public bool IsServerStarted { get; set; } = false; //NOT OPTIMAL
+        public System.Net.Sockets.TcpListener Server { get; set; }
+
+        public bool IsServerStarted { get; set; }
 
         public ListenerWindowView()
         {
             InitializeComponent();
 
             IPHostEntry host = Dns.GetHostEntry(Dns.GetHostName());
-            foreach ( IPAddress ip in host.AddressList )
+            foreach (IPAddress ip in host.AddressList)
             {
                 ComboBoxAllIpAddresses.Items.Add(ip.ToString());
             }
-
-            //Server.Start();
         }
 
         public async void StartReceiving()
         {
             try
             {
-                if ( !IsServerStarted )
+                if (!IsServerStarted)
                 {
                     Server = TcpListener.GetServer(IPAddress.Parse(TcpListener.GetLocalIpAddress()),
                                                    GlobalConfig.UserConfig.PortNumber);
@@ -46,34 +42,43 @@ namespace HafezWPFUI.Views.Windows
                     StartServer();
                 }
 
-                while ( IsServerStarted )
-                {
-                    string   portInput      = await TcpListener.StartListening(Server);
-                    string[] portInputSplit = portInput.Split('/');
+                CancellationToken token = _cts?.Token ?? CancellationToken.None;
 
-                    UserModel networkUser = new UserModel
+                while (IsServerStarted && !token.IsCancellationRequested)
+                {
+                    string portInput = await TcpListener.StartListening(Server, token);
+                    if (!TcpListener.TryParseCommandPacket(portInput, out string userId, out string password, out string command))
                     {
-                        Id = -1, UserId = portInputSplit[0], Password = portInputSplit[1]
-                        // Command = portInputSplit[2]
+                        continue;
+                    }
+
+                    UserModel networkUser = new()
+                    {
+                        Id = -1,
+                        UserId = userId,
+                        Password = password
                     };
 
-                    string command = portInputSplit[2];
-                    for ( int i = 3; i < portInputSplit.Length; i++ )
+                    networkUser = networkUser.IsUserValid();
+                    if (networkUser == null || networkUser.Id == -1)
                     {
-                        command += $"/{portInputSplit[i]}";
+                        continue;
                     }
 
-                    networkUser         = networkUser.IsUserValid();
                     networkUser.Command = command;
-
-                    if ( networkUser != null && networkUser.Id != -1 )
-                    {
-                        DataGridListener.Items.Add(networkUser);
-                        await NetCommandProcessor.DoCommandAsync(networkUser);
-                    }
+                    DataGridListener.Items.Add(networkUser);
+                    await NetCommandProcessor.DoCommandAsync(networkUser);
                 }
             }
-            catch ( Exception e )
+            catch (OperationCanceledException)
+            {
+                // Expected when StopServer cancels the listener loop.
+            }
+            catch (ObjectDisposedException)
+            {
+                // Expected when the underlying socket is stopped.
+            }
+            catch (Exception e)
             {
                 GlobalConfig.LogInformation(e);
             }
@@ -81,12 +86,18 @@ namespace HafezWPFUI.Views.Windows
 
         public void StopServer()
         {
-            Server.Stop();
             IsServerStarted = false;
+            _cts?.Cancel();
+            _cts?.Dispose();
+            _cts = null;
+            Server?.Stop();
         }
 
         public void StartServer()
         {
+            _cts?.Cancel();
+            _cts?.Dispose();
+            _cts = new CancellationTokenSource();
             Server.Start();
             IsServerStarted = true;
         }
@@ -107,7 +118,7 @@ namespace HafezWPFUI.Views.Windows
             {
                 DataGridListener.Items.Clear();
             }
-            catch ( Exception exception )
+            catch (Exception exception)
             {
                 GlobalConfig.LogInformation(exception);
             }
@@ -115,27 +126,33 @@ namespace HafezWPFUI.Views.Windows
 
         public static string GetIpPort(string ipAddress = "")
         {
-            if ( string.IsNullOrWhiteSpace(ipAddress) )
+            if (string.IsNullOrWhiteSpace(ipAddress))
             {
                 ipAddress = TcpListener.GetLocalIpAddress();
             }
 
-            string fullIpAddress = $"{ipAddress}:{GlobalConfig.UserConfig.PortNumber}";
-
-            return fullIpAddress;
+            return $"{ipAddress}:{GlobalConfig.UserConfig.PortNumber}";
         }
 
         private void ComboBoxAllIpAddresses_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (ComboBoxAllIpAddresses.SelectedItem == null)
+            {
+                return;
+            }
+
             StopServer();
 
-            string? ipAddress = ComboBoxAllIpAddresses.SelectedItem.ToString();
+            string ipAddress = ComboBoxAllIpAddresses.SelectedItem.ToString();
+            if (!IPAddress.TryParse(ipAddress, out IPAddress parsedIp))
+            {
+                return;
+            }
+
             TextBlockInternet.Text = GetIpPort(ipAddress);
-            Server = TcpListener.GetServer(IPAddress.Parse(ipAddress),
-                                           GlobalConfig.UserConfig.PortNumber);
+            Server = TcpListener.GetServer(parsedIp, GlobalConfig.UserConfig.PortNumber);
 
             StartServer();
-
             StartReceiving();
         }
     }

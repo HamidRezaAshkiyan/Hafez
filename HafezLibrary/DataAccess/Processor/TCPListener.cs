@@ -1,25 +1,29 @@
 ﻿using System;
+using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace HafezLibrary.DataAccess.Processor
 {
     public static class TcpListener
     {
+        private const int MaxPayloadBytes = 64 * 1024; // 64 KB safety limit
+
         public static string GetLocalIpAddress()
         {
             IPHostEntry host = Dns.GetHostEntry(Dns.GetHostName());
-            foreach ( IPAddress ip in host.AddressList )
+            foreach (IPAddress ip in host.AddressList)
             {
-                if ( ip.AddressFamily == AddressFamily.InterNetwork )
+                if (ip.AddressFamily == AddressFamily.InterNetwork && !IPAddress.IsLoopback(ip))
                 {
                     return ip.ToString();
                 }
             }
 
-            throw new Exception("No network adapters with an IPv4 address in the system!");
+            return IPAddress.Loopback.ToString();
         }
 
         public static System.Net.Sockets.TcpListener GetServer(IPAddress localAddress, int portNumber)
@@ -28,38 +32,55 @@ namespace HafezLibrary.DataAccess.Processor
         }
 
         /// <summary>
-        ///     listening to STARTED server
+        /// Accepts a single client connection on a started TCP listener and reads the full UTF-8 payload.
         /// </summary>
-        /// <param name="server"></param>
-        /// <returns></returns>
-        public static async Task<string> StartListening(System.Net.Sockets.TcpListener server)
+        public static async Task<string> StartListening(
+            System.Net.Sockets.TcpListener server,
+            CancellationToken cancellationToken = default)
         {
-            // Buffer for reading data
-            byte[] bytes = new byte[512];
+            using TcpClient client = await server.AcceptTcpClientAsync(cancellationToken);
+            using NetworkStream stream = client.GetStream();
+            using MemoryStream bufferStream = new();
 
-            // Perform a blocking call to accept requests.
-            TcpClient client = await server.AcceptTcpClientAsync();
-            //Console.WriteLine("Connected!");
-
-            // Get a stream object for reading and writing
-            NetworkStream stream = client.GetStream();
-
-            int    i;
-            string portOutputText = "";
-            // Loop to receive all the data sent by the client.
-            while ( (i = stream.Read(bytes, 0, bytes.Length)) != 0 )
-                // Translate data bytes to a UTF8 string.
+            byte[] chunk = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = await stream.ReadAsync(chunk.AsMemory(0, chunk.Length), cancellationToken)) > 0)
             {
-                portOutputText = Encoding.UTF8.GetString(bytes, 0, i);
+                if (bufferStream.Length + bytesRead > MaxPayloadBytes)
+                {
+                    throw new InvalidDataException($"Incoming TCP message exceeded {MaxPayloadBytes} bytes.");
+                }
+
+                bufferStream.Write(chunk, 0, bytesRead);
             }
 
+            return Encoding.UTF8.GetString(bufferStream.ToArray());
+        }
 
-            // Shutdown and end connection
-            client.Close();
+        /// <summary>
+        /// Safely parses a legacy "userId/password/command..." packet without throwing on malformed input.
+        /// </summary>
+        public static bool TryParseCommandPacket(string rawPacket, out string userId, out string password, out string command)
+        {
+            userId = string.Empty;
+            password = string.Empty;
+            command = string.Empty;
 
-            //server.Stop();
+            if (string.IsNullOrWhiteSpace(rawPacket))
+            {
+                return false;
+            }
 
-            return portOutputText;
+            string[] parts = rawPacket.Split('/', 3);
+            if (parts.Length < 3 || string.IsNullOrWhiteSpace(parts[0]) || string.IsNullOrWhiteSpace(parts[2]))
+            {
+                return false;
+            }
+
+            userId = parts[0];
+            password = parts[1];
+            command = parts[2];
+            return true;
         }
     }
 }

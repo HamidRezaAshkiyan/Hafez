@@ -132,8 +132,11 @@ namespace HafezWPFUI.Views
 
                 PersonalDuaListDisplayModel personalDuaListDisplay =
                     ComboBoxPersonalDuaLists.SelectedItem as PersonalDuaListDisplayModel;
-                PersonalDuaListModel personalDuaList = Bootstrapper.ConfigureAutoMapper()
-                                                                   .Map<PersonalDuaListModel>(personalDuaListDisplay);
+                PersonalDuaListModel personalDuaList = new()
+                {
+                    DuaId = personalDuaListDisplay.DuaId,
+                    DuaName = personalDuaListDisplay.DuaName
+                };
 
                 PersonalDuaListController.RemovePersonalDua(personalDuaList);
 
