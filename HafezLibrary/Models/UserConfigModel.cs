@@ -1,9 +1,10 @@
 ﻿using Dapper;
+using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using HafezLibrary.DataAccess.Connector;
+using HafezLibrary.Settings;
 
 namespace HafezLibrary.Models
 {
@@ -150,26 +151,63 @@ namespace HafezLibrary.Models
             typeof(UserConfigModel).GetProperty(propertyName)?.SetValue(this, value);
         }
 
+        private static readonly HashSet<string> ValidColumns = new(
+            typeof(UserConfigModel).GetProperties().Select(p => p.Name),
+            StringComparer.OrdinalIgnoreCase);
+
         public static void Update(Dictionary<string, string> par)
         {
-            string query = par.Aggregate("UPDATE UserConfig SET ",
-                                         (current, p) => current + $"{p.Key} = N'{p.Value}', ");
-            query = query.Substring(0, query.Length - 2);
+            if (par == null || par.Count == 0)
+            {
+                return;
+            }
 
-            DataAccess.Connector.DataAccess.DoCommand(query);
+            var setClauses = new List<string>();
+            var parameters = new Dictionary<string, object>();
 
-            // using IDbConnection connection = new SqlConnection(SqlConnector.GetConnectionString());
-            // connection.Execute(tempQuery);
+            foreach (var kvp in par)
+            {
+                if (!ValidColumns.Contains(kvp.Key))
+                {
+                    continue;
+                }
+
+                string paramName = $"@p_{kvp.Key}";
+                setClauses.Add($"{kvp.Key} = {paramName}");
+                parameters[paramName] = kvp.Value;
+            }
+
+            if (setClauses.Count == 0)
+            {
+                return;
+            }
+
+            string query = $"UPDATE UserConfig SET {string.Join(", ", setClauses)} WHERE Id = 1";
+            DataAccess.Connector.DataAccess.DoCommand(query, parameters);
+
+            // Mirror updates into %AppData%\Hafez\settings.json
+            try
+            {
+                AppSettings settings = AppSettingsService.Load();
+                UserConfigModel current = GetAllUserConfig();
+                if (current != null)
+                {
+                    settings.DisplayConfig = current;
+                    AppSettingsService.Save(settings);
+                }
+            }
+            catch
+            {
+                // Non-fatal if JSON settings mirror fails during unit test or read-only env
+            }
         }
 
         public static UserConfigModel GetAllUserConfig()
         {
-            const string query = "SELECT * FROM UserConfig WHERE id = 1";
+            const string query = "SELECT * FROM UserConfig WHERE Id = 1";
 
-            using IDbConnection connection = new SqlConnection(SqlConnector.GetConnectionString());
-            UserConfigModel     output     = connection.Query<UserConfigModel>(query).FirstOrDefault();
-
-            return output;
+            using IDbConnection connection = SqlConnector.CreateConnection();
+            return connection.Query<UserConfigModel>(query).FirstOrDefault() ?? new UserConfigModel { Id = 1 };
         }
     }
 }

@@ -1,97 +1,62 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
+using Microsoft.Data.Sqlite;
 using static HafezLibrary.DataAccess.Connector.SqlConnector;
 
 namespace HafezLibrary.DataAccess.Connector
 {
     public static class DataAccess
     {
-        /*private static readonly SqlConnection Con = new SqlConnection(
-            @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename='|DataDirectory|\Data\DB.mdf';Integrated Security=True;Connect Timeout=30");*/
-
-        private static readonly SqlConnection  Con = new SqlConnection(GetConnectionString());
-        private static readonly SqlDataAdapter Sda = new SqlDataAdapter();
-        private static readonly SqlCommand     Cmd = new SqlCommand();
-        private static          DataTable      _dt;
-
-        public static DataTable Select(string query) // method for database select query
+        public static DataTable Select(string query, Dictionary<string, object> parameters = null)
         {
             try
             {
-                Cmd.Connection    = Con;
-                Sda.SelectCommand = Cmd;
+                using var connection = (SqliteConnection)CreateConnection();
+                using var command = connection.CreateCommand();
+                command.CommandText = query;
 
-                if ( Connect() )
+                if (parameters != null)
                 {
-                    _dt             = new DataTable();
-                    Cmd.CommandText = query;
-                    Sda.Fill(_dt);
+                    foreach (var kvp in parameters)
+                    {
+                        command.Parameters.AddWithValue(kvp.Key, kvp.Value ?? DBNull.Value);
+                    }
                 }
+
+                using var reader = command.ExecuteReader();
+                var table = new DataTable();
+                table.Load(reader);
+                return table;
             }
-            catch ( Exception e )
+            catch (Exception e)
             {
-                Console.WriteLine($"Could not Select. Error #902 \nerror detail : {e.Message}");
+                Console.WriteLine($"Could not Select. Error #902\nError detail: {e.Message}");
                 return null;
             }
-            finally
-            {
-                Disconnect();
-            }
-
-            return _dt;
         }
 
-        public static void DoCommand(string query) // method for other queries
+        public static void DoCommand(string query, Dictionary<string, object> parameters = null)
         {
-            //todo change parameter to command
-
             try
             {
-                if ( !Connect() )
+                using var connection = (SqliteConnection)CreateConnection();
+                using var command = connection.CreateCommand();
+                command.CommandText = query;
+
+                if (parameters != null)
                 {
-                    return;
+                    foreach (var kvp in parameters)
+                    {
+                        command.Parameters.AddWithValue(kvp.Key, kvp.Value ?? DBNull.Value);
+                    }
                 }
 
-                Cmd.Connection  = Con;
-                Cmd.CommandText = query;
-                Cmd.ExecuteNonQuery();
+                command.ExecuteNonQuery();
             }
-            catch ( Exception e )
+            catch (Exception e)
             {
-                Console.WriteLine($"Could not Do Command. Error #903 \nerror detail : {e.Message}");
-            }
-            finally
-            {
-                Disconnect();
-            }
-        }
-
-        private static bool Connect() // method for connect to DB
-        {
-            try
-            {
-                Con.Open();
-                return true;
-            }
-            catch ( Exception e )
-            {
-                Console.WriteLine($"Could not Connect. Error #900 \nerror detail : {e.Message}");
-                return false;
-            }
-        }
-
-        private static bool Disconnect() // method for disconnect from DB
-        {
-            try
-            {
-                Con.Close();
-                return true;
-            }
-            catch ( Exception e )
-            {
-                Console.WriteLine($"Could not Disconnect. Error #901 \nerror detail : {e.Message}");
-                return false;
+                Console.WriteLine($"Could not Do Command. Error #903\nError detail: {e.Message}");
             }
         }
     }
