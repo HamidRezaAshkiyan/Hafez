@@ -8,7 +8,7 @@ namespace HafezLibrary.Validators
         public NotificationValidator()
         {
             RuleFor(n => n.Description)
-                .Cascade(CascadeMode.StopOnFirstFailure)
+                .Cascade(CascadeMode.Stop)
                 .NotEmpty().WithMessage("توضیحات اعلان نباید خالی باشد");
             //.Length(2, 50).WithMessage("لطفا مقدار مناسبی برای توضیحات وارد کنید");
         }

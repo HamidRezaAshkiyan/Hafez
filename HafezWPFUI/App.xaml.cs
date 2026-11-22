@@ -1,39 +1,59 @@
 ﻿using Serilog;
+using System;
 using System.ComponentModel;
+using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using HafezWPFUI.Helper.Handlers;
-using Microsoft.AppCenter;
-using Microsoft.AppCenter.Analytics;
-using Microsoft.AppCenter.Crashes;
+using System.Windows.Threading;
 using HafezWPFUI.Properties;
 
 namespace HafezWPFUI
 {
     public partial class App
     {
-        public Volume Volume { get; set; } = new() {Value = 10};
+        public Volume Volume { get; set; } = new() { Value = 10 };
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            ControlHandlers.PhysicalKeyValidation();
+            string logDir = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                "Hafez",
+                "Logs");
+            Directory.CreateDirectory(logDir);
 
             Log.Logger = new LoggerConfiguration()
-                         .MinimumLevel.Debug()
+                         .MinimumLevel.Information()
                          .WriteTo.Debug()
-                         .WriteTo.File("Logs\\Log.log", fileSizeLimitBytes: 10000, retainedFileCountLimit: 5)
-                         //.WriteTo.RollingFile("Logs\\Log.log", fileSizeLimitBytes: 10000, retainedFileCountLimit: 5)
+                         .WriteTo.File(
+                             Path.Combine(logDir, "hafez-.log"),
+                             rollingInterval: RollingInterval.Day,
+                             fileSizeLimitBytes: 5 * 1024 * 1024,
+                             retainedFileCountLimit: 14)
                          .CreateLogger();
 
-            AppCenter.Start("0e71973a-7f39-4947-ab8d-70bb5dd33445",
-                            typeof(Analytics), typeof(Crashes));
+            DispatcherUnhandledException += OnDispatcherUnhandledException;
+            AppDomain.CurrentDomain.UnhandledException += OnDomainUnhandledException;
 
-            Log.Information("Application Stated.");
+            Log.Information("Hafez application started.");
+        }
+
+        private void OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+        {
+            Log.Error(e.Exception, "Unhandled UI exception");
+        }
+
+        private void OnDomainUnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            if (e.ExceptionObject is Exception ex)
+            {
+                Log.Fatal(ex, "Unhandled domain exception (IsTerminating={IsTerminating})", e.IsTerminating);
+            }
         }
 
         private void Application_Exit(object sender, ExitEventArgs e)
         {
-            Log.Information("Application Closed.");
+            Log.Information("Hafez application closed.");
+            Log.CloseAndFlush();
         }
     }
 
